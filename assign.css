@@ -42,7 +42,6 @@ h1 {
 h2 {
   font-size:1.6em;
   font-family: Arial;
-  color:black;
   text-align:center;
 }
 
@@ -89,9 +88,16 @@ a:hover {
    
 }
 
+#tableError
+{
+	color: #FF0000; /*Bright Red*/
+}
+
 .resultTextBox
 {
 	outline:none;
 	border:none;
-	color: #FF0000 /*Bright Red*/
+	color: #FF0000; /*Bright Red*/
 }
+
+

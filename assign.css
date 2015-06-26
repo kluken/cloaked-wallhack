@@ -1,0 +1,97 @@
+* {
+   margin:0px;
+}
+
+body {
+	font-size: 1em;
+	font-family: Verdana;
+	line-height:1.3;
+	position: relative;
+	top: 0px;
+}
+body:after {
+	content : "";
+	display: block;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+    height: 100%;
+	background-image: url("car.jpg");
+	background-size: 1920px 1080px;
+	opacity : 0.2;
+    z-index: -1;
+}
+
+ table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+	margin-left: auto;
+    margin-right: auto;
+}
+th, td {
+    padding: 15px;
+}
+
+h1 {
+  font-size:1.6em;
+  font-family: Arial;
+  text-align:center;
+}
+
+h2 {
+  font-size:1.6em;
+  font-family: Arial;
+  color:black;
+  text-align:center;
+}
+
+h4 {
+  font-size: 1.2em;
+  font-family: Verdana;
+  text-decoration:underline;
+}
+
+a:link {
+	color:#151515;
+}
+
+a:visited {
+	color:#151515;
+}
+
+a:hover {
+	color:#FF0000;
+}
+
+#container {
+   width: 1800px;
+   height: 1000px;
+   margin-top: 0px;
+   margin-bottom: 45px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+#headerbar {
+	width: 1800px;
+	height: 50px;
+	margin-bottom: 15px ;
+	padding: 6px;
+   	text-align: center;
+}
+
+#content {
+   width: 1800px;
+   padding: 6px;
+   height: 950px;
+   text-align: center; 
+   
+}
+
+.resultTextBox
+{
+	outline:none;
+	border:none;
+	color: #FF0000 /*Bright Red*/
+}

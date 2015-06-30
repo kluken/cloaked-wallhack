@@ -6,7 +6,7 @@
 		<title>UWS Solar Car Project - Battery</title>
 		<link rel="stylesheet" href="assign.css" type="text/css" /> 
 		<?php
-		if (isset($_POST['numBatteryCells']))
+		if (!isset($_POST['numBatteryCells']))
 		{
 			if (!isset($SQLResult))
 			{

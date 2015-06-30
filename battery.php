@@ -172,16 +172,18 @@
 			<?php  
 				if (!isset($_POST['numBatteryCells']))
 				{ ?>
-					</br>
+					<br/>
 					<form method="post" action="battery.php">
-					<label id = "numBatteryCells"> Please enter the amount of cells you want to show </label><input id="numBatteryCells" name="numBatteryCells"  value = "5" ></input>
-					<input type="submit" value="Submit"></input>
+						<p>
+							<label id = "numBatteryCellsLabel"> Please enter the amount of cells you want to show </label><input id="numBatteryCells" name="numBatteryCells"  value = "5" ></input>
+							<input type="submit" value="Submit"></input>
+						</p>
 					</form>
 					<?php
 				}
 				else
 				{ ?>
-					<p> </br>  <br/>
+					<br/>  <br/>
 					<table>
 						<caption>Battery Statistics</caption>
 						<tr>
@@ -310,7 +312,6 @@
 						}
 						?> 
 					</table>
-				</p>
 			<?php } ?>
 			</div>
 		</div>

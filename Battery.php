@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 
@@ -164,7 +163,7 @@
 	<body>
 		<div id="container">
 			<div id="headerbar">
-				<h1>UWS Solar Car Project - Electrical</h1>
+				<h1>UWS Solar Car Project - Battery</h1>
 				<p>
 					Menu Options: <a href="home.php">Home</a> <a href="electrical.php">Electrical</a> <a href="battery.php">Battery</a> <a href="motors.php">Motors</a> <a href="it.php">IT Admin</a>
 				</p>

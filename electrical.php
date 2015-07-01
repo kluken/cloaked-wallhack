@@ -6,7 +6,6 @@
 		<title>UWS Solar Car Project - Electrical</title>
 		<link rel="stylesheet" href="assign.css" type="text/css" /> 
 		<!--<script type="text/JavaScript" src = "news.js"> </script>-->
-			
 	</head>
 	<body>
 		<div id="container">
@@ -22,8 +21,8 @@
 						<th>
 							Pack State of Charge (Ah)
 						</th>
-						<td>
-							<?php echo "Test" ?>
+						<td <?php if (!ISSET($SQLResult) || !isNumeric($SQLResult) || $SQLResult < 4 || $SQLResult > 90) echo("class = badData") ?>>
+							<?php if (!ISSET($SQLResult)) echo "Test"; else echo $SQLResult?>
 						</td>
 						<th>
 							Pack State of Charge (%)
@@ -471,6 +470,5 @@
 				</table>
 			</div>
 		</div>
-
 	</body>
 </html> 

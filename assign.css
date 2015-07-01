@@ -88,21 +88,12 @@ a:hover {
    
 }
 
-#tableError
+td.badData
 {
-	color: #FF0000; /*Bright Red*/
+	background-color: #FF0000; /*Bright Red*/
 }
 
-.tableGood
+td.goodData
 {
 	color: Green;
 }
-
-.resultTextBox
-{
-	outline:none;
-	border:none;
-	color: #FF0000; /*Bright Red*/
-}
-
-

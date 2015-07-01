@@ -18,6 +18,7 @@
 			<div id="content">
 				<p> 
 					SHOW ME THE CONTENT <br/>
+					<?php echo exec("C:/wamp/www/cloaked-wallhack/test.exe"); ?>
 				</p>
 			</div>
 		</div>

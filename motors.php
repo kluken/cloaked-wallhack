@@ -6,6 +6,7 @@
 		<title>UWS Solar Car Project - Motors</title>
 		<link rel="stylesheet" href="assign.css" type="text/css" /> 
 		<!--<script type="text/JavaScript" src = "news.js"> </script>-->
+		
 	</head>
 	<body>
 		<div id="container">
@@ -183,25 +184,25 @@
 							<th>
 								Desaturation Fault
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								15V Rail Under Voltage
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Config Read Error
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Watchdog Caused last Reset
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 						</tr>
@@ -209,25 +210,25 @@
 							<th>
 								Bad Motor Position Hall Sequence
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								DC Bus Over Volt
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Software Over Current
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Hardware Over Current
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 						</tr>
@@ -240,25 +241,25 @@
 							<th>
 								Output Voltage PWM
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Motor Current
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Velocity
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Bus Current
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 						</tr>
@@ -266,19 +267,19 @@
 							<th>
 								Bus Voltage Upper Limit
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								Bus Voltage Lower Limit
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>
 								IPM Temp or Motor Temp
 							</th>
-							<td class = "tableGood">
+							<td class = "goodData">
 								OK
 							</td>
 							<th>

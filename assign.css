@@ -97,3 +97,10 @@ td.goodData
 {
 	color: Green;
 }
+
+table, th, td.dataSelect
+{
+	border-collapse:collapse;
+	border: 1px red;
+	
+}

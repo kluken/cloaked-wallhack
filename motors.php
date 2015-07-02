@@ -5,7 +5,14 @@
 	<head>
 		<title>UWS Solar Car Project - Motors</title>
 		<link rel="stylesheet" href="master.css" type="text/css" /> 
-		<!--<script type="text/JavaScript" src = "news.js"> </script>-->
+		<script src="jquery-2.1.4.min.js"></script>
+		<script>
+			function refreshTable() 
+			{
+				$('#content').load( "motors.php #content");
+			}
+			setInterval(refreshTable, 3000);
+		</script>
 		
 	</head>
 	<body>

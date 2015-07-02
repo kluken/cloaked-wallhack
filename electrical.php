@@ -4,8 +4,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<title>UWS Solar Car Project - Electrical</title>
-		<link rel="stylesheet" href="master.css" type="text/css" /> 
-		<!--<script type="text/JavaScript" src = "news.js"> </script>-->
+		<link rel="stylesheet" href="master.css" type="text/css" />
+ 		<script src="jquery-2.1.4.min.js"></script>
+		<script>
+			function refreshTable() 
+			{
+				$('#content').load( "electrical.php #content");
+			}
+			setInterval(refreshTable, 3000);
+		</script>
+		<?php
+			session_start();
+			if (isset($_POST['resetSession']))
+			{
+				unset($_SESSION['selectedData']);
+			}
+			else if (isset($_POST['selectedData']))
+			{
+				$_SESSION['selectedData'] = Array();
+				$_SESSION['selectedData'] = $_POST['selectedData'];
+			}
+		?>
 	</head>
 	<body>
 		<div id="container">
@@ -16,13 +35,13 @@
 				</p>
 			</div>
 			<div id="content">
-				<?php if (!isset($_POST['selectedData']))
+				<?php if (!isset($_SESSION['selectedData']))
 				{ ?>
 					<form method="post" action="electrical.php">
 						<p>
 							<fieldset>
 								<legend>Please select the data to be shown.</legend>
-								<table>
+								<table id = "elecTable">
 									<tr>
 										<th>
 											<input type = "checkbox" id = "packSOCA" name = "selectedData[]" checked = "checked" value = "Pack State of Charge (Ah)"> <label for = "packSOCA"> Pack State of Charge (Ah)</label>
@@ -259,32 +278,36 @@
 					</form>
 				<?php }
 				else
-				{?>
+				{
+				?>
+				<form method = "post" action = "electrical.php">
 					<table>
-					<tr>
-						<?php 
-						$count = 0;
-						$arrayLength = sizeof($_POST['selectedData']);
-						$numRows = (int)($arrayLength / 6);
-						foreach ($_POST['selectedData'] as $key => $entry)
-						{
-							if ( $count % 6 != 0)
+						<tr>
+							<?php 
+							$count = 0;
+							$arrayLength = sizeof($_SESSION['selectedData']);
+							$numRows = (int)($arrayLength / 6);
+							foreach ($_SESSION['selectedData'] as $key => $entry)
 							{
-								echo "<th>$entry</th>";
-								echo "<td> Test </td>";
-							}
-							else
-							{
-								echo "</tr>";
-								echo "<tr>";
-								echo "<th>$entry</th>";
-								echo "<td> Test </td>";
-							}
-							$count++;
-						} 
-						?>
-					</tr>
+								if ( $count % 6 != 0)
+								{
+									echo "<th>$entry</th>";
+									echo "<td> Test </td>";
+								}
+								else
+								{
+									echo "</tr>";
+									echo "<tr>";
+									echo "<th>$entry</th>";
+									echo "<td> Test </td>";
+								}
+								$count++;
+							} 
+							?>
+						</tr>
 					</table>
+					<input type = "submit" value = "Reset Choices" name = "resetSession"/>
+				</form>
 				<?php } ?>
 			</div>
 		</div>

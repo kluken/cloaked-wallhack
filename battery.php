@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<title>UWS Solar Car Project - Battery</title>
-		<link rel="stylesheet" href="assign.css" type="text/css" /> 
+		<link rel="stylesheet" href="master.css" type="text/css" /> 
 		<?php
 		if (isset($_POST['numBatteryCells']))
 		{

@@ -94,7 +94,23 @@ a:hover
    	text-align: center;
 }
 
-#content 
+#content
+{
+   width: 1800px;
+   padding: 6px;
+   height: 950px;
+   text-align: center; 
+}
+
+#secondContent
+{
+   width: 1800px;
+   padding: 6px;
+   height: 950px;
+   text-align: center; 
+}
+
+#firstContent
 {
    width: 1800px;
    padding: 6px;

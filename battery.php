@@ -9,9 +9,9 @@
 		<script>
 			function refreshTable() 
 			{
-				$('#content').load( "battery.php #content");
+				$('#secondContent').load( "battery.php #secondContent");
 			}
-			setInterval(refreshTable, 3000);
+			setInterval(refreshTable, 1000);
 		</script>
 		<?php
 			session_start();
@@ -35,32 +35,33 @@
 				$port = "3306";
 				
 				//Create SQL Commands
-				$sqlCommand = Array();
+				$sqlStatus = Array();
+				$sqlCell0 = Array();  CMU 1 Cell0-3Voltage
+				$sqlCell4 = Array();
+				
 				$conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 				for ($count = 0; $count < $_SESSION['numBatteryCells']; $count++)
 				{
 					$CMUNum = $count+1;
-					$sqlCommand[$count] = "SELECT * FROM CMU".$CMUNum;
+					$sqlStatus[$count] = "SELECT * FROM CMU ".$CMUNum." Status";
+					$sqlCell0[$count] = "SELECT  * FROM CMU ".$CMUNum." Cell0-3Voltage";
+					$sqlCell3[$count] = "SELECT  * FROM CMU ".$CMUNum." Cell4-7Voltage";
 				}
 				
 				// Create connection
 				if (!$conn) 
 				{
 					die("Connection failed: " . mysqli_connect_error());
-				}
-				else
-				{
-					echo '<script language="javascript"> alert("Connection Successful") </script>';
+					echo '<script language="javascript"> alert("Connection Error") </script>';
 				}
 				
 				
 				//Run Commands
 				$rs = Array();
 				$SQLResult = Array();
-				for ($count = 0; $count < sizeof($sqlCommand); $count++)
+				for ($count = 0; $count < $_SESSION['numBatteryCells']; $count++)
 				{
-					$rs[$count] = mysqli_query($conn, $sqlCommand[$count]);
-					//$SQLResult[$count] = mysqli_fetch_array($conn, $rs[$count]);
+					$rs[$count] = mysqli_query($conn, $sqlSerial[$count]);
 				}
 					
 				if (sizeof($rs[0] < 1))
@@ -223,10 +224,10 @@
 					Menu Options: <a href="home.php">Home</a> <a href="electrical.php">Electrical</a> <a href="battery.php">Battery</a> <a href="motors.php">Motors</a> <a href="it.php">IT Admin</a>
 				</p>
 			</div>
-			<div id="content">
 			<?php  
 				if (!isset($_SESSION['numBatteryCells']))
 				{ ?>
+				<div id="firstContent">
 					<br/>
 					<form method="post" action="battery.php">
 						<p>
@@ -238,9 +239,9 @@
 				}
 				else
 				{ ?>
-					<br/>  <br/>
+				<div id="secondContent">
 					<form action = "battery.php" method = "post">
-						<table id = "battTable">
+						<table>
 							<caption>Battery Statistics</caption>
 							<tr>
 							<th>
@@ -289,77 +290,77 @@
 								echo "</td>";
 								$CMU = "CMU".$count."SerialNumber";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."PCBTemp";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."CellTemp";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell0Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell1Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell2Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell3Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell4Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell5Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell6Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell7Voltage";
 								if (!is_numeric($SQLResult[$CMU]) || $SQLResult[$CMU] < 5)
-								echo "<td id='tableError'>";
+								echo "<td class = 'badData'>";
 								else
 								echo "<td>";
 								echo $SQLResult[$CMU];
@@ -368,6 +369,7 @@
 							}
 							?> 
 						</table>
+						<br/>
 					<input type = "submit" name = "resetSession" value = "Reset Choices"/>
 					</form>
 			<?php } ?>

@@ -9,9 +9,9 @@
 		<script>
 			function refreshTable() 
 			{
-				$('#content').load( "electrical.php #content");
+				$('#secondContent').load( "electrical.php #secondContent");
 			}
-			setInterval(refreshTable, 3000);
+			setInterval(refreshTable, 1000);
 		</script>
 		<?php
 			session_start();
@@ -34,9 +34,9 @@
 					Menu Options: <a href="home.php">Home</a> <a href="electrical.php">Electrical</a> <a href="battery.php">Battery</a> <a href="motors.php">Motors</a> <a href="it.php">IT Admin</a>
 				</p>
 			</div>
-			<div id="content">
 				<?php if (!isset($_SESSION['selectedData']))
 				{ ?>
+				<div id="firstContent">
 					<form method="post" action="electrical.php">
 						<p>
 							<fieldset>
@@ -280,6 +280,7 @@
 				else
 				{
 				?>
+				<div id = "secondContent">
 				<form method = "post" action = "electrical.php">
 					<table>
 						<tr>

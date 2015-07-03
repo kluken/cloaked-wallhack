@@ -11,7 +11,7 @@
 			{
 				$('#content').load( "motors.php #content");
 			}
-			setInterval(refreshTable, 3000);
+			setInterval(refreshTable, 1000);
 		</script>
 		
 	</head>

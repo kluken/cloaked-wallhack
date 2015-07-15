@@ -118,12 +118,23 @@ a:hover
    text-align: center; 
 }
 
-td.badData
+td.highWarn
 {
 	background-color: #FF0000; /*Bright Red*/
+}
+
+td.medWarn
+{
+	background-color: #FFD700; /*Gold Yellow*/
 }
 
 td.goodData
 {
 	color: Green;
+}
+
+label.check
+{
+	display: inline-block; 
+	width: 100%; 
 }

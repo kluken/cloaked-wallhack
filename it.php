@@ -13,6 +13,23 @@
 			}
 			setInterval(refreshTable, 3000);
 		</script>
+		
+		<?php 
+		session_start();
+		
+		if (!isset($_SESSION["hostname"]))
+				header("location: home.php");
+			else 
+			{
+				//Set SQL Database Settings
+				$servername = $_SESSION["hostname"];
+				$username = $_SESSION["username"];
+				$password = $_SESSION["password"];
+				$dbname = $_SESSION["dbname"];
+				$port = $_SESSION["port"];
+			}
+			
+			?>
 	</head>
 	<body>
 		<div id="container">
@@ -25,7 +42,7 @@
 			<div id="content">
 				<p> 
 					SHOW ME THE CONTENT <br/>
-					<?php echo exec("C:/wamp/www/cloaked-wallhack/test.exe"); ?>
+					<?php echo exec("test.exe"); ?>
 				</p>
 			</div>
 		</div>

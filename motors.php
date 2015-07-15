@@ -5,14 +5,31 @@
 	<head>
 		<title>UWS Solar Car Project - Motors</title>
 		<link rel="stylesheet" href="master.css" type="text/css" /> 
-		<script src="jquery-2.1.4.min.js"></script>
-		<script>
+		<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
 			function refreshTable() 
 			{
 				$('#content').load( "motors.php #content");
 			}
 			setInterval(refreshTable, 1000);
 		</script>
+		
+		<?php 
+			session_start();
+			
+			if (!isset($_SESSION["hostname"]))
+				header("location: home.php");
+			else 
+			{
+				//Set SQL Database Settings
+				$servername = $_SESSION["hostname"];
+				$username = $_SESSION["username"];
+				$password = $_SESSION["password"];
+				$dbname = $_SESSION["dbname"];
+				$port = $_SESSION["port"];
+			}
+			
+			?>
 		
 	</head>
 	<body>

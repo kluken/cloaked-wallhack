@@ -15,6 +15,19 @@
 		</script>
 		<?php
 			session_start();
+			
+			if (!isset($_SESSION["hostname"]))
+				header("location: home.php");
+			else 
+			{
+				//Set SQL Database Settings
+				$servername = $_SESSION["hostname"];
+				$username = $_SESSION["username"];
+				$password = $_SESSION["password"];
+				$dbname = $_SESSION["dbname"];
+				$port = $_SESSION["port"];
+			}
+			
 			if (isset($_POST['resetSession']))
 			{
 				unset($_SESSION['selectedData']);
@@ -73,7 +86,7 @@
 											<input type = "checkbox" id = "precharge12Status" name = "selectedData[]" value = "Precharge / Driver 12V Status"> <label for = "precharge12Status"> Precharge / Driver 12V Status</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "prechrgeStatus" name = "selectedData[]" value = "Precharge Status"> <label for = "prechrgeStatus"> Precharge Status</label>
+											<input type = "checkbox" id = "prechargeStatus" name = "selectedData[]" value = "Precharge Status"> <label for = "prechargeStatus"> Precharge Status</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "12VContactor" name = "selectedData[]" value = "12V Contactor Supply"> <label for = "12VContactor"> 12V Contactor Supply</label>
@@ -200,22 +213,13 @@
 									</tr>
 									<tr>
 										<th>
-											<input type = "checkbox" id = "mppt1LsbVout" name = "selectedData[]" value = "MPPT 1 LSB Vout"> <label for = "mppt1LsbVout"> MPPT 1 LSB Vout</label>
+											<input type = "checkbox" id = "mppt1Vout" name = "selectedData[]" value = "MPPT 1 Vout"> <label for = "mppt1LsbVout"> MPPT 1 Vout</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt1MsbVout" name = "selectedData[]" value = "MPPT 1 MSB Vout"> <label for = "mppt1MsbVout"> MPPT 1 MSB Vout</label>
+											<input type = "checkbox" id = "mppt1Iin" name = "selectedData[]" value = "MPPT 1 Iin"> <label for = "mppt1LsbIin"> MPPT 1 Iin</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt1LsbIin" name = "selectedData[]" value = "MPPT 1 LSB Iin"> <label for = "mppt1LsbIin"> MPPT 1 LSB Iin</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "mppt1MsbIin" name = "selectedData[]" value = "MPPT 1 MSB Iin"> <label for = "mppt1MsbIin"> MPPT 1 MSB Iin</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "mppt1LsbVin" name = "selectedData[]" value = "MPPT 1 LSB Vin"> <label for = "mppt1LsbVin"> MPPT 1 LSB Vin</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "mppt1MsbVin" name = "selectedData[]" value = "MPPT 1 MSB Vin"> <label for = "mppt1MsbVin"> MPPT 1 MSB Vin</label>
+											<input type = "checkbox" id = "mppt1Vin" name = "selectedData[]" value = "MPPT 1 Vin"> <label for = "mppt1LsbVin"> MPPT 1 Vin</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "mpptBattBelowVolt1" name = "selectedData[]" value = "Battery Below Voltage"> <label for = "mpptBattBelowVolt1"> Battery Below Voltage</label>
@@ -223,8 +227,6 @@
 										<th>
 											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedData[]" value = "Battery Over Temperature"> <label for = "mpptOverTemp1"> Battery Over Temperature</label>
 										</th>
-									</tr>
-									<tr>
 										<th>
 											<input type = "checkbox" id = "noConnMppt1" name = "selectedData[]" value = "No Connection to MPPT1"> <label for = "noConnMppt1"> No Connection to MPPT1</label>
 										</th>
@@ -232,30 +234,18 @@
 											<input type = "checkbox" id = "underVoltMppt1" name = "selectedData[]" value = "Under Voltage on MPPT1 Input"> <label for = "underVoltMppt1"> Under Voltage on MPPT1 Input</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "msbUinMppt1" name = "selectedData[]" value = "MSB Uin (MPPT1)"> <label for = "msbUinMppt1"> MSB Uin (MPPT1)</label>
-										</th>
-										<th>
 											<input type = "checkbox" id = "mppt2Temp" name = "selectedData[]" value = "MPPT 2 Temperature"> <label for = "mppt2Temp"> MPPT 2 Temperature</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "mppt2LsbVout" name = "selectedData[]" value = "MPPT 2 LSB Vout"> <label for = "mppt2LsbVout"> MPPT 2 LSB Vout</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "mppt2MsbVout" name = "selectedData[]" value = "MPPT 2 MSB Vout"> <label for = "mppt2MsbVout"> MPPT 2 MSB Vout</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "mppt2LsbIin" name = "selectedData[]" value = "MPPT 2 LSB Iin"> <label for = "mppt2LsbIin"> MPPT 2 LSB Iin</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "mppt2MsbIin" name = "selectedData[]" value = "MPPT 2 MSB Iin"> <label for = "mppt2MsbIin"> MPPT 2 MSB Iin</label>
 										</th>
 									</tr>
 									<tr>
 										<th>
-											<input type = "checkbox" id = "mppt2LsbVin" name = "selectedData[]" value = "MPPT 2 LSB Vin"> <label for = "mppt2LsbVin"> MPPT 2 LSB Vin</label>
+											<input type = "checkbox" id = "mppt2Vout" name = "selectedData[]" value = "MPPT 2 Vout"> <label for = "mppt2LsbVout"> MPPT 2 Vout</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt2MsbVin" name = "selectedData[]" value = "MPPT 2 MSB Vin"> <label for = "mppt2MsbVin"> MPPT 2 MSB Vin</label>
+											<input type = "checkbox" id = "mppt2Iin" name = "selectedData[]" value = "MPPT 2 Iin"> <label for = "mppt2LsbIin"> MPPT 2 Iin</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt2Vin" name = "selectedData[]" value = "MPPT 2 Vin"> <label for = "mppt2LsbVin"> MPPT 2 Vin</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "mpptBattBelowVolt2" name = "selectedData[]" value = "Battery Below Voltage"> <label for = "mpptBattBelowVolt2"> Battery Below Voltage</label>
@@ -267,9 +257,6 @@
 										</th>
 										<th>
 											<input type = "checkbox" id = "underVoltMppt2" name = "selectedData[]" value = "Under Voltage on MPPT2 Input"> <label for = "underVoltMppt2"> Under Voltage on MPPT2 Input</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "msbUinMppt2" name = "selectedData[]" value = "MSB Uin (MPPT2)"> <label for = "msbUinMppt2"> MSB Uin (MPPT2)</label>
 										</th>
 									</tr>
 								</table>

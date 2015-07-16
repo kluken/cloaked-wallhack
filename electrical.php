@@ -16,6 +16,8 @@
 		<?php
 			session_start();
 			
+			require_once('electricalFunctions.php');
+			
 			if (!isset($_SESSION["hostname"]))
 				header("location: home.php");
 			else 
@@ -26,6 +28,7 @@
 				$password = $_SESSION["password"];
 				$dbname = $_SESSION["dbname"];
 				$port = $_SESSION["port"];
+				$conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 			}
 			
 			if (isset($_POST['resetSession']))
@@ -213,19 +216,19 @@
 									</tr>
 									<tr>
 										<th>
-											<input type = "checkbox" id = "mppt1Vout" name = "selectedData[]" value = "MPPT 1 Vout"> <label for = "mppt1LsbVout"> MPPT 1 Vout</label>
+											<input type = "checkbox" id = "mppt1Vout" name = "selectedData[]" value = "MPPT 1 Vout"> <label for = "mppt1Vout"> MPPT 1 Vout</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt1Iin" name = "selectedData[]" value = "MPPT 1 Iin"> <label for = "mppt1LsbIin"> MPPT 1 Iin</label>
+											<input type = "checkbox" id = "mppt1Iin" name = "selectedData[]" value = "MPPT 1 Iin"> <label for = "mppt1Iin"> MPPT 1 Iin</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt1Vin" name = "selectedData[]" value = "MPPT 1 Vin"> <label for = "mppt1LsbVin"> MPPT 1 Vin</label>
+											<input type = "checkbox" id = "mppt1Vin" name = "selectedData[]" value = "MPPT 1 Vin"> <label for = "mppt1Vin"> MPPT 1 Vin</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptBattBelowVolt1" name = "selectedData[]" value = "Battery Below Voltage"> <label for = "mpptBattBelowVolt1"> Battery Below Voltage</label>
+											<input type = "checkbox" id = "mpptBattBelowVolt1" name = "selectedData[]" value = "Battery Below Voltage from MPPT1"> <label for = "mpptBattBelowVolt1"> Battery Below Voltage from MPPT1</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedData[]" value = "Battery Over Temperature"> <label for = "mpptOverTemp1"> Battery Over Temperature</label>
+											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedData[]" value = "Battery Over Temperature from MPPT1"> <label for = "mpptOverTemp1"> Battery Over Temperature from MPPT1</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "noConnMppt1" name = "selectedData[]" value = "No Connection to MPPT1"> <label for = "noConnMppt1"> No Connection to MPPT1</label>
@@ -239,19 +242,19 @@
 									</tr>
 									<tr>
 										<th>
-											<input type = "checkbox" id = "mppt2Vout" name = "selectedData[]" value = "MPPT 2 Vout"> <label for = "mppt2LsbVout"> MPPT 2 Vout</label>
+											<input type = "checkbox" id = "mppt2Vout" name = "selectedData[]" value = "MPPT 2 Vout"> <label for = "mppt2Vout"> MPPT 2 Vout</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt2Iin" name = "selectedData[]" value = "MPPT 2 Iin"> <label for = "mppt2LsbIin"> MPPT 2 Iin</label>
+											<input type = "checkbox" id = "mppt2Iin" name = "selectedData[]" value = "MPPT 2 Iin"> <label for = "mppt2Iin"> MPPT 2 Iin</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt2Vin" name = "selectedData[]" value = "MPPT 2 Vin"> <label for = "mppt2LsbVin"> MPPT 2 Vin</label>
+											<input type = "checkbox" id = "mppt2Vin" name = "selectedData[]" value = "MPPT 2 Vin"> <label for = "mppt2Vin"> MPPT 2 Vin</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptBattBelowVolt2" name = "selectedData[]" value = "Battery Below Voltage"> <label for = "mpptBattBelowVolt2"> Battery Below Voltage</label>
+											<input type = "checkbox" id = "mpptBattBelowVolt2" name = "selectedData[]" value = "Battery Below Voltage from MPPT2"> <label for = "mpptBattBelowVolt2"> Battery Below Voltage from MPPT2</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptOverTemp2" name = "selectedData[]" value = "Battery Over Temperature"> <label for = "mpptOverTemp2"> Battery Over Temperature</label>
+											<input type = "checkbox" id = "mpptOverTemp2" name = "selectedData[]" value = "Battery Over Temperature from MPPT2"> <label for = "mpptOverTemp2"> Battery Over Temperature from MPPT2</label>
 										</th><th>
 											<input type = "checkbox" id = "noConnMppt2" name = "selectedData[]" value = "No Connection to MPPT2"> <label for = "noConnMppt2"> No Connection to MPPT2</label>
 										</th>
@@ -279,15 +282,23 @@
 							{
 								if ( $count % 6 != 0)
 								{
+									$sqlSelect = sqlLookup($entry);
+									$result = mysqli_query($conn, $sqlSelect);
+									$row =  mysqli_fetch_assoc($result);
+									$tableName = dataNameLookup($entry);
 									echo "<th>$entry</th>";
-									echo "<td> Test </td>";
+									echo "<td>$row[$tableName]</td>";
 								}
 								else
 								{
+									$sqlSelect = sqlLookup($entry);
+									$result = mysqli_query($conn, $sqlSelect);
+									$row =  mysqli_fetch_assoc($result);
+									$tableName = dataNameLookup($entry);
 									echo "</tr>";
 									echo "<tr>";
 									echo "<th>$entry</th>";
-									echo "<td> Test </td>";
+									echo "<td>$row[$tableName]</td>";
 								}
 								$count++;
 							} 

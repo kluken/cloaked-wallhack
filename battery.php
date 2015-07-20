@@ -26,10 +26,28 @@
 		<script type="text/javascript">
 			function refreshTable() 
 			{
-				$('#secondContent').load( "battery.php #secondContent");
+				if ($('#refreshBattPage').val() == 1)
+					$('#secondContent').load( "battery.php #secondContent");
 			}
 			setInterval(refreshTable, 1000);
 		</script>
+		
+		<script type="text/javascript">
+			function playPause()
+			{
+				if (document.getElementById("refreshBattPage").value == 1)
+				{
+					document.getElementById("playPauseBatt").value = "Play";
+					document.getElementById("refreshBattPage").value = 0;
+				}
+				else
+				{
+					document.getElementById("playPauseBatt").value = "Pause";
+					document.getElementById("refreshBattPage").value = 1;
+				}
+			}
+		</script>
+
 		
 
 		<?php
@@ -148,6 +166,7 @@
 				<div id="secondContent">
 					<form action = "battery.php" method = "post">
 						<table>
+							<input type = "hidden" id = "refreshBattPage" name = "refreshBattPage" value = "1"/>
 							<caption>Battery Statistics</caption>
 							<tr>
 							<th>
@@ -324,7 +343,10 @@
 							}
 							?> 
 						</table>
-						<br/>
+					<br/>
+					<input type="button" value="Pause" onclick="playPause()" id = "playPauseBatt" name = "playPauseBatt"/>
+					<br/>
+					<br/>
 					<input type = "submit" name = "resetSession" value = "Reset Choices"/>
 				</form>
 			<?php } ?>

@@ -9,10 +9,60 @@
 		<script>
 			function refreshTable() 
 			{
+				if ($('#refreshElecPage').val() == 1)
 				$('#secondContent').load( "electrical.php #secondContent");
 			}
 			setInterval(refreshTable, 1000);
 		</script>
+		
+		<script type="text/javascript">
+			function playPause()
+			{
+				if (document.getElementById("refreshElecPage").value == 1)
+				{
+					document.getElementById("playPauseElec").value = "Play";
+					document.getElementById("refreshElecPage").value = 0;
+				}
+				else
+				{
+					document.getElementById("playPauseElec").value = "Pause";
+					document.getElementById("refreshElecPage").value = 1;
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function selDelAll(source)
+			{
+				var i = 0, boxes = document.getElementsByName("selectedData[]");
+				for (i = 0; i < document.getElementsByName("selectedData[]").length; i++)
+				{
+					if (boxes[i].checked == true)
+						boxes[i].checked = false;
+					else
+						boxes[i].checked = true;
+				}
+				
+				boxes = document.getElementsByName("selectedEFlags[]");
+				for (i = 0; i < document.getElementsByName("selectedEFlags[]").length; i++)
+				{
+					if (boxes[i].checked == true)
+						boxes[i].checked = false;
+					else
+						boxes[i].checked = true;
+				}
+				
+				boxes = document.getElementsByName("selectedLFlags[]");
+				for (i = 0; i < document.getElementsByName("selectedLFlags[]").length; i++)
+				{
+					if (boxes[i].checked == true)
+						boxes[i].checked = false;
+					else
+						boxes[i].checked = true;
+				}				
+			}
+		</script>
+		
 		<?php
 			session_start();
 			
@@ -263,6 +313,10 @@
 										</th>
 									</tr>
 								</table>
+								<br/>
+								<input type="button" value="Toggle Selected" onclick="selDelAll()"/>
+								<br/>
+								<br/>
 								<input type="submit" value="Submit"></input>
 						</p>
 					</form>
@@ -273,6 +327,7 @@
 				<div id = "secondContent">
 				<form method = "post" action = "electrical.php">
 					<table>
+						<input type = "hidden" id = "refreshElecPage" name = "refreshElecPage" value = "1"/>
 						<tr>
 							<?php 
 							$count = 0;
@@ -311,6 +366,10 @@
 							?>
 						</tr>
 					</table>
+					<br/>
+					<input type="button" value="Pause" onclick="playPause()" id = "playPauseElec" name = "playPauseElec"/>
+					<br/>
+					<br/>
 					<input type = "submit" value = "Reset Choices" name = "resetSession"/>
 				</form>
 				<?php } ?>

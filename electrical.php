@@ -33,12 +33,12 @@
 			
 			if (isset($_POST['resetSession']))
 			{
-				unset($_SESSION['selectedData']);
+				unset($_SESSION['electricalSelectedData']);
 			}
 			else if (isset($_POST['selectedData']))
 			{
-				$_SESSION['selectedData'] = Array();
-				$_SESSION['selectedData'] = $_POST['selectedData'];
+				$_SESSION['electricalSelectedData'] = Array();
+				$_SESSION['electricalSelectedData'] = $_POST['selectedData'];
 			}
 		?>
 	</head>
@@ -50,7 +50,7 @@
 					Menu Options: <a href="home.php">Home</a> <a href="electrical.php">Electrical</a> <a href="battery.php">Battery</a> <a href="motors.php">Motors</a> <a href="it.php">IT Admin</a>
 				</p>
 			</div>
-				<?php if (!isset($_SESSION['selectedData']))
+				<?php if (!isset($_SESSION['electricalSelectedData']))
 				{ ?>
 				<div id="firstContent">
 					<form method="post" action="electrical.php">
@@ -276,9 +276,9 @@
 						<tr>
 							<?php 
 							$count = 0;
-							$arrayLength = sizeof($_SESSION['selectedData']);
+							$arrayLength = sizeof($_SESSION['electricalSelectedData']);
 							$numRows = (int)($arrayLength / 6);
-							foreach ($_SESSION['selectedData'] as $key => $entry)
+							foreach ($_SESSION['electricalSelectedData'] as $key => $entry)
 							{
 								if ( $count % 6 != 0)
 								{
@@ -287,7 +287,10 @@
 									$row =  mysqli_fetch_assoc($result);
 									$tableName = dataNameLookup($entry);
 									echo "<th>$entry</th>";
-									echo "<td>$row[$tableName]</td>";
+									if (!empty($row[$tableName]))
+										echo "<td>$row[$tableName]</td>";
+									else 
+										echo "<td class = 'highWarn'>N/A</td>";
 								}
 								else
 								{
@@ -298,7 +301,10 @@
 									echo "</tr>";
 									echo "<tr>";
 									echo "<th>$entry</th>";
-									echo "<td>$row[$tableName]</td>";
+									if (!empty($row[$tableName]))
+										echo "<td>$row[$tableName]</td>";
+									else 
+										echo "<td class = 'highWarn'>N/A</td>";
 								}
 								$count++;
 							} 

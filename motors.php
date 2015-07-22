@@ -328,11 +328,19 @@
 								{
 									$sqlSelect = sqlLookup($entry);
 									$result = mysqli_query($conn, $sqlSelect);
-									$row =  mysqli_fetch_assoc($result);
 									$tableName = dataNameLookup($entry);
+									$total = 0;
+									$numValues = 0;
+									while($row = mysqli_fetch_array($result)) 
+									{
+										$total = $total + $row[$tableName];
+										$numValues++;
+									}
+									if ($numValues !=0)
+										$total = $total / $numValues;
 									echo "<th>$entry</th>";
-									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
+									if ($total != 0)
+										echo "<td>$total</td>";
 									else 
 										echo "<td class = 'highWarn'>N/A</td>";
 								}
@@ -340,13 +348,21 @@
 								{
 									$sqlSelect = sqlLookup($entry);
 									$result = mysqli_query($conn, $sqlSelect);
-									$row =  mysqli_fetch_assoc($result);
 									$tableName = dataNameLookup($entry);
+									$total = 0;
+									$numValues = 0;
+									while($row = mysqli_fetch_array($result)) 
+									{
+										$total = $total + $row[$tableName];
+										$numValues++;
+									}
+									if ($numValues !=0)
+										$total = $total / $numValues;
 									echo "</tr>";
 									echo "<tr>";
 									echo "<th>$entry</th>";
-									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
+									if ($total != 0)
+										echo "<td>$total</td>";
 									else 
 										echo "<td class = 'highWarn'>N/A</td>";
 								}
@@ -376,9 +392,9 @@
 									$tableName = dataNameLookup($entry);
 									echo "<th>$entry</th>";
 									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
+										echo "<td class = 'highWarn'>$row[$tableName]</td>";
 									else 
-										echo "<td class = 'highWarn'>N/A</td>";
+										echo "<td>Good</td>";
 								}
 								else
 								{
@@ -390,9 +406,9 @@
 									echo "<tr>";
 									echo "<th>$entry</th>";
 									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
+										echo "<td class = 'highWarn'>$row[$tableName]</td>";
 									else 
-										echo "<td class = 'highWarn'>N/A</td>";
+										echo "<td>Good</td>";
 								}
 								$count++;
 							} 
@@ -420,9 +436,9 @@
 									$tableName = dataNameLookup($entry);
 									echo "<th>$entry</th>";
 									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
+										echo "<td class = 'highWarn'>$row[$tableName]</td>";
 									else 
-										echo "<td class = 'highWarn'>N/A</td>";
+										echo "<td>Good</td>";
 								}
 								else
 								{
@@ -434,9 +450,9 @@
 									echo "<tr>";
 									echo "<th>$entry</th>";
 									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
+										echo "<td class = 'highWarn'>$row[$tableName]</td>";
 									else 
-										echo "<td class = 'highWarn'>N/A</td>";
+										echo "<td>Good</td>";
 								}
 								$count++;
 							} 

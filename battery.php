@@ -115,7 +115,6 @@
 						$sqlStatusReturn[$count]["PCB Temperature"] = $row["PCB Temperature"];
 						$sqlStatusReturn[$count]["Cell Temperature"] = $row["Cell Temperature"];
 					}
-					//var_dump($sqlStatusReturn);
 					$result = mysqli_query($conn, $sqlCell0[$count]);
 					while ($row =  mysqli_fetch_assoc($result))
 					{
@@ -124,7 +123,6 @@
 						$sqlCell0Return[$count]["Cell 2 Voltage"] = $row["Cell 2 Voltage"];
 						$sqlCell0Return[$count]["Cell 3 Voltage"] = $row["Cell 3 Voltage"];
 					}
-					//var_dump($sqlCell0Return);
 					$result = mysqli_query($conn, $sqlCell4[$count]);
 					while($row = mysqli_fetch_assoc($result))
 					{
@@ -133,7 +131,6 @@
 						$sqlCell4Return[$count]["Cell 6 Voltage"] = $row["Cell 6 Voltage"];
 						$sqlCell4Return[$count]["Cell 7 Voltage"] = $row["Cell 7 Voltage"];
 					}
-					//var_dump($sqlCell4Return);
 				}
 			}
 		?>

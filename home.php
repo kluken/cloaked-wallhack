@@ -34,26 +34,49 @@
 			"dataDateFormat": "YYYY-MM-DD HH:NN:SS",
 			"startDuration": 1,
 			"categoryAxis": {
-			  "parseDates": true
+			  "parseDates": true,
+			  "minorGridEnabled": true,
+			  "twoLineMode": true,
+			   "minPeriod": "ss"
 			},
 			"graphs": [ {
 			  "valueField": "cell 0 voltage",
 			  "bullet": "round",
-			  "bulletBorderColor": "#FFFFFF",
+			  "bulletBorderColor": "#000000",
 			  "bulletBorderThickness": 2,
 			  "lineThickness ": 2,
-			  "lineAlpha": 0.5,
-			  "hideBulletsCount": 30
+			  "lineAlpha": 1,
+			  //"hideBulletsCount": 30,
+			  "title": "Cell 0 Voltage"
 
 			}, {
 			  "valueField": "cell 1 voltage",
 			  "bullet": "square",
-			  "bulletBorderColor": "#FFFFFF",
+			  "bulletBorderColor": "#000000",
 			  "bulletBorderThickness": 2,
 			  "lineThickness ": 2,
-			  "lineAlpha": 0.5
+			  "lineAlpha": 1,
+			  //"hideBulletsCount": 30,
+			  "title": "Cell 1 Voltage"
 			} ]
-		  } );
+		  }
+
+			  );
+			  
+			   // CURSOR
+               var chartCursor = new AmCharts.ChartCursor();
+               chartCursor.cursorAlpha = 0.1;
+               chartCursor.fullWidth = true;
+               chart.addChartCursor(chartCursor);
+
+               // SCROLLBAR
+               var chartScrollbar = new AmCharts.ChartScrollbar();
+               chart.addChartScrollbar(chartScrollbar);
+			  
+			  var legend = new AmCharts.AmLegend();
+               legend.marginLeft = 110;
+               legend.useGraphSettings = true;
+               chart.addLegend(legend);		  
 
         </script> 
 		

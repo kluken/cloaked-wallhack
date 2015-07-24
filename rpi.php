@@ -90,8 +90,6 @@
 						<div id="PiControl">
 							<form id="RPiControlPannel" method="POST">
 							<?php 
-								//.... CHECK FOR FORM POST
-								if ( isset ( $_POST
 								//....DISPLAY RASBERRY PI :
 								if ( isset ( $_POST['PiControl'] ) || isset( $_SESSION['PiControl'] ) ) {
 									//...Pi Control is set

@@ -23,6 +23,11 @@
 		<?php 
 		session_start();
 		
+		// SQL For the rasberry pies
+		// SQL DB: MAIN : SQL TABLE: 'RPi'
+		// FORMAT: PI NAME, PI IP ADDRESS, PI PING , PI LAST SEEN, SERVICES (SSH/PHP/DBM)
+		
+		//...Check if we have host name
 		if (!isset($_SESSION["hostname"]))
 				header("location: home.php");
 			else 
@@ -31,15 +36,30 @@
 				$servername = $_SESSION["hostname"];
 				$username = $_SESSION["username"];
 				$password = $_SESSION["password"];
-				$dbname = $_SESSION["dbname"];
+				$dbname = "main";
 				$port = $_SESSION["port"];
 			}
 			
+		// Create connection
+		$conn = new mysqli($servername, $username, $password, $dbname);
+		// Check connection
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		} 
+		
 		//...POST FROM a form
 		if (  isset($_POST["RPiControlPannel"]) ) {
 			//...Control Pannel was executed : 
+			
 		}else if (  isset($_POST["PiSelectPannel"]) ) {
 			//...Rasberry Pi selected : 
+			if ( isset ( $_POST['Submit'] ) && isset ( $_POST['PiSelectedIP'] ) {
+					//...We have a rasberry selected;
+					$_SESSION['PiControl']="ACTIVE";
+					
+			}else if ( isset ( $_POST['Reset'] ) ) {
+					unset ( $_SESSION['PiControl'] );
+			}
 			
 		}		
 			
@@ -60,20 +80,6 @@
 						<table style="width:100%">
 						  
 							<?php 
-								// SQL For the rasberry pies
-								// SQL DB: MAIN : SQL TABLE: 'RPi'
-								// FORMAT: PI NAME, PI IP ADDRESS, PI PING , PI LAST SEEN, SERVICES (SSH/PHP/DBM)
-								$servername = "localhost";
-								$username = "solar"; //...READ ONLY PERMISSIONS
-								$password = "solar";
-								$dbname = "main";
-								
-								// Create connection
-								$conn = new mysqli($servername, $username, $password, $dbname);
-								// Check connection
-								if ($conn->connect_error) {
-									die("Connection failed: " . $conn->connect_error);
-								} 
 
 								$sql = "SELECT * FROM pi";
 								$result = mysqli_query ( $conn , $sql );
@@ -91,44 +97,58 @@
 								//$conn->close();
 								mysqli_close ( $conn );
 							?>
-						</table>
-						</div>
-						
-						<div id="PiControl">
-							<form id="RPiControlPannel" method="POST">
-							<?php 
-								//....DISPLAY RASBERRY PI :
-								if ( isset ( $_POST['PiControl'] ) || isset( $_SESSION['PiControl'] ) ) {
-									//...Pi Control is set
-									?>
-											<h2> Raspberry Pi control panel:</h2>										
-									<?php
-									echo "<input type='text' name='RASBERRY_NAME' value='".$_SESSION['PiName']."'/>";
-									echo "<input type='text' name='RASBERRY_IP' value='".$_SESSION['PiIP']."'/>";
-									echo "<input type='text' name='RASBERRY_ID' value='".$_SESSION['PiID']."'/>";
-									
-									// RASBERRY PI SERVICES 
-									echo "<h2> RASBERRY PI SERVICES </h2>";
-									echo "<h3> SSH SERVER: ".$_SESSION['PiSSH']."</h3>";
-									echo "<h3> MYSQL SERVER: ".$_SESSION['PiSQL']."</h3>";
-									echo "<h3> APACHE SERVER: ".$_SESSION['PiWWW']."</h3>";
-									echo "<h3> RPi SERVICE: ".$_SESSION['PiRPi']."</h3>";
-									
-									echo "<h3> Version: </h3>";
-									
-									// RASBERRY CONTROL
-								}else {
-										?>
-											<h2> PLEASE SELECT A RASBERRY FROM THE LIST </h2>
-											<p> Raspberry Pi control panel: </p>											
-										<?php											
-								}
-							?>
-							</form>
+						</table>	
+						<input type="submit" value="Submit">
+						<input type="submit" value="Reset">
 						</div>						
 					</form>
+					<div id="PiControl">
+						<form id="RPiControlPannel" method="POST">
+						<?php 
+							//....DISPLAY RASBERRY PI :
+							if ( isset ( $_POST['PiControl'] ) || isset( $_SESSION['PiControl'] ) ) {
+								//...Execute sessions:
+								// Check Services
+								$RPiDir = "/home/pi/RPi";
+								$_SESSION['PiSSH'] = shell_exec ( "$RPiDir/./pisc.sh ssh" );
+								$_SESSION['PiSQL'] = shell_exec ( "$RPiDir/./pisc.sh mysql" );
+								$_SESSION['PiWWW'] = shell_exec ( "$RPiDir/./pisc.sh apache2" );
+								$_SESSION['PiRPi'] = shell_exec ( "$RPiDir/./pisc.sh RPi-SERVICE" );
+								
+								//...Pi Control is set
+								?>
+										<h2> Raspberry Pi control panel:</h2>										
+								<?php
+								echo "<input type='text' name='RASBERRY_NAME' value='".$_SESSION['PiName']."'/>";
+								echo "<input type='text' name='RASBERRY_IP' value='".$_SESSION['PiIP']."'/>";
+								echo "<input type='text' name='RASBERRY_ID' value='".$_SESSION['PiID']."'/>";
+								
+								// RASBERRY PI SERVICES 
+								echo "<h2> RASBERRY PI SERVICES </h2>";
+								echo "<h3> SSH SERVER: ".$_SESSION['PiSSH']."</h3><br>";
+								echo "<h3> MYSQL SERVER: ".$_SESSION['PiSQL']."</h3>";
+								echo "<h3> APACHE SERVER: ".$_SESSION['PiWWW']."</h3>";
+								echo "<h3> RPi SERVICE: ".$_SESSION['PiRPi']."</h3>";
+								
+								echo "<h3> Version: </h3>";
+								
+								// RASBERRY CONTROL
+							}else {
+									?>
+										<h2> PLEASE SELECT A RASBERRY FROM THE LIST </h2>
+										<p> Raspberry Pi control panel: </p>											
+									<?php											
+							}
+						?>
+						</form>
+					</div>		
+					
 				</p>
 			</div>
 		</div>
 	</body>
+	<?php 	
+		//Close the connection
+		mysqli_close ( $conn ); 
+	?>
 </html> 

@@ -9,10 +9,16 @@
 		<script>
 			function refreshTable() 
 			{
-				$('#content').load( "it.php #content");
+				$('#content').load( "rpi.php #content");
 			}
 			setInterval(refreshTable, 3000);
 		</script>
+		<style>
+			body:after 			{	
+				background-image: url("car.jpg");
+				background-size: 1920px 1080px;		
+			}
+		</style>
 		
 		<?php 
 		session_start();
@@ -106,6 +112,8 @@
 									echo "<h3> MYSQL SERVER: ".$_SESSION['PiSQL']."</h3>";
 									echo "<h3> APACHE SERVER: ".$_SESSION['PiWWW']."</h3>";
 									echo "<h3> RPi SERVICE: ".$_SESSION['PiRPi']."</h3>";
+									
+									echo "<h3> Version: </h3>";
 									
 									// RASBERRY CONTROL
 								}else {

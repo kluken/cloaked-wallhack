@@ -96,16 +96,16 @@
 									?>
 											<h2> Raspberry Pi control panel:</h2>										
 									<?php
-									echo "<input type='text' name='RASBERRY_NAME' value='$_SESSION['PiName']'/>";
-									echo "<input type='text' name='RASBERRY_IP' value='$_SESSION['PiIpAddr']'/>";
-									echo "<input type='text' name='RASBERRY_ID' value='$_SESSION['PiID']'/>";
+									echo "<input type='text' name='RASBERRY_NAME' value='".$_SESSION['PiName']."'/>";
+									echo "<input type='text' name='RASBERRY_IP' value='".$_SESSION['PiIP']."'/>";
+									echo "<input type='text' name='RASBERRY_ID' value='".$_SESSION['PiID']."'/>";
 									
 									// RASBERRY PI SERVICES 
 									echo "<h2> RASBERRY PI SERVICES </h2>";
-									echo "<h3> SSH SERVER: $_SESSION['PiSSH']</h3>";
-									echo "<h3> MYSQL SERVER: $_SESSION['PiSQL']</h3>";
-									echo "<h3> APACHE SERVER: $_SESSION['PiWWW']</h3>";
-									echo "<h3> RPi SERVICE: $_SESSION['PiRPi']";
+									echo "<h3> SSH SERVER: ".$_SESSION['PiSSH']."</h3>";
+									echo "<h3> MYSQL SERVER: ".$_SESSION['PiSQL']."</h3>";
+									echo "<h3> APACHE SERVER: ".$_SESSION['PiWWW']."</h3>";
+									echo "<h3> RPi SERVICE: ".$_SESSION['PiRPi']."</h3>";
 									
 									// RASBERRY CONTROL
 								}else {

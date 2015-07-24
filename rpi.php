@@ -29,6 +29,14 @@
 				$port = $_SESSION["port"];
 			}
 			
+		//...POST FROM a form
+		if (  isset($_POST["RPiControlPannel"]) ) {
+			//...Control Pannel was executed : 
+		}else if (  isset($_POST["PiSelectPannel"]) ) {
+			//...Rasberry Pi selected : 
+			
+		}		
+			
 			?> 
 	</head>
 	<body>
@@ -41,8 +49,8 @@
 			</div>
 			<div id="content">
 				<p> 
-					<form>
-						<div id="PiSelect">
+					<form id="PiSelectPannel" method="POST">
+						<div id="PiSelect">						
 						<table style="width:100%">
 						  
 							<?php 
@@ -81,17 +89,36 @@
 						</div>
 						
 						<div id="PiControl">
+							<form id="RPiControlPannel" method="POST">
 							<?php 
+								//.... CHECK FOR FORM POST
+								if ( isset ( $_POST
 								//....DISPLAY RASBERRY PI :
-								if ( isset ( $_SESSION['PiControl'] ) ) {
+								if ( isset ( $_POST['PiControl'] ) || isset( $_SESSION['PiControl'] ) ) {
+									//...Pi Control is set
+									?>
+											<h2> Raspberry Pi control panel:</h2>										
+									<?php
+									echo "<input type='text' name='RASBERRY_NAME' value='$_SESSION['PiName']'/>";
+									echo "<input type='text' name='RASBERRY_IP' value='$_SESSION['PiIpAddr']'/>";
+									echo "<input type='text' name='RASBERRY_ID' value='$_SESSION['PiID']'/>";
 									
+									// RASBERRY PI SERVICES 
+									echo "<h2> RASBERRY PI SERVICES </h2>";
+									echo "<h3> SSH SERVER: $_SESSION['PiSSH']</h3>";
+									echo "<h3> MYSQL SERVER: $_SESSION['PiSQL']</h3>";
+									echo "<h3> APACHE SERVER: $_SESSION['PiWWW']</h3>";
+									echo "<h3> RPi SERVICE: $_SESSION['PiRPi']";
+									
+									// RASBERRY CONTROL
 								}else {
 										?>
 											<h2> PLEASE SELECT A RASBERRY FROM THE LIST </h2>
-											<p> Raspberry Pi control panel: </p>									
-										<?php 
+											<p> Raspberry Pi control panel: </p>											
+										<?php											
 								}
 							?>
+							</form>
 						</div>						
 					</form>
 				</p>

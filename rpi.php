@@ -75,7 +75,7 @@
 									die("Connection failed: " . $conn->connect_error);
 								} 
 
-								$sql = "SELECT * ping FROM pi";
+								$sql = "SELECT * FROM pi";
 								$result = $conn->query($sql);
 
 								if ($result->num_rows > 0) {

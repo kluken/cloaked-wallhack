@@ -8,17 +8,18 @@ $conn = mysqli_connect("localhost", "solar", "solar", "solar", "3306");
 
 // Fetch the data
 
-$result = mysqli_query($conn, "SELECT * FROM solar.`cmu 1 cell0-3voltage`");
+$result = mysqli_query($conn, "SELECT timestamp, Uin, Uout, Iin FROM solar.`MPPT2`");
 
 
 
 // Print out rows
 $count = 0;
+$numRows = mysqli_num_rows($result) - 1;
 echo (' [');
 while ( $row = mysqli_fetch_assoc( $result ) ) 
 {
-	echo ('{"category": "'. $row['timestamp'] .'", "cell 0 voltage": '. $row['Cell 0 Voltage'] .', "cell 1 voltage": ' .$row['Cell 1 Voltage']. '}');
-	if ($count < 41)
+	echo ('{"category": "'. $row['timestamp'] .'", "Uin": '. $row['Uin'] .', "Uout": ' .$row['Uout'].', "Iin": ' .$row['Iin']. '}');
+	if ($count < $numRows)
 	echo ",";
 	$count++;
 }

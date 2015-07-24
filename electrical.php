@@ -94,13 +94,9 @@
 	</head>
 	<body>
 		<div id="container">
-			<div id="headerbar">
-				<h1>UWS Solar Car Project - Electrical</h1>
-				<p>
-					Menu Options: <a href="home.php">Home</a> <a href="electrical.php">Electrical</a> <a href="battery.php">Battery</a> <a href="motors.php">Motors</a> <a href="it.php">IT Admin</a>
-				</p>
-			</div>
-				<?php if (!isset($_SESSION['electricalSelectedData']))
+				<?php
+				require_once("headerBar.php");
+				if (!isset($_SESSION['electricalSelectedData']))
 				{ ?>
 				<div id="firstContent">
 					<form method="post" action="electrical.php">

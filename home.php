@@ -82,13 +82,10 @@
 		
 	</head>
 	<body>
-		<div id="headerbar">
-			<h1>UWS Solar Car Project - Home</h1>
-			<p>
-				Menu Options: <a href="home.php">Home</a> <a href="electrical.php">Electrical</a> <a href="battery.php">Battery</a> <a href="motors.php">Motors</a> <a href="it.php">IT Admin</a>
-			</p>
-		</div>
-			<?php if (!isset($_POST["hostname"]) && !isset($_SESSION["hostname"])) 
+
+			<?php 
+			require_once("headerBar.php");
+			if (!isset($_POST["hostname"]) && !isset($_SESSION["hostname"])) 
 			{ ?>
 				<div id="content">
 					<form method = "post" action = "home.php" id = "pageSetup" >
@@ -130,4 +127,5 @@
 		
 	</div>
 	</body>
+
 </html> 

@@ -76,7 +76,7 @@
 								} 
 
 								$sql = "SELECT * FROM pi";
-								$result = mysqli_query ( $conn , $sql )
+								$result = mysqli_query ( $conn , $sql );
 								//$result = $conn->query($sql);
 
 								if ($result->num_rows > 0) {

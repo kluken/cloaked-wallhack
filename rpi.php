@@ -69,16 +69,15 @@
 									die("Connection failed: " . $conn->connect_error);
 								} 
 
-								$sql = "SELECT id, ip, ping FROM RPi";
+								$sql = "SELECT * ping FROM pi";
 								$result = $conn->query($sql);
 
 								if ($result->num_rows > 0) {
 									// output data of each row
+									echo "<tr><th>ID</th><th>NAME</th><th>IP ADDRESS</th><th>MAC(KEY)</th></tr>";
 									while($row = $result->fetch_assoc()) {
-										echo "<tr>
-												<td>id: " . $row["ID"]. " - Name: " . $row["NAME"]. " " . $row["IP"]. "<br></td>
-											 <tr>";
-									}
+										echo "<tr><td> ". $row["id"]. " </td><td>" . $row["name"]. " </td><td>" . $row["ip"]. "</td><td>" . $row["mac"]. "</td><tr>";
+									}									
 								} else {
 									echo "0 results";
 								}

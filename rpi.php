@@ -11,7 +11,7 @@
 			{
 				$('#content').load( "rpi.php #content");
 			}
-			setInterval(refreshTable, 3000);
+			setInterval(refreshTable, 10000);
 		</script>
 		<style>
 			body:after 			{	
@@ -76,7 +76,8 @@
 								} 
 
 								$sql = "SELECT * FROM pi";
-								$result = $conn->query($sql);
+								$result = mysqli_query ( $conn , $sql )
+								//$result = $conn->query($sql);
 
 								if ($result->num_rows > 0) {
 									// output data of each row
@@ -87,8 +88,8 @@
 								} else {
 									echo "0 results";
 								}
-								$conn->close();
-								
+								//$conn->close();
+								mysqli_close ( $conn );
 							?>
 						</table>
 						</div>

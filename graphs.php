@@ -10,6 +10,14 @@
         <script src="dark.js" type="text/javascript"></script>
 		<script src="dataloader.min.js" type="text/javascript"></script>
 		
+		<script type="text/javascript">
+			function refreshTable() 
+			{
+					$('#content').load( "graphs.php #content");
+			}
+			setInterval(refreshTable, 1000);
+		</script>
+		
 		<?php
 			session_start();
 			
@@ -34,7 +42,7 @@
 			},
 			"categoryField": "category",
 			"dataDateFormat": "YYYY-MM-DD HH:NN:SS",
-			"startDuration": 1,
+			"startDuration": 0,
 			"categoryAxis": {
 			  "parseDates": true,
 			  "minorGridEnabled": true,
@@ -89,13 +97,12 @@
 			var chart2 = AmCharts.makeChart( "MPPT2", {
 			"type": "serial",
 			"mouseWheelScrollEnabled": true,
-			"startEffect": "easeOutSine",
 			"dataLoader": {
 			  "url": "graphDataMPPT2.php"
 			},
 			"categoryField": "category",
 			"dataDateFormat": "YYYY-MM-DD HH:NN:SS",
-			"startDuration": 1,
+			"startDuration": 0,
 			"categoryAxis": {
 			  "parseDates": true,
 			  "minorGridEnabled": true,
@@ -153,10 +160,12 @@
 	<body>
 		<div id="container">
 			<?php require_once("headerBar.php"); ?>
-			<div> <h4> MPPT1 </h4></div>
-			<div id="MPPT1" style="width: 100%; height: 400px;"></div>
-			<div> <h4> MPPT2 </h4></div>
-			<div id="MPPT2" style="width: 100%; height: 400px;"></div>
+			<div id = "content">
+				<div> <h4> MPPT1 </h4></div>
+				<div id="MPPT1" style="width: 100%; height: 400px;"></div>
+				<div> <h4> MPPT2 </h4></div>
+				<div id="MPPT2" style="width: 100%; height: 400px;"></div>
+			</div>
 						
 		</div>
 	</body></html> 

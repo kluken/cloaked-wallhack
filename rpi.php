@@ -33,7 +33,7 @@
 			else 
 			{
 				//Set SQL Database Settings
-				$servername = $_SESSION["hostname"];
+				$servername = "192.168.1.3";//$_SESSION["hostname"];
 				$username = $_SESSION["username"];
 				$password = $_SESSION["password"];
 				$dbname = "main";
@@ -53,7 +53,7 @@
 			
 		}else if (  isset($_POST["PiSelectPannel"]) ) {
 			//...Rasberry Pi selected : 
-			if ( isset ( $_POST['Submit'] ) && isset ( $_POST['PiSelectedIP'] ) {
+			if ( isset ( $_POST['Submit'] ) && isset ( $_POST['PiSelectedIP'] )) {
 					//...We have a rasberry selected;
 					$_SESSION['PiControl']="ACTIVE";
 					
@@ -67,12 +67,7 @@
 	</head>
 	<body>
 		<div id="container">
-			<div id="headerbar">
-				<h1>UWS Solar Car Project - IT Admin</h1>
-				<p> 
-					Menu Options: <a href="home.php">Home</a> <a href="electrical.php">Electrical</a> <a href="battery.php">Battery</a> <a href="motors.php">Motors</a> <a href="it.php">IT Admin</a>
-				</p>
-			</div>
+			<?php require_once("headerBar.php"); ?>
 			<div id="content">
 				<p> 
 					<form id="PiSelectPannel" method="POST">

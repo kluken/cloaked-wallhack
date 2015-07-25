@@ -5,10 +5,6 @@
 	<head>
 		<title>UWS Solar Car Project - Home</title>
 		<link rel="stylesheet" href="master.css" type="text/css" /> 
-		<script src="amcharts.js" type="text/javascript"></script>
-        <script src="serial.js" type="text/javascript"></script>
-        <script src="dark.js" type="text/javascript"></script>
-		<script src="dataloader.min.js" type="text/javascript"></script>
 		
 		<?php
 			session_start();
@@ -24,61 +20,6 @@
 			}
 		?>
 
-        <script>
-			var chart = AmCharts.makeChart( "chartdiv", {
-			"type": "serial",
-			"dataLoader": {
-			  "url": "graphData.php"
-			},
-			"categoryField": "category",
-			"dataDateFormat": "YYYY-MM-DD HH:NN:SS",
-			"startDuration": 1,
-			"categoryAxis": {
-			  "parseDates": true,
-			  "minorGridEnabled": true,
-			  "twoLineMode": true,
-			   "minPeriod": "ss"
-			},
-			"graphs": [ {
-			  "valueField": "cell 0 voltage",
-			  "bullet": "round",
-			  "bulletBorderColor": "#000000",
-			  "bulletBorderThickness": 2,
-			  "lineThickness ": 2,
-			  "lineAlpha": 1,
-			  //"hideBulletsCount": 30,
-			  "title": "Cell 0 Voltage"
-
-			}, {
-			  "valueField": "cell 1 voltage",
-			  "bullet": "square",
-			  "bulletBorderColor": "#000000",
-			  "bulletBorderThickness": 2,
-			  "lineThickness ": 2,
-			  "lineAlpha": 1,
-			  //"hideBulletsCount": 30,
-			  "title": "Cell 1 Voltage"
-			} ]
-		  }
-
-			  );
-			  
-			   // CURSOR
-               var chartCursor = new AmCharts.ChartCursor();
-               chartCursor.cursorAlpha = 0.1;
-               chartCursor.fullWidth = true;
-               chart.addChartCursor(chartCursor);
-
-               // SCROLLBAR
-               var chartScrollbar = new AmCharts.ChartScrollbar();
-               chart.addChartScrollbar(chartScrollbar);
-			  
-			  var legend = new AmCharts.AmLegend();
-               legend.marginLeft = 110;
-               legend.useGraphSettings = true;
-               chart.addLegend(legend);		  
-
-        </script> 
 		
 	</head>
 	<body>
@@ -113,10 +54,8 @@
 					$_SESSION["port"] = $_POST["port"];
 					$_SESSION["username"] = $_POST["username"];
 					$_SESSION["password"] = $_POST["password"];
-				}
-				//require_once("graphData.php");?>
-			<div id="chartdiv" style="width: 100%; height: 400px;"></div> 
-						
+				}?>
+				
 				<form method = "post" action = "home.php" id = "pageReset" >
 					<input type="hidden" id="resetServerDetails" name="resetServerDetails" value="resetServerDetails"/>
 					<input type = "submit" value="Reset Server Details" />

@@ -78,7 +78,7 @@
                     <?php
                         function getTableRowCount($xTable , $sqlConn ) {
                             $row_cnt = 0;
-                            if ($result = mysqli_query($sqlConn, "SELECT COUNT(*) FROM ".$xTable."")) {
+                            if ($result = mysqli_query($sqlConn, "SELECT COUNT(*) FROM ".$xTable.";")) {
                                 /* determine number of rows result set */
                                 if ($row = mysqli_fetch_array ( $result )>0){
                                     $row_cnt = $row[0];
@@ -91,7 +91,7 @@
                         echo "<h2> Database Tables Display</h2>";
                         $dbname = $_SESSION['dbname'];                 
 
-                        $sql = "SHOW TABLES FROM $dbname";
+                        $sql = "SHOW TABLES FROM $dbname;";
                         $result = mysqli_query ( $conn , $sql);
 
                         if (!$result) {

@@ -76,6 +76,16 @@
                     <div id="DBTablePannel">
                     <table>
                     <?php
+                        function getTableRowCount($xTable) {
+                            $row_cnt = 0;
+                            if ($result = $mysqli->query("SELECT COUNT(*) FROM $xTable")) {
+                                /* determine number of rows result set */
+                                $row_cnt = $result->num_rows;
+                                /* close result set */
+                                $result->close();
+                            }
+                            return $row_cnt;
+                        }
                         // List all tables under current database
                         echo "<h2> Database Tables Display</h2>";
                         $dbname = $_SESSION['dbname'];                 
@@ -89,7 +99,10 @@
                             exit;
                         }
                         $_tRowCount = 0;
+                        
+                        //...Print out all the tables
                          while($row = $result->fetch_assoc()) {
+                            $_qRowCount = getTableRowCount ( $row[0] );
                             echo "<tr><td>$_tRowCount</td><td> {$row[0]} </td></tr>\n";
                             $_tRowCount = $_tRowCount + 1;
                         }

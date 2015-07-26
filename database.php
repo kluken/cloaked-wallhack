@@ -102,8 +102,8 @@
                         
                         //...Print out all the tables
                          while($row = $result->fetch_assoc()) {
-                            $_qRowCount = getTableRowCount ( $row[0] );
-                            echo "<tr><td>$_tRowCount</td><td> {$row[0]} </td><td> $_qRowCount </td> </tr>\n";
+                            $_qRowCount = getTableRowCount ( $row );
+                            echo "<tr><td>$_tRowCount</td><td> {$row} </td><td> $_qRowCount </td> </tr>\n";
                             $_tRowCount = $_tRowCount + 1;
                         }
 

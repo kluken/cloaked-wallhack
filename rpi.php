@@ -73,7 +73,16 @@
 					<form id="PiSelectPannel" method="POST">
 						<div id="PiSelect">						
 						<table style="width:100%">
-						  
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NAME</th>
+                                    <th>IP</th>
+                                    <th>MAC</th>
+                                </tr>
+                            </thead>
+                            <tbody>                            
+                                
 							<?php 
 
 								$sql = "SELECT * FROM pi";
@@ -81,8 +90,7 @@
 								//$result = $conn->query($sql);
 
 								if ($result->num_rows > 0) {
-									// output data of each row
-									echo "<tr><th>ID</th><th>NAME</th><th>IP ADDRESS</th><th>MAC(KEY)</th></tr>";
+									// output data of each row									
 									while($row = $result->fetch_assoc()) {
 										echo "<tr><td> ". $row["id"]. " </td><td>" . $row["name"]. " </td><td>" . $row["ip"]. "</td><td>" . $row["mac"]. "</td><tr>";
 									}									
@@ -92,6 +100,7 @@
 								//$conn->close();
 								mysqli_close ( $conn );
 							?>
+                            </tbody>
 						</table>	
 						<input type="submit" value="Submit">
 						<input type="submit" value="Reset">

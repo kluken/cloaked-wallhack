@@ -89,7 +89,7 @@
                             exit;
                         }
                         $_tRowCount = 0;
-                        while ($row = mysql_fetch_row($result)) {
+                         while($row = $result->fetch_assoc()) {
                             echo "<tr><td>$_tRowCount</td><td> {$row[0]} </td></tr>\n";
                             $_tRowCount = $_tRowCount + 1;
                         }

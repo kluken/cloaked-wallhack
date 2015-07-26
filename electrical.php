@@ -271,7 +271,7 @@
 											<input type = "checkbox" id = "mppt1Vin" name = "selectedData[]" value = "MPPT 1 Vin"> <label for = "mppt1Vin"> MPPT 1 Vin</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptBattBelowVolt1" name = "selectedData[]" value = "Battery Below Voltage from MPPT1"> <label for = "mpptBattBelowVolt1"> Battery Below Voltage from MPPT1</label>
+											<input type = "checkbox" id = "mpptBattOverVolt1" name = "selectedData[]" value = "Battery Over Voltage from MPPT1"> <label for = "mpptBattOverVolt1"> Battery Over Voltage from MPPT1</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedData[]" value = "Battery Over Temperature from MPPT1"> <label for = "mpptOverTemp1"> Battery Over Temperature from MPPT1</label>
@@ -297,7 +297,7 @@
 											<input type = "checkbox" id = "mppt2Vin" name = "selectedData[]" value = "MPPT 2 Vin"> <label for = "mppt2Vin"> MPPT 2 Vin</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptBattBelowVolt2" name = "selectedData[]" value = "Battery Below Voltage from MPPT2"> <label for = "mpptBattBelowVolt2"> Battery Below Voltage from MPPT2</label>
+											<input type = "checkbox" id = "mpptBattOverVolt2" name = "selectedData[]" value = "Battery Over Voltage from MPPT2"> <label for = "mpptBattOverVolt2"> Battery Over Voltage from MPPT2</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "mpptOverTemp2" name = "selectedData[]" value = "Battery Over Temperature from MPPT2"> <label for = "mpptOverTemp2"> Battery Over Temperature from MPPT2</label>
@@ -335,27 +335,47 @@
 								{
 									$sqlSelect = sqlLookup($entry);
 									$result = mysqli_query($conn, $sqlSelect);
-									$row =  mysqli_fetch_assoc($result);
 									$tableName = dataNameLookup($entry);
 									echo "<th>$entry</th>";
-									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
+									if (mysqli_num_rows($result) > 0)
+									{
+										$row =  mysqli_fetch_assoc($result);
+										
+										if ($row[$tableName] == "" || (is_null($row[$tableName])))
+											echo "<td class = 'highWarn'>No Data</td>";
+										else 
+										{
+											
+											echo "<td>$row[$tableName]</td>";
+										}
+									}
 									else 
-										echo "<td class = 'highWarn'>N/A</td>";
+										echo "<td class = 'highWarn'>No Data</td>";
 								}
 								else
 								{
 									$sqlSelect = sqlLookup($entry);
 									$result = mysqli_query($conn, $sqlSelect);
-									$row =  mysqli_fetch_assoc($result);
 									$tableName = dataNameLookup($entry);
 									echo "</tr>";
 									echo "<tr>";
 									echo "<th>$entry</th>";
-									if (!empty($row[$tableName]))
-										echo "<td>$row[$tableName]</td>";
-									else 
-										echo "<td class = 'highWarn'>N/A</td>";
+									if (mysqli_num_rows($result) > 0)
+									{
+										$row =  mysqli_fetch_assoc($result);
+										if ($row[$tableName] == "" || (is_null($row[$tableName])))
+										{		
+											echo "<td class = 'highWarn'>N/A</td>";
+										}
+										else
+										{
+											echo "<td>$row[$tableName]</td>";
+										}
+									}
+									else
+									{
+										echo "<td class = 'highWarn'>No Data</td>";
+									}
 								}
 								$count++;
 							} 

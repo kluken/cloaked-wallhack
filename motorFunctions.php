@@ -63,7 +63,7 @@ function sqlLookup($dataName)
 	}
 	else if (strcmp($dataName, "Motor Temperature") == 0)
 	{
-		return "SELECT `Motor_Temp` FROM `IPM_Heatsink_and Motor_Temperature_Measurement` ORDER BY id DESC LIMIT 5";
+		return "SELECT `Motor_Temp` FROM `IPM_Heatsink_and_Motor_Temperature_Measurement` ORDER BY id DESC LIMIT 5";
 	}
 	else if (strcmp($dataName, "IPM DSP Board Temp") == 0)
 	{
@@ -173,91 +173,91 @@ function dataNameLookup($dataName)
 {
 	if (strcmp($dataName, "DC Bus Amp Hours") == 0)
 	{
-		return "DC Bus AmpHours";
+		return "DC_Bus_AmpHours";
 	}
 	else if (strcmp($dataName, "Motor Slip Speed") == 0)
 	{
-		return "Slip Speed";
+		return "Slip_Speed";
 	}
 	else if (strcmp($dataName, "Vehicle Velocity") == 0)
 	{
-		return "Vehicle Velocity";
+		return "Vehicle_Velocity";
 	}
 	else if (strcmp($dataName, "Motor Velocity") == 0)
 	{
-		return "Motor Velocity";
+		return "Motor_Velocity";
 	}
 	else if (strcmp($dataName, "Bus Current") == 0)
 	{
-		return "Bus Current";
+		return "Bus_Current";
 	}
 	else if (strcmp($dataName, "Bus Voltage") == 0)
 	{
-		return "Bus Voltage";
+		return "Bus_Voltage";
 	}
 	else if (strcmp($dataName, "Phase B Current") == 0)
 	{
-		return "Phase B Current";
+		return "Phase_B_Current";
 	}
 	else if (strcmp($dataName, "Phase C Current") == 0)
 	{
-		return "Phase C Current";
+		return "Phase_C_Current";
 	}
 	else if (strcmp($dataName, "Motor Current D") == 0)
 	{
-		return "I d";
+		return "I_d";
 	}
 	else if (strcmp($dataName, "Motor Current Q") == 0)
 	{
-		return "I q";
+		return "I_q";
 	}
 	else if (strcmp($dataName, "Motor Voltage D") == 0)
 	{
-		return "V d";
+		return "V_d";
 	}
 	else if (strcmp($dataName, "Motor Voltage Q") == 0)
 	{
-		return "V q";
+		return "V_q";
 	}
 	else if (strcmp($dataName, "Back EMF D") == 0)
 	{
-		return "BEMF d";
+		return "BEMF_d";
 	}
 	else if (strcmp($dataName, "Back EMF Q") == 0)
 	{
-		return "BEMF q";
+		return "BEMF_q";
 	}
 	else if (strcmp($dataName, "IPM Heatsink Temperature") == 0)
 	{
-		return "IPM Heatsink Temp";
+		return "IPM_Heatsink_Temp";
 	}
 	else if (strcmp($dataName, "Motor Temperature") == 0)
 	{
-		return "Motor Temp";
+		return "Motor_Temp";
 	}
 	else if (strcmp($dataName, "IPM DSP Board Temp") == 0)
 	{
-		return "DSP Board Temp";
+		return "DSP_Board_Temp";
 	}
 	else if (strcmp($dataName, "15V Rail") == 0)
 	{
-		return "15V Supply";
+		return "15V_Supply";
 	}
 	else if (strcmp($dataName, "3.3V Rail") == 0)
 	{
-		return "3.3V Supply";
+		return "3.3V_Supply";
 	}
 	else if (strcmp($dataName, "1.9V Rail") == 0)
 	{
-		return "1.9V Supply";
+		return "1.9V_Supply";
 	}
 	else if (strcmp($dataName, "Receive Errors") == 0)
 	{
-		return "Receive Error";
+		return "Receive_Error";
 	}
 	else if (strcmp($dataName, "Transmit Errors") == 0)
 	{
-		return "Transmit Error";
+		return "Transmit_Error";
 	}
 	else if (strcmp($dataName, "Odometer") == 0)
 	{
@@ -265,51 +265,51 @@ function dataNameLookup($dataName)
 	}
 	else if (strcmp($dataName, "Tritium Motor ID") == 0)
 	{
-		return "Motor Tritium ID";
+		return "Motor_Tritium_ID";
 	}
 	else if (strcmp($dataName, "Tritium Motor Serial Number") == 0)
 	{
-		return "Motor Serial Number";
+		return "Motor_Serial_Number";
 	}
 	else if (strcmp($dataName, "Desaturation Fault") == 0)
 	{
-		return "Desaturation Fault";
+		return "Desaturation_Fault";
 	}
 	else if (strcmp($dataName, "15V Rail Under Voltage") == 0)
 	{
-		return "15V Rail Under Voltage";
+		return "15V_Rail_Under_Voltage";
 	}
 	else if (strcmp($dataName, "Config Read Error") == 0)
 	{
-		return "Config Read Error";
+		return "Config_Read_Error";
 	}
 	else if (strcmp($dataName, "Watchdog Caused Last Reset") == 0)
 	{
-		return "Watchdog Caused Last Reset";
+		return "Watchdog_Caused_Last_Reset";
 	}
 	else if (strcmp($dataName, "Bad Motor Position Hall Sequence") == 0)
 	{
-		return "Bad Motor Position Hall Sequence";
+		return "Bad_Motor_Position_Hall_Sequence";
 	}
 	else if (strcmp($dataName, "DC Bus Over Volt") == 0)
 	{
-		return "DC Bus Over Voltage";
+		return "DC_Bus_Over_Voltage";
 	}
 	else if (strcmp($dataName, "Software Over Current") == 0)
 	{
-		return "Software Over Current";
+		return "Software_Over_Current";
 	}
 	else if (strcmp($dataName, "Hardware Over Current") == 0)
 	{
-		return "Hardware Over Current";
+		return "Hardware_Over_Current";
 	}
 	else if (strcmp($dataName, "Output Voltage PWM") == 0)
 	{
-		return "Output Voltage PWM";
+		return "Output_Voltage_PWM";
 	}
 	else if (strcmp($dataName, "Motor Current") == 0)
 	{
-		return "Motor Current";
+		return "Motor_Current";
 	}
 	else if (strcmp($dataName, "Velocity") == 0)
 	{
@@ -317,19 +317,19 @@ function dataNameLookup($dataName)
 	}
 	else if (strcmp($dataName, "Bus Current") == 0)
 	{
-		return "Bus Current";
+		return "Bus_Current";
 	}
 	else if (strcmp($dataName, "Bus Voltage Upper Limit") == 0)
 	{
-		return "Bus Voltage Upper Limit";
+		return "Bus_Voltage_Upper_Limit";
 	}
 	else if (strcmp($dataName, "Bus Voltage Lower Limit") == 0)
 	{
-		return "Bus Voltage Lower Limit";
+		return "Bus_Voltage_Lower_Limit";
 	}
 	else if (strcmp($dataName, "IPM Temp or Motor Temp") == 0)
 	{
-		return "IPM Temp or Motor Temp";
+		return "IPM_Temp_or_Motor_Temp";
 	}
 	
 	else

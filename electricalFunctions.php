@@ -35,7 +35,7 @@ function sqlLookup($dataName)
 	}
 	else if (strcmp($dataName, "Precharge / Driver 12V Status") == 0)
 	{
-		return "SELECT `12V_Contactor_Supply_Voltage_Status` FROM `Precharge_Status` ORDER BY id DESC LIMIT 1";
+		return "SELECT `12V_Contactor_Supply_Voltage` FROM `Precharge_Status` ORDER BY id DESC LIMIT 1";
 	}
 	else if (strcmp($dataName, "Precharge Status") == 0)
 	{
@@ -59,11 +59,11 @@ function sqlLookup($dataName)
 	}
 	else if (strcmp($dataName, "CMU With Minimum Cell Voltage") == 0)
 	{
-		return "SELECT `CMU_with_Minimum_Voltage` FROM `Minimum / Maximum Cell Voltage` ORDER BY id DESC LIMIT 1";
+		return "SELECT `CMU_with_Minimum_Voltage` FROM `Minimum_/_Maximum_Cell_Voltage` ORDER BY id DESC LIMIT 1";
 	}
 	else if (strcmp($dataName, "Cell With Minimum Voltage") == 0)
 	{
-		return "SELECT `Cell_with_Minimum_Voltage` FROM `Minimum_/_Maximum Cell_Voltage` ORDER BY id DESC LIMIT 1";
+		return "SELECT `Cell_with_Minimum_Voltage` FROM `Minimum_/_Maximum_Cell_Voltage` ORDER BY id DESC LIMIT 1";
 	}
 	else if (strcmp($dataName, "Maximum Cell Voltage") == 0)
 	{
@@ -205,7 +205,7 @@ function sqlLookup($dataName)
 	{
 		return "SELECT `Uin` FROM `MPPT1` ORDER BY id DESC LIMIT 1";
 	}
-	else if (strcmp($dataName, "Battery Below Voltage from MPPT1") == 0)
+	else if (strcmp($dataName, "Battery Over Voltage from MPPT1") == 0)
 	{
 		return "SELECT `Battery_Over_Voltage` FROM `MPPT1` ORDER BY id DESC LIMIT 1";
 	}
@@ -237,7 +237,7 @@ function sqlLookup($dataName)
 	{
 		return "SELECT `Uin` FROM `MPPT2` ORDER BY id DESC LIMIT 1";
 	}
-	else if (strcmp($dataName, "Battery Below Voltage from MPPT2") == 0)
+	else if (strcmp($dataName, "Battery Over Voltage from MPPT2") == 0)
 	{
 		return "SELECT `Battery_Over_Voltage` FROM `MPPT2` ORDER BY id DESC LIMIT 1";
 	}
@@ -272,183 +272,183 @@ function dataNameLookup($dataName)
 	}
 	else if (strcmp($dataName, "Balance State of Charge (Ah)") == 0)
 	{
-		return "Balance SOCA";
+		return "Balance_SOCA";
 	}
 	else if (strcmp($dataName, "Balance State of Charge (%)") == 0)
 	{
-		return "Balance SOCP";
+		return "Balance_SOCP";
 	}
 	else if (strcmp($dataName, "Charging Cell Voltage Error (mV)") == 0)
 	{
-		return "Charging Cell Voltage Error";
+		return "Charging_Cell_Voltage_Error";
 	}
 	else if (strcmp($dataName, "Cell Temp Margin") == 0)
 	{
-		return "Cell Temperature Margin";
+		return "Cell_Temperature_Margin";
 	}
 	else if (strcmp($dataName, "Discharging Cell Voltage Error (mV)") == 0)
 	{
-		return "Discharging Cell Voltage Error";
+		return "Discharging_Cell_Voltage_Error";
 	}
 	else if (strcmp($dataName, "Total Pack Capacity (Ah)") == 0)
 	{
-		return "Total Pack Capacity";
+		return "Total_Pack_Capacity";
 	}
 	else if (strcmp($dataName, "Precharge / Driver 12V Status") == 0)
 	{
-		return "12V Contactor Supply Voltage Status";
+		return "12V_Contactor_Supply Voltage_Status";
 	}
 	else if (strcmp($dataName, "Precharge Status") == 0)
 	{
-		return "Precharge State";
+		return "Precharge_State";
 	}
 	else if (strcmp($dataName, "12V Contactor Supply") == 0)
 	{
-		return "12V Contactor Supply Voltage";
+		return "12V_Contactor_Supply_Voltage";
 	}
 	else if (strcmp($dataName, "Precharge Timer Elapsed") == 0)
 	{
-		return "Precharge Timer Elapsed";
+		return "Precharge_Timer_Elapsed";
 	}
 	else if (strcmp($dataName, "Precharge Timer") == 0)
 	{
-		return "Precharge Timer Counter";
+		return "Precharge_Timer_Counter";
 	}
 	else if (strcmp($dataName, "Minimum Cell Voltage") == 0)
 	{
-		return "Minimum Cell Voltage";
+		return "Minimum_Cell_Voltage";
 	}
 	else if (strcmp($dataName, "CMU With Minimum Cell Voltage") == 0)
 	{
-		return "CMU with Minimum Voltage";
+		return "CMU_with_Minimum_Voltage";
 	}
 	else if (strcmp($dataName, "Cell With Minimum Voltage") == 0)
 	{
-		return "Cell with Minimum Voltage";
+		return "Cell_with_Minimum_Voltage";
 	}
 	else if (strcmp($dataName, "Maximum Cell Voltage") == 0)
 	{
-		return "Maximum Cell Voltage";
+		return "Maximum_Cell_Voltage";
 	}
 	else if (strcmp($dataName, "CMU With Maximum Cell Voltage") == 0)
 	{
-		return "CMU with Maximum Voltage";
+		return "CMU_with_Maximum_Voltage";
 	}
 	else if (strcmp($dataName, "Cell With Maximum Voltage") == 0)
 	{
-		return "Cell with Maximum Voltage";
+		return "Cell_with_Maximum_Voltage";
 	}
 	else if (strcmp($dataName, "Minimum CMU Temp") == 0)
 	{
-		return "Minimum Cell Temperature";
+		return "Minimum_Cell_Temperature";
 	}
 	else if (strcmp($dataName, "CMU With Minimum Temperature") == 0)
 	{
-		return "CMU with Minimum Cell Temperature";
+		return "CMU_with_Minimum_Cell_Temperature";
 	}
 	else if (strcmp($dataName, "Maximum CMU Temp") == 0)
 	{
-		return "Maximum Cell Temperature";
+		return "Maximum_Cell_Temperature";
 	}
 	else if (strcmp($dataName, "CMU With Maximum Temperature") == 0)
 	{
-		return "CMU with Maximum Cell Temperature";
+		return "CMU_with_Maximum_Cell_Temperature";
 	}
 	else if (strcmp($dataName, "Battery Voltage (mV)") == 0)
 	{
-		return "Battery Voltage";
+		return "Battery_Voltage";
 	}
 	else if (strcmp($dataName, "Battery Current (mA)") == 0)
 	{
-		return "Battery Current";
+		return "Battery_Current";
 	}
 	else if (strcmp($dataName, "Battery Voltage Threshold (Rising - V)") == 0)
 	{
-		return "Balance Voltage Threshold - Rising";
+		return "Balance_Voltage_Threshold_-_Rising";
 	}
 	else if (strcmp($dataName, "Battery Voltage Threshold (Falling - V)") == 0)
 	{
-		return "Balance Voltage Threshold - Falling";
+		return "Balance_Voltage_Threshold_-_Falling";
 	}
 	else if (strcmp($dataName, "Cells Under Voltage") == 0)
 	{
-		return "Cell Under Voltage";
+		return "Cell_Under_Voltage";
 	}
 	else if (strcmp($dataName, "Cells Over Voltage") == 0)
 	{
-		return "Cell Over Voltage";
+		return "Cell_Over_Voltage";
 	}
 	else if (strcmp($dataName, "Cells Over Temperature") == 0)
 	{
-		return "Cell Over Temperature";
+		return "Cell_Over_Temperature";
 	}
 	else if (strcmp($dataName, "Measurements Untrusted") == 0)
 	{
-		return "Measurement Untrusted";
+		return "Measurement_Untrusted";
 	}
 	else if (strcmp($dataName, "CMU Comms Timeout") == 0)
 	{
-		return "CMU Communications Timeout";
+		return "CMU_Communications_Timeout";
 	}
 	else if (strcmp($dataName, "BMU Is in Setup Mode") == 0)
 	{
-		return "BMU is in Setup Mode";
+		return "BMU_is_in_Setup_Mode";
 	}
 	else if (strcmp($dataName, "CMU CAN Bus Power Status") == 0)
 	{
-		return "CMU CAN Bus Power Status";
+		return "CMU_CAN_Bus_Power_Status";
 	}
 	else if (strcmp($dataName, "Pack Isolation Test Fail") == 0)
 	{
-		return "Pack Isolation Test Failure";
+		return "Pack_Isolation_Test_Failure";
 	}
 	else if (strcmp($dataName, "SOC Measurement Not Valid") == 0)
 	{
-		return "SOC Measurement is not Valid";
+		return "SOC_Measurement_is_not_Valid";
 	}
 	else if (strcmp($dataName, "12V CAN Supply Too Low") == 0)
 	{
-		return "CAN 12V Too Low";
+		return "CAN_12V_Too_Low";
 	}
 	else if (strcmp($dataName, "Contactor Stuck / Not Engaged") == 0)
 	{
-		return "Contactor is Stuck / Not Engaged";
+		return "Contactor_is_Stuck_/_Not_Engaged";
 	}
 	else if (strcmp($dataName, "CMU Detected Extra Cell") == 0)
 	{
-		return "CMU has detected an extra Cell";
+		return "CMU_has_detected_an_extra_Cell";
 	}
 	else if (strcmp($dataName, "CMU Count") == 0)
 	{
-		return "BMS CMU Count";
+		return "BMS_CMU_Count";
 	}
 	else if (strcmp($dataName, "BMU Firmware Build") == 0)
 	{
-		return "BMU Hardware Version";
+		return "BMU_Hardware_Version";
 	}
 	else if (strcmp($dataName, "Fan 0 Speed") == 0)
 	{
-		return "Fan Speed 0";
+		return "Fan_Speed_0";
 	}
 	else if (strcmp($dataName, "Fan 1 Speed") == 0)
 	{
-		return "Fan Speed 1";
+		return "Fan_Speed_1";
 	}
 	else if (strcmp($dataName, "Fan and Contactor 12V Consumption (mA)") == 0)
 	{
-		return "12V Current Consumption of Fans and Contactors";
+		return "12V_Current_Consumption_of_Fans_and_Contactors";
 	}
 	else if (strcmp($dataName, "12V CMU's") == 0)
 	{
-		return "12V Current Consumption of CMUs";
+		return "12V_Current_Consumption_of_CMUs";
 	}
 	else if (strcmp($dataName, "Extended Pack BMU Hardware Version") == 0)
 	{
-		return "BMU Hardware Version";
+		return "BMU_Hardware_Version";
 	}
 	else if (strcmp($dataName, "Extended Pack BMU Model ID") == 0)
 	{
-		return "BMU Model ID";
+		return "BMU_Model_ID";
 	}
 	else if (strcmp($dataName, "MPPT 1 Temperature") == 0)
 	{
@@ -466,21 +466,21 @@ function dataNameLookup($dataName)
 	{
 		return "Uin";
 	}
-	else if (strcmp($dataName, "Battery Below Voltage from MPPT1") == 0)
+	else if (strcmp($dataName, "Battery Over Voltage from MPPT1") == 0)
 	{
-		return "Battery Over Voltage";
+		return "Battery_Over_Voltage";
 	}
 	else if (strcmp($dataName, "Battery Over Temperature from MPPT1") == 0)
 	{
-		return "Over Temperature";
+		return "Over_Temperature";
 	}
 	else if (strcmp($dataName, "No Connection to MPPT1") == 0)
 	{
-		return "No Connection";
+		return "No_Connection";
 	}
 	else if (strcmp($dataName, "Under Voltage on MPPT1 Input") == 0)
 	{
-		return "Under Voltage";
+		return "Under_Voltage";
 	}
 	else if (strcmp($dataName, "MPPT 2 Temperature") == 0)
 	{
@@ -498,21 +498,21 @@ function dataNameLookup($dataName)
 	{
 		return "Uin";
 	}
-	else if (strcmp($dataName, "Battery Below Voltage from MPPT2") == 0)
+	else if (strcmp($dataName, "Battery Over Voltage from MPPT2") == 0)
 	{
-		return "Battery Over Voltage";
+		return "Battery_Over_Voltage";
 	}
 	else if (strcmp($dataName, "Battery Over Temperature from MPPT2") == 0)
 	{
-		return "Over Temperature";
+		return "Over_Temperature";
 	}
 	else if (strcmp($dataName, "No Connection to MPPT2") == 0)
 	{
-		return "No Connection";
+		return "No_Connection";
 	}
 	else if (strcmp($dataName, "Under Voltage on MPPT2 Input") == 0)
 	{
-		return "Under Voltage";
+		return "Under_Voltage";
 	}
 	else
 	{

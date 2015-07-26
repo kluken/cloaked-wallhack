@@ -36,7 +36,7 @@
 				$servername = "192.168.1.3";//$_SESSION["hostname"];
 				$username = $_SESSION["username"];
 				$password = $_SESSION["password"];
-				$dbname = "main";
+				$dbname = $_SESSION["dbname"];
 				$port = $_SESSION["port"];
 			}
 			
@@ -98,10 +98,10 @@
                             echo 'MySQL Error: ' . mysql_error();
                             exit;
                         }
-                        $_tRowCount = 0;
+                        $_tRowCount = 1;
                         
                         //...Print out all the tables
-                         while($row = $result->fetch_assoc()) {
+                         while($row = mysqli_fetch_array ( $result ) ) {
                             $_qRowCount = getTableRowCount ( $row[0] , $conn );
                             echo "<tr><td>$_tRowCount</td><td> {$row[0]} </td><td> $_qRowCount </td> </tr>\n";
                             $_tRowCount = $_tRowCount + 1;

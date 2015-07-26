@@ -3,8 +3,14 @@
 error_reporting( 0 );
 
 // Connect to MySQL
-$conn = mysqli_connect("localhost", "solar", "solar", "solar", "3306");
-
+// Connect to MySQL
+session_start();
+$servername = $_SESSION["hostname"];
+$username = $_SESSION["username"];
+$password = $_SESSION["password"];
+$dbname = $_SESSION["dbname"];
+$port = $_SESSION["port"];
+$conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 

@@ -82,6 +82,7 @@
                                 /* determine number of rows result set */
                                 if ($row = mysqli_fetch_array ( $result )>0){
                                     $row_cnt = $row[0];
+                                    echo "Total rows: " . $row_cnt;
                                 }
                             }
                             return $row_cnt;
@@ -111,7 +112,10 @@
                     ?>
                     </table>
                     <div id= "DBControlPannel" >
-                        <h1> Database Control Pannel <h2>
+                        <h1> Database Control Panel </h1>
+                        <h3> Current Database: </h3>
+                        <h3> Delete Database </h3>
+                        <h3> Create Database </h3>
                     </div>    
                 </form>
 			</div>

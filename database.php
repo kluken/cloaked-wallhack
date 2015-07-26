@@ -81,7 +81,7 @@
                         $dbname = $_SESSION['dbname'];                 
 
                         $sql = "SHOW TABLES FROM $dbname";
-                        $result = mysql_query($sql);
+                        $result = mysqli_query ( $conn , $sql);
 
                         if (!$result) {
                             echo "DB Error, could not list tables\n";
@@ -94,7 +94,7 @@
                             $_tRowCount = $_tRowCount + 1;
                         }
 
-                        mysql_free_result($result);
+                        mysqli_free_result($result);
                     ?>
                     </table>
                     <div id= "DBControlPannel" >

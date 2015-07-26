@@ -83,8 +83,6 @@
                                 if ($result = mysqli_fetch_array ( $result )>0){
                                     $row_cnt = $result[0];
                                 }
-                                /* close result set */
-                                $result->close();
                             }
                             return $row_cnt;
                         }

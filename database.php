@@ -80,8 +80,8 @@
                             $row_cnt = 0;
                             if ($result = mysqli_query($sqlConn, "SELECT COUNT(*) FROM ".$xTable."")) {
                                 /* determine number of rows result set */
-                                if ($result = mysqli_fetch_array ( $result )>0){
-                                    $row_cnt = $result[0];
+                                if ($row = mysqli_fetch_array ( $result )>0){
+                                    $row_cnt = $row[0];
                                 }
                             }
                             return $row_cnt;

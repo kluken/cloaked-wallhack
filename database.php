@@ -9,7 +9,7 @@
 		<script>
 			function refreshTable() 
 			{
-				$('#content').load( "rpi.php #content");
+				$('#content').load( "database.php #content");
 			}
 			setInterval(refreshTable, 10000);
 		</script>
@@ -78,7 +78,7 @@
                     <?php
                         function getTableRowCount($xTable) {
                             $row_cnt = 0;
-                            if ($result = $mysqli->query("SELECT COUNT(*) FROM $xTable")) {
+                            if ($result = $mysqli->query("SELECT COUNT(*) FROM ".$xTable."")) {
                                 /* determine number of rows result set */
                                 $row_cnt = $result->num_rows;
                                 /* close result set */

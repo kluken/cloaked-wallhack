@@ -78,7 +78,7 @@
                     <?php
                         function getTableRowCount($xTable) {
                             $row_cnt = 0;
-                            if ($result = $mysqli->query("SELECT COUNT(*) FROM ".$xTable."")) {
+                            if ($result = mysqli_query($conn, "SELECT COUNT(*) FROM ".$xTable."")) {
                                 /* determine number of rows result set */
                                 $row_cnt = $result->num_rows;
                                 /* close result set */
@@ -103,7 +103,7 @@
                         //...Print out all the tables
                          while($row = $result->fetch_assoc()) {
                             $_qRowCount = getTableRowCount ( $row[0] );
-                            echo "<tr><td>$_tRowCount</td><td> {$row[0]} </td></tr>\n";
+                            echo "<tr><td>$_tRowCount</td><td> {$row[0]} </td><td> $_qRowCount </td> </tr>\n";
                             $_tRowCount = $_tRowCount + 1;
                         }
 

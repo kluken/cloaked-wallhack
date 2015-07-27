@@ -33,7 +33,7 @@
 			else 
 			{
 				//Set SQL Database Settings
-				$servername = "192.168.1.3";//$_SESSION["hostname"];
+				$servername = $_SESSION["hostname"];
 				$username = $_SESSION["username"];
 				$password = $_SESSION["password"];
 				$dbname = $_SESSION["dbname"];

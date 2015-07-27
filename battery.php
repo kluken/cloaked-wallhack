@@ -89,9 +89,9 @@
 				for ($count = 0; $count < $_SESSION['numBatteryCells']; $count++)
 				{
 					$CMUNum = $count+1;
-					$sqlStatus[$count] = "SELECT `Serial_Number`, `PCB_Temperature`, `Cell_Temperature` FROM `CMU_".$CMUNum."_Status`";
-					$sqlCell0[$count] = "SELECT `Cell_0_Voltage`, `Cell_1_Voltage`, `Cell_2_Voltage`, `Cell_3_Voltage` FROM `CMU_".$CMUNum."_Cell0-3Voltage`";
-					$sqlCell4[$count] = "SELECT `Cell_4_Voltage`, `Cell_5_Voltage`, `Cell_6_Voltage`, `Cell_7_Voltage` FROM `CMU_".$CMUNum."_Cell4-7Voltage`";
+					$sqlStatus[$count] = "select `serial_number`, `pcb_temperature`, `cell_temperature` from `cmu_".$CMUNum."_status`";
+					$sqlCell0[$count] = "select `cell_0_voltage`, `cell_1_voltage`, `cell_2_voltage`, `cell_3_voltage` from `cmu_".$CMUNum."_cell0-3voltage`";
+					$sqlCell4[$count] = "select `cell_4_voltage`, `cell_5_voltage`, `cell_6_voltage`, `cell_7_voltage` from `cmu_".$CMUNum."_cell4-7voltage`";
 				}
 
 				// Create connection
@@ -109,13 +109,13 @@
 				for ($count = 0; $count < $_SESSION['numBatteryCells']; $count++)
 				{
 					$result = mysqli_query($conn, $sqlStatus[$count]);
-					if (mysqli_num_rows($result) > 0)
+					if ($result != false && mysqli_num_rows($result) > 0)
 					{
 						while($row =  mysqli_fetch_assoc($result))
 						{
-							$sqlStatusReturn[$count]["Serial Number"] = $row["Serial Number"];
-							$sqlStatusReturn[$count]["PCB Temperature"] = $row["PCB Temperature"];
-							$sqlStatusReturn[$count]["Cell Temperature"] = $row["Cell Temperature"];
+							$sqlStatusReturn[$count]["Serial Number"] = $row["serial number"];
+							$sqlStatusReturn[$count]["PCB Temperature"] = $row["pcb temperature"];
+							$sqlStatusReturn[$count]["Cell Temperature"] = $row["cell temperature"];
 						}
 					}
 					else
@@ -126,14 +126,14 @@
 					}
 					
 					$result = mysqli_query($conn, $sqlCell0[$count]);
-					if (mysqli_num_rows($result) > 0)
+					if ($result != false && mysqli_num_rows($result) > 0)
 					{
 						while ($row =  mysqli_fetch_assoc($result))
 						{
-							$sqlCell0Return[$count]["Cell 0 Voltage"] = $row["Cell 0 Voltage"];
-							$sqlCell0Return[$count]["Cell 1 Voltage"] = $row["Cell 1 Voltage"];
-							$sqlCell0Return[$count]["Cell 2 Voltage"] = $row["Cell 2 Voltage"];
-							$sqlCell0Return[$count]["Cell 3 Voltage"] = $row["Cell 3 Voltage"];
+							$sqlCell0Return[$count]["Cell 0 Voltage"] = $row["cell 0 voltage"];
+							$sqlCell0Return[$count]["Cell 1 Voltage"] = $row["cell 1 voltage"];
+							$sqlCell0Return[$count]["Cell 2 Voltage"] = $row["cell 2 voltage"];
+							$sqlCell0Return[$count]["Cell 3 Voltage"] = $row["cell 3 voltage"];
 						}
 					}
 					else
@@ -144,14 +144,14 @@
 						$sqlCell0Return[$count]["Cell 3 Voltage"] = "No Data";
 					}
 					$result = mysqli_query($conn, $sqlCell4[$count]);
-					if (mysqli_num_rows($result) > 0)
+					if ($result != false && mysqli_num_rows($result) > 0)
 					{
 						while($row = mysqli_fetch_assoc($result))
 						{
-							$sqlCell4Return[$count]["Cell 4 Voltage"] = $row["Cell 4 Voltage"];
-							$sqlCell4Return[$count]["Cell 5 Voltage"] = $row["Cell 5 Voltage"];
-							$sqlCell4Return[$count]["Cell 6 Voltage"] = $row["Cell 6 Voltage"];
-							$sqlCell4Return[$count]["Cell 7 Voltage"] = $row["Cell 7 Voltage"];
+							$sqlCell4Return[$count]["Cell 4 Voltage"] = $row["cell 4 voltage"];
+							$sqlCell4Return[$count]["Cell 5 Voltage"] = $row["cell 5 voltage"];
+							$sqlCell4Return[$count]["Cell 6 Voltage"] = $row["cell 6 voltage"];
+							$sqlCell4Return[$count]["Cell 7 Voltage"] = $row["cell 7 voltage"];
 						}
 					}
 					else

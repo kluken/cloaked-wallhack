@@ -14,7 +14,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 
-$result = mysqli_query($conn, "SELECT timestamp, Uin, Uout, Iin FROM solar.`MPPT2`");
+$result = mysqli_query($conn, "select time_stamp, uin, uout, iin from solar.`mppt2`");
 
 
 
@@ -24,7 +24,7 @@ $numRows = mysqli_num_rows($result) - 1;
 echo (' [');
 while ( $row = mysqli_fetch_assoc( $result ) ) 
 {
-	echo ('{"category": "'. $row['timestamp'] .'", "Uin": '. $row['Uin'] .', "Uout": ' .$row['Uout'].', "Iin": ' .$row['Iin']. '}');
+	echo ('{"category": "'. $row['time_stamp'] .'", "uin": '. $row['uin'] .', "uout": ' .$row['uout'].', "iin": ' .$row['iin']. '}');
 	if ($count < $numRows)
 	echo ",";
 	$count++;

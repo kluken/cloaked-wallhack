@@ -14,7 +14,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 
-$result = mysqli_query($conn, "SELECT `timestamp`, `Phase_C_Current`, `Phase_B_Current` FROM `phase_current_measurement`;");
+$result = mysqli_query($conn, "SELECT `time_stamp`, `phase_c_current`, `phase_b_current` from `phase_current_measurement`;");
 
 
 
@@ -24,7 +24,7 @@ $numRows = mysqli_num_rows($result) - 1;
 echo (' [');
 while ( $row = mysqli_fetch_assoc( $result ) ) 
 {
-	echo ('{"category": "'. $row['timestamp'] .'", "Phase C Current": '. $row['Phase_C_Current'] .', "Phase B Current": ' .$row['Phase_B_Current'].'}');
+	echo ('{"category": "'. $row['time_stamp'] .'", "Phase C Current": '. $row['phase_c_current'] .', "Phase B Current": ' .$row['phase_b_current'].'}');
 	if ($count < $numRows)
 	echo ",";
 	$count++;

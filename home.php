@@ -152,12 +152,23 @@
 				if (isset($_SESSION["hostname"]))
 				{
 					$conn = mysqli_connect($_SESSION["hostname"], $_SESSION["username"], $_SESSION["password"], $_SESSION["dbname"], $_SESSION["port"]);
-					$sqlSelectVelocity = "SELECT `Vehicle_Velocity` FROM `Velocity_Measurement` ORDER BY id DESC LIMIT 1";
+					$sqlSelectVelocity = "select `Vehicle_Velocity` from `velocity_measurement` order by packet_number desc limit 1";
 					$velocityResult = mysqli_query($conn, $sqlSelectVelocity);
-					$velocityData = mysqli_fetch_assoc($velocityResult);
-					$sqlSelectPower = "SELECT `Bus_Current`, `Bus_Voltage` FROM `Bus_Measurement`ORDER BY id DESC LIMIT 1";
+					if ($velocityResult != false)
+						$velocityData = mysqli_fetch_assoc($velocityResult);
+					else
+						$velocityData['Vehicle_Velocity'] = "No Data";
+						
+					$sqlSelectPower = "select `Bus_Current`, `Bus_Voltage` from `bus_measurement`order by packet_number desc limit 1";
 					$powerResult = mysqli_query($conn, $sqlSelectPower);
-					$powerData = mysqli_fetch_assoc($powerResult);
+					if ($powerResult != false)
+						$powerData = mysqli_fetch_assoc($powerResult);
+					else
+					{
+						$powerData['Bus_Current'] = "n/a";
+						$powerData['Bus_Voltage'] = "n/a";
+					}
+						
 				}?>
 				<table>
 					<tr>
@@ -174,8 +185,13 @@
 						</th>
 						<td>
 							<?php
-								$power = $powerData['Bus_Current'] * $powerData['Bus_Voltage'];
-								echo "$power";
+								if ($powerData['Bus_Current'] == "n/a" || $powerData['Bus_Voltage'] == "n/a")
+									echo "No Data";
+								else
+								{
+									$power = $powerData['Bus_Current'] * $powerData['Bus_Voltage'];
+									echo "$power";
+								}
 							?>
 						</td>
 					</tr>

@@ -335,12 +335,11 @@
 								{
 									$sqlSelect = sqlLookup($entry);
 									$result = mysqli_query($conn, $sqlSelect);
-									$tableName = dataNameLookup($entry);
 									echo "<th>$entry</th>";
-									if (mysqli_num_rows($result) > 0)
+									if ($result != false && mysqli_num_rows($result) > 0)
 									{
 										$row =  mysqli_fetch_assoc($result);
-										
+										$tableName = dataNameLookup($entry);
 										if ($row[$tableName] == "" || (is_null($row[$tableName])))
 											echo "<td class = 'highWarn'>No Data</td>";
 										else 
@@ -356,12 +355,12 @@
 								{
 									$sqlSelect = sqlLookup($entry);
 									$result = mysqli_query($conn, $sqlSelect);
-									$tableName = dataNameLookup($entry);
 									echo "</tr>";
 									echo "<tr>";
 									echo "<th>$entry</th>";
-									if (mysqli_num_rows($result) > 0)
+									if ($result != false && mysqli_num_rows($result) > 0)
 									{
+										$tableName = dataNameLookup($entry);
 										$row =  mysqli_fetch_assoc($result);
 										if ($row[$tableName] == "" || (is_null($row[$tableName])))
 										{		

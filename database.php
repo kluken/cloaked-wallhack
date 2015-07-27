@@ -75,14 +75,25 @@
                 <form id="DatabaseControlForm" method="POST">
                     <div id="DBTablePannel">
                     <table>
+					<tr>
+						<th>
+							Table Number
+						</th>
+						<th>
+							Table Name
+						</th>
+						<th>
+							Number of Rows
+						</th>
+					</tr>
                     <?php
                         function getTableRowCount($xTable , $sqlConn ) {
                             $row_cnt = 0;
                             if ($result = mysqli_query($sqlConn, "SELECT COUNT(*) FROM ".$xTable.";")) {
                                 /* determine number of rows result set */
-                                if ($row = mysqli_fetch_array ( $result )>0){
+                                if (mysqli_num_rows ($result)>0){
+									$row = mysqli_fetch_array ( $result );
                                     $row_cnt = $row[0];
-                                    echo "Total rows: " . $row_cnt;
                                 }
                             }
                             return $row_cnt;

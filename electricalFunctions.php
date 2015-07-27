@@ -35,7 +35,7 @@ function sqlLookup($dataName)
 	}
 	else if (strcmp($dataName, "Precharge / Driver 12V Status") == 0)
 	{
-		return "SELECT `12V_Contactor_Supply_Voltage` FROM `Precharge_Status` ORDER BY packet_number DESC LIMIT 1";
+		return "SELECT `12V_Contactor_Supply_Voltage_Status` FROM `precharge_status` ORDER BY packet_number DESC LIMIT 1";
 	}
 	else if (strcmp($dataName, "Precharge Status") == 0)
 	{
@@ -296,7 +296,7 @@ function dataNameLookup($dataName)
 	}
 	else if (strcmp($dataName, "Precharge / Driver 12V Status") == 0)
 	{
-		return "12V_Contactor_Supply Voltage_Status";
+		return "12V_Contactor_Supply_Voltage_Status";
 	}
 	else if (strcmp($dataName, "Precharge Status") == 0)
 	{

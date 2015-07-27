@@ -14,7 +14,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 
-$result = mysqli_query($conn, "SELECT `time_stamp`, `phase_c_current`, `phase_b_current` from `phase_current_measurement` ORDER BY `packet_number` DESC;");// ORDER BY `packet_number` DESC LIMIT 100
+$result = mysqli_query($conn, "SELECT `bus_measurement`.`time_stamp`, `bus_measurement`.`Bus_Current`, `bus_measurement`.`Bus_Voltage`, `velocity_measurement`.`vehicle_velocity` from `bus_measurement`, `velocity_measurement` where `bus_measurement`.`time_stamp` = `velocity_measurement`.`time_stamp` ORDER BY `bus_measurement`.`time_stamp` DESC LIMIT 10;");
 
 
 
@@ -24,7 +24,7 @@ $numRows = mysqli_num_rows($result) - 1;
 echo (' [');
 while ( $row = mysqli_fetch_assoc( $result ) ) 
 {
-	echo ('{"category": "'. $row['time_stamp'] .'", "Phase C Current": '. $row['phase_c_current'] .', "Phase B Current": ' .$row['phase_b_current'].'}');
+	echo ('{"category": "'. $row['time_stamp'] .'", "Power Draw": '. $row['Bus_Current'] *$row['Bus_Voltage']  .', "Vehicle Velocity": ' .$row['vehicle_velocity'].'}');
 	if ($count < $numRows)
 	echo ",";
 	$count++;

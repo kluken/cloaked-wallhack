@@ -341,7 +341,7 @@
 									if ($total != 0)
 										echo "<td>$total</td>";
 									else 
-										echo "<td class = 'highWarn'>N/A</td>";
+										echo "<td class = 'highWarn'>No Data</td>";
 								}
 								else
 								{
@@ -366,7 +366,7 @@
 										if ($total != 0)
 											echo "<td>$total</td>";
 										else 
-											echo "<td class = 'highWarn'>N/A</td>";
+											echo "<td class = 'highWarn'>No Data</td>";
 									}
 									
 								

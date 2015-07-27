@@ -30,7 +30,7 @@
 				if ($('#refreshHomePage').val() == 1)
 				$('#secondHomeContent').load( "home.php #secondHomeContent");
 			}
-			setInterval(refreshTable, 1000);
+			setInterval(refreshTable, 500);
 			
 			function refreshgraph() 
 			{
@@ -60,7 +60,7 @@
 		</script>
 		
 		<script type="text/javascript">
-			var chart = AmCharts.makeChart( "Motor_Phases", {
+			/*var chart = AmCharts.makeChart( "Motor_Phases", {
 			"type": "serial",
 			"mouseWheelScrollEnabled": true,
 			"startEffect": "easeOutSine",
@@ -111,7 +111,7 @@
 			  var legend = new AmCharts.AmLegend();
                legend.marginLeft = 110;
                legend.useGraphSettings = true;
-               chart.addLegend(legend);		 
+               chart.addLegend(legend);	*/	 
 	</script>
 		
 	</head>
@@ -173,11 +173,12 @@
 				<table>
 					<tr>
 						<th>
-							Vehicle Velocity (m/s):
+							Vehicle Velocity (km/hr):
 						</th>
 						<td>
 							<?php 
-								echo $velocityData['Vehicle_Velocity'];
+								$velocity = $velocityData['Vehicle_Velocity'] * 3.6;
+								echo $velocity;
 							?>
 						</td>
 						<th>

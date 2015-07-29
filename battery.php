@@ -89,9 +89,9 @@
 				for ($count = 0; $count < $_SESSION['numBatteryCells']; $count++)
 				{
 					$CMUNum = $count+1;
-					$sqlStatus[$count] = "select `serial_number`, `pcb_temperature`, `cell_temperature` from `cmu_".$CMUNum."_status`";
-					$sqlCell0[$count] = "select `cell_0_voltage`, `cell_1_voltage`, `cell_2_voltage`, `cell_3_voltage` from `cmu_".$CMUNum."_cell0-3voltage`";
-					$sqlCell4[$count] = "select `cell_4_voltage`, `cell_5_voltage`, `cell_6_voltage`, `cell_7_voltage` from `cmu_".$CMUNum."_cell4-7voltage`";
+					$sqlStatus[$count] = "select `Serial_Number`, `PCB_Temperature`, `Cell_Temperature` from `CMU_".$CMUNum."_Status`";
+					$sqlCell0[$count] = "select `Cell_0_Voltage`, `Cell_1_Voltage`, `Cell_2_Voltage`, `Cell_3_Voltage` from `CMU_".$CMUNum."_Cell0-3Voltage`";
+					$sqlCell4[$count] = "select `Cell_4_Voltage`, `Cell_5_Voltage`, `Cell_6_Voltage`, `Cell_7_Voltage` from `CMU_".$CMUNum."_Cell4-7Voltage`";
 				}
 
 				// Create connection
@@ -112,10 +112,10 @@
 					if ($result != false && mysqli_num_rows($result) > 0)
 					{
 						while($row =  mysqli_fetch_assoc($result))
-						{
-							$sqlStatusReturn[$count]["Serial Number"] = $row["serial_number"];
-							$sqlStatusReturn[$count]["PCB Temperature"] = $row["pcb_temperature"];
-							$sqlStatusReturn[$count]["Cell Temperature"] = $row["cell_temperature"];
+						{	
+							$sqlStatusReturn[$count]["Serial Number"] = $row["Serial_Number"];
+							$sqlStatusReturn[$count]["PCB Temperature"] = $row["PCB_Temperature"] * 0.1;
+							$sqlStatusReturn[$count]["Cell Temperature"] = $row["Cell_Temperature"] * 0.1;
 						}
 					}
 					else
@@ -130,10 +130,10 @@
 					{
 						while ($row =  mysqli_fetch_assoc($result))
 						{
-							$sqlCell0Return[$count]["Cell 0 Voltage"] = $row["cell_0_voltage"];
-							$sqlCell0Return[$count]["Cell 1 Voltage"] = $row["cell_1_voltage"];
-							$sqlCell0Return[$count]["Cell 2 Voltage"] = $row["cell_2_voltage"];
-							$sqlCell0Return[$count]["Cell 3 Voltage"] = $row["cell_3_voltage"];
+							$sqlCell0Return[$count]["Cell 0 Voltage"] = $row["Cell_0_Voltage"];
+							$sqlCell0Return[$count]["Cell 1 Voltage"] = $row["Cell_1_Voltage"];
+							$sqlCell0Return[$count]["Cell 2 Voltage"] = $row["Cell_2_Voltage"];
+							$sqlCell0Return[$count]["Cell 3 Voltage"] = $row["Cell_3_Voltage"];
 						}
 					}
 					else
@@ -148,10 +148,10 @@
 					{
 						while($row = mysqli_fetch_assoc($result))
 						{
-							$sqlCell4Return[$count]["Cell 4 Voltage"] = $row["cell_4_voltage"];
-							$sqlCell4Return[$count]["Cell 5 Voltage"] = $row["cell_5_voltage"];
-							$sqlCell4Return[$count]["Cell 6 Voltage"] = $row["cell_6_voltage"];
-							$sqlCell4Return[$count]["Cell 7 Voltage"] = $row["cell_7_voltage"];
+							$sqlCell4Return[$count]["Cell 4 Voltage"] = $row["Cell_4_Voltage"];
+							$sqlCell4Return[$count]["Cell 5 Voltage"] = $row["Cell_5_Voltage"];
+							$sqlCell4Return[$count]["Cell 6 Voltage"] = $row["Cell_6_Voltage"];
+							$sqlCell4Return[$count]["Cell 7 Voltage"] = $row["Cell_7_Voltage"];
 						}
 					}
 					else
@@ -189,7 +189,7 @@
 					<form action = "battery.php" method = "post">
 						<table>
 							<input type = "hidden" id = "refreshBattPage" name = "refreshBattPage" value = "1"/>
-							<caption>Battery Statistics</caption>
+							<caption>Battery Statistics </caption>
 							<tr>
 							<th>
 							CMU Number
@@ -237,13 +237,13 @@
 								echo "</td>";
 								$CMU = "CMU".$count+1 ."SerialNumber";
 								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["Serial Number"]))
-								echo "<td class = 'highWarn'>";
+									echo "<td class = 'highWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlStatusReturn[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlStatusReturn[$count]["Serial Number"];
+									echo $sqlStatusReturn[$count]["Serial Number"];
 								echo "</td>";
 								$CMU = "CMU".$count."PCBTemp";
 								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["PCB Temperature"]) || $sqlStatusReturn[$count]["PCB Temperature"] > 60)
@@ -253,7 +253,7 @@
 								if (empty($sqlStatusReturn[$count]))
 								echo "N/A";
 								else
-								echo $sqlStatusReturn[$count]["PCB Temperature"];
+								echo $sqlStatusReturn[$count]["PCB Temperature"] . "&#176C";
 								echo "</td>";
 								$CMU = "CMU".$count."CellTemp";
 								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["Cell Temperature"]) || $sqlStatusReturn[$count]["Cell Temperature"] > 60)
@@ -263,7 +263,7 @@
 								if (empty($sqlStatusReturn[$count]))
 								echo "N/A";
 								else
-								echo $sqlStatusReturn[$count]["Cell Temperature"];
+								echo $sqlStatusReturn[$count]["Cell Temperature"] . "&#176C";
 								echo "</td>";
 								$CMU = "CMU".$count."Cell0Voltage";
 								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 0 Voltage"]) || $sqlCell0Return[$count]["Cell 0 Voltage"] < 2700 || $sqlCell0Return[$count]["Cell 0 Voltage"] > 4200)

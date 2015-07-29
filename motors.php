@@ -327,19 +327,26 @@
 									$tableName = dataNameLookup($entry);
 									$total = 0;
 									$numValues = 0;
+									echo "<th>$entry</th>";
 									if ($result != false && mysqli_num_rows($result) > 0)
 									{
-										while($row = mysqli_fetch_array($result)) 
+										if ($entry == "Tritium Motor ID" || $entry == "Tritium Motor Serial Number")
 										{
-											$total = $total + $row[$tableName];
-											$numValues++;
+											$row = mysqli_fetch_array($result);
+											echo "<td>$row[$tableName]</td>";
+										}
+										else
+										{
+											while($row = mysqli_fetch_array($result)) 
+											{
+												$total = $total + $row[$tableName];
+												$numValues++;
+											}
+											if ($numValues !=0)
+												$total = $total / $numValues;
+											echo "<td>$total</td>";
 										}
 									}
-									if ($numValues !=0)
-										$total = $total / $numValues;
-									echo "<th>$entry</th>";
-									if ($total != 0)
-										echo "<td>$total</td>";
 									else 
 										echo "<td class = 'highWarn'>No Data</td>";
 								}
@@ -350,23 +357,30 @@
 									$tableName = dataNameLookup($entry);
 									$total = 0;
 									$numValues = 0;
+									echo "</tr>";
+									echo "<tr>";
+									echo "<th>$entry</th>";
 									if ($result != false && mysqli_num_rows($result) > 0)
 									{
-										while($row = mysqli_fetch_array($result)) 
+										if ($entry == "Tritium Motor ID" || $entry == "Tritium Motor Serial Number")
 										{
-											$total = $total + $row[$tableName];
-											$numValues++;
+											$row = mysqli_fetch_array($result);
+											echo "<td>$row[$tableName]</td>";
+										}
+										else
+										{
+											while($row = mysqli_fetch_array($result)) 
+											{
+												$total = $total + $row[$tableName];
+												$numValues++;
+											}
+											if ($numValues !=0)
+												$total = $total / $numValues;
+											echo "<td>$total</td>";
 										}
 									}
-										if ($numValues !=0)
-											$total = $total / $numValues;
-										echo "</tr>";
-										echo "<tr>";
-										echo "<th>$entry</th>";
-										if ($total != 0)
-											echo "<td>$total</td>";
-										else 
-											echo "<td class = 'highWarn'>No Data</td>";
+									else 
+										echo "<td class = 'highWarn'>No Data</td>";
 									}
 									
 								

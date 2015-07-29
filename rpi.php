@@ -15,7 +15,7 @@
 		</script>
 		<style>
 			body:after 			{	
-				background-image: url("car.jpg");
+				background-image: url("pi.png");
 				background-size: 1920px 1080px;		
 			}
 		</style>
@@ -33,7 +33,7 @@
 			else 
 			{
 				//Set SQL Database Settings
-				$servername = "192.168.1.3";//$_SESSION["hostname"];
+				$servername = $_SESSION["hostname"];
 				$username = $_SESSION["username"];
 				$password = $_SESSION["password"];
 				$dbname = "main";
@@ -89,7 +89,7 @@
 								$result = mysqli_query ( $conn , $sql );
 								//$result = $conn->query($sql);
 
-								if ($result->num_rows > 0) {
+								if ($result != false && mysqli_num_rows($result) > 0) {
 									// output data of each row									
 									while($row = $result->fetch_assoc()) {
 										echo "<tr><td> ". $row["id"]. " </td><td>" . $row["name"]. " </td><td>" . $row["ip"]. "</td><td>" . $row["mac"]. "</td><tr>";
@@ -150,9 +150,10 @@
 				</p>
 			</div>
 		</div>
-	</body>
-	<?php 	
+			<?php 	
 		//Close the connection
 		mysqli_close ( $conn ); 
 	?>
+	</body>
+
 </html> 

@@ -209,7 +209,7 @@ function sqlLookup($dataName)
 	{
 		return "SELECT `Battery_Over_Voltage` FROM `MPPT1` ORDER BY packet_number DESC LIMIT 1";
 	}
-	else if (strcmp($dataName, "Battery Over Temperature from MPPT1") == 0)
+	else if (strcmp($dataName, "MPPT1 Over Temperature") == 0)
 	{
 		return "SELECT `Over_Temperature` FROM `MPPT1` ORDER BY packet_number DESC LIMIT 1";
 	}
@@ -241,7 +241,7 @@ function sqlLookup($dataName)
 	{
 		return "SELECT `Battery_Over_Voltage` FROM `MPPT2` ORDER BY packet_number DESC LIMIT 1";
 	}
-	else if (strcmp($dataName, "Battery Over Temperature from MPPT2") == 0)
+	else if (strcmp($dataName, "MPPT2 Over Temperature") == 0)
 	{
 		return "SELECT `Over_Temperature` FROM `MPPT2` ORDER BY packet_number DESC LIMIT 1";
 	}
@@ -470,7 +470,7 @@ function dataNameLookup($dataName)
 	{
 		return "Battery_Over_Voltage";
 	}
-	else if (strcmp($dataName, "Battery Over Temperature from MPPT1") == 0)
+	else if (strcmp($dataName, "MPPT1 Over Temperature") == 0)
 	{
 		return "Over_Temperature";
 	}
@@ -502,7 +502,7 @@ function dataNameLookup($dataName)
 	{
 		return "Battery_Over_Voltage";
 	}
-	else if (strcmp($dataName, "Battery Over Temperature from MPPT2") == 0)
+	else if (strcmp($dataName, "MPPT2 Over Temperature") == 0)
 	{
 		return "Over_Temperature";
 	}

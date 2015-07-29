@@ -274,7 +274,7 @@
 											<input type = "checkbox" id = "mpptBattOverVolt1" name = "selectedData[]" value = "Battery Over Voltage from MPPT1"> <label for = "mpptBattOverVolt1"> Battery Over Voltage from MPPT1</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedData[]" value = "Battery Over Temperature from MPPT1"> <label for = "mpptOverTemp1"> Battery Over Temperature from MPPT1</label>
+											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedData[]" value = "MPPT1 Over Temperature"> <label for = "mpptOverTemp1"> MPPT1 Over Temperature</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "noConnMppt1" name = "selectedData[]" value = "No Connection to MPPT1"> <label for = "noConnMppt1"> No Connection to MPPT1</label>
@@ -300,7 +300,7 @@
 											<input type = "checkbox" id = "mpptBattOverVolt2" name = "selectedData[]" value = "Battery Over Voltage from MPPT2"> <label for = "mpptBattOverVolt2"> Battery Over Voltage from MPPT2</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptOverTemp2" name = "selectedData[]" value = "Battery Over Temperature from MPPT2"> <label for = "mpptOverTemp2"> Battery Over Temperature from MPPT2</label>
+											<input type = "checkbox" id = "mpptOverTemp2" name = "selectedData[]" value = "MPPT2 Over Temperature"> <label for = "mpptOverTemp2"> MPPT2 Over Temperature</label>
 										</th><th>
 											<input type = "checkbox" id = "noConnMppt2" name = "selectedData[]" value = "No Connection to MPPT2"> <label for = "noConnMppt2"> No Connection to MPPT2</label>
 										</th>

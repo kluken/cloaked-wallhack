@@ -95,11 +95,11 @@ return "SELECT `Odometer` FROM `Odometer_and_Bus_AmpHours_Measurement` ORDER BY 
 }
 else if (strcmp($dataName, "Tritium Motor ID") == 0)
 {
-return "SELECT `Motor_Tritium_ID` FROM `Identification_Information` ORDER BY packet_number DESC LIMIT 5";
+return "SELECT `Tritium_ID` FROM `Identification_Information` ORDER BY packet_number DESC LIMIT 5";
 }
 else if (strcmp($dataName, "Tritium Motor Serial Number") == 0)
 {
-return "SELECT `Motor_Serial_Number` FROM `Identification_Information` ORDER BY packet_number DESC LIMIT 5";
+return "SELECT `Serial_Number` FROM `Identification_Information` ORDER BY packet_number DESC LIMIT 5";
 }
 else if (strcmp($dataName, "Desaturation Fault") == 0)
 {
@@ -262,11 +262,11 @@ return "Odometer";
 }
 else if (strcmp($dataName, "Tritium Motor ID") == 0)
 {
-return "Motor_Tritium_ID";
+return "Tritium_ID";
 }
 else if (strcmp($dataName, "Tritium Motor Serial Number") == 0)
 {
-return "Motor_Serial_Number";
+return "Serial_Number";
 }
 else if (strcmp($dataName, "Desaturation Fault") == 0)
 {

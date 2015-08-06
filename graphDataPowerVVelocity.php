@@ -14,20 +14,44 @@ $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 
-$result = mysqli_query($conn, "SELECT `bus_measurement`.`time_stamp`, `bus_measurement`.`Bus_Current`, `bus_measurement`.`Bus_Voltage`, `velocity_measurement`.`vehicle_velocity` from `bus_measurement`, `velocity_measurement` where `bus_measurement`.`time_stamp` = `velocity_measurement`.`time_stamp` ORDER BY `bus_measurement`.`time_stamp` DESC LIMIT 10;");
+$voltageResult = mysqli_query($conn, "SELECT DISTINCT `time_stamp`, `Bus_Current`, `Bus_Voltage` from `Bus_Measurement` ORDER BY `time_stamp` DESC LIMIT 100;");
+
+$velocityResult = mysqli_query($conn, "SELECT DISTINCT `vehicle_velocity` from `Velocity_Measurement` ORDER BY `time_stamp` DESC LIMIT 100;");
 
 
 
 // Print out rows
 $count = 0;
-$numRows = mysqli_num_rows($result) - 1;
+$numRows = mysqli_num_rows($voltageResult) - 1;
+
+if (mysqli_num_rows($velocityResult) - 1 < mysqli_num_rows($voltageResult) - 1)
+	$numRows = mysqli_num_rows($velocityResult) - 1;
+
 echo (' [');
-while ( $row = mysqli_fetch_assoc( $result ) ) 
+
+$velocityArray = Array();
+$count = 0;
+while ($velocityRow = mysqli_fetch_assoc($velocityResult))
 {
-	echo ('{"category": "'. $row['time_stamp'] .'", "Power Draw": '. $row['Bus_Current'] *$row['Bus_Voltage']  .', "Vehicle Velocity": ' .$row['vehicle_velocity'].'}');
+	$velocityArray[$count] = $velocityRow['vehicle_velocity'] * 3.6;
+	$count++;
+}
+
+$powerArray = Array();
+$timeArray = Array();
+$count = $numRows;
+while ($voltageRow = mysqli_fetch_assoc($voltageResult))
+{
+	$powerArray[$count] = $voltageRow['Bus_Current'] * $voltageRow['Bus_Voltage'];
+	$timeArray[$count] = $voltageRow['time_stamp'];
+	$count--;
+}
+
+for ($count = 0; $count < $numRows+1; $count++) 
+{
+	echo ('{"category": "'. $timeArray[$count] .'", "Power Draw": '. $powerArray[$count] .', "Vehicle Velocity": ' .$velocityArray[$count].'}');
 	if ($count < $numRows)
 	echo ",";
-	$count++;
 }
 echo ("]");
 

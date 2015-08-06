@@ -32,12 +32,6 @@
 			}
 			setInterval(refreshTable, 500);
 			
-			function refreshgraph() 
-			{
-				if ($('#refreshHomePage').val() == 1)
-				location.reload(); 
-			}
-			setInterval(refreshgraph, 5000);
 			
 			
 			
@@ -152,17 +146,42 @@
 				if (isset($_SESSION["hostname"]))
 				{
 					$conn = mysqli_connect($_SESSION["hostname"], $_SESSION["username"], $_SESSION["password"], $_SESSION["dbname"], $_SESSION["port"]);
-					$sqlSelectVelocity = "select `Vehicle_Velocity` from `velocity_measurement` order by packet_number desc limit 1";
+					$sqlSelectVelocity = "select distinct `Vehicle_Velocity` from `velocity_measurement` order by packet_number desc limit 10";
 					$velocityResult = mysqli_query($conn, $sqlSelectVelocity);
+					$velocityData = 0;
+					$rowCount = 0;
 					if ($velocityResult != false)
-						$velocityData = mysqli_fetch_assoc($velocityResult);
+					{
+						while($row = mysqli_fetch_array($velocityResult))
+						{
+							$velocityData = $row['Vehicle_Velocity'] + $velocityData;
+							$rowCount++;
+						}
+						if ($rowCount != 0)
+							$velocityData = $velocityData / $rowCount;
+					}
 					else
 						$velocityData['Vehicle_Velocity'] = "No Data";
 						
-					$sqlSelectPower = "select `Bus_Current`, `Bus_Voltage` from `bus_measurement`order by packet_number desc limit 1";
+					$sqlSelectPower = "select distinct `Bus_Current`, `Bus_Voltage` from `bus_measurement`order by packet_number desc limit 10";
 					$powerResult = mysqli_query($conn, $sqlSelectPower);
+					$busCurrent = 0;
+					$busVoltage = 0;
+					$rowCount = 0;
 					if ($powerResult != false)
-						$powerData = mysqli_fetch_assoc($powerResult);
+					{
+						while ($row = mysqli_fetch_assoc($powerResult))
+						{
+							$busCurrent = $row['Bus_Current'] + $busCurrent;
+							$busVoltage = $row['Bus_Voltage'] + $busVoltage;
+							$rowCount++;
+						}
+						if ($rowCount != 0)
+						{
+							$powerData['Bus_Current'] = $busCurrent / $rowCount;
+							$powerData['Bus_Voltage'] = $busVoltage / $rowCount;
+						}
+					}
 					else
 					{
 						$powerData['Bus_Current'] = "n/a";
@@ -198,7 +217,7 @@
 					</tr>
 				</table>
 				</div>
-				<div id="Motor_Phases" style="width: 100%; height: 400px;"> </div>
+				<!--<div id="Motor_Phases" style="width: 100%; height: 400px;"> </div> -->
 				<div>
 					<form method = "post" action = "home.php" id = "pageReset" >
 						<p><input type="hidden" id="resetServerDetails" name="resetServerDetails" value="1"/>

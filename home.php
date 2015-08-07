@@ -30,7 +30,7 @@
 				if ($('#refreshHomePage').val() == 1)
 				$('#secondHomeContent').load( "home.php #secondHomeContent");
 			}
-			setInterval(refreshTable, 500);
+			setInterval(refreshTable, 250);
 			
 			
 			
@@ -52,61 +52,6 @@
 				}
 			}
 		</script>
-		
-		<script type="text/javascript">
-			/*var chart = AmCharts.makeChart( "Motor_Phases", {
-			"type": "serial",
-			"mouseWheelScrollEnabled": true,
-			"startEffect": "easeOutSine",
-			"dataLoader": {
-			  "url": "graphDataMotorPhases.php"
-			},
-			"categoryField": "category",
-			"dataDateFormat": "YYYY-MM-DD HH:NN:SS",
-			"startDuration": 0,
-			"categoryAxis": {
-			  "parseDates": true,
-			  "minorGridEnabled": true,
-			  "twoLineMode": true,
-			   "minPeriod": "ss"
-			},
-			"graphs": [ {
-			  "valueField": "Phase C Current",
-			  "bullet": "round",
-			  "bulletBorderColor": "#000000",
-			  "bulletBorderThickness": 2,
-			  "lineThickness ": 2,
-			  "lineAlpha": 1,
-			  "title": "Phase C Current"
-
-			}, {
-			  "valueField": "Phase B Current",
-			  "bullet": "square",
-			  "bulletBorderColor": "#000000",
-			  "bulletBorderThickness": 2,
-			  "lineThickness ": 2,
-			  "lineAlpha": 1,
-			  "title": "Phase B Current"
-			} ]
-		  }
-
-			  );
-			  
-			   // CURSOR
-               var chartCursor = new AmCharts.ChartCursor();
-               chartCursor.cursorAlpha = 0.1;
-               chartCursor.fullWidth = true;
-               chart.addChartCursor(chartCursor);
-
-               // SCROLLBAR
-               var chartScrollbar = new AmCharts.ChartScrollbar();
-               chart.addChartScrollbar(chartScrollbar);
-			  
-			  var legend = new AmCharts.AmLegend();
-               legend.marginLeft = 110;
-               legend.useGraphSettings = true;
-               chart.addLegend(legend);	*/	 
-	</script>
 		
 	</head>
 	<body>
@@ -146,7 +91,7 @@
 				if (isset($_SESSION["hostname"]))
 				{
 					$conn = mysqli_connect($_SESSION["hostname"], $_SESSION["username"], $_SESSION["password"], $_SESSION["dbname"], $_SESSION["port"]);
-					$sqlSelectVelocity = "select distinct `Vehicle_Velocity` from `velocity_measurement` order by packet_number desc limit 10";
+					$sqlSelectVelocity = "select `Vehicle_Velocity` from `velocity_measurement` GROUP BY `time_stamp` order by `time_stamp` desc limit 5";
 					$velocityResult = mysqli_query($conn, $sqlSelectVelocity);
 					$velocityData = 0;
 					$rowCount = 0;
@@ -163,7 +108,7 @@
 					else
 						$velocityData['Vehicle_Velocity'] = "No Data";
 						
-					$sqlSelectPower = "select distinct `Bus_Current`, `Bus_Voltage` from `bus_measurement`order by packet_number desc limit 10";
+					$sqlSelectPower = "select `Bus_Current`, `Bus_Voltage` from `bus_measurement` GROUP BY `time_stamp` order by `time_stamp` desc limit 5";
 					$powerResult = mysqli_query($conn, $sqlSelectPower);
 					$busCurrent = 0;
 					$busVoltage = 0;
@@ -196,7 +141,7 @@
 						</th>
 						<td>
 							<?php 
-								$velocity = $velocityData['Vehicle_Velocity'] * 3.6;
+								$velocity = $velocityData * 3.6;
 								echo $velocity;
 							?>
 						</td>
@@ -217,7 +162,6 @@
 					</tr>
 				</table>
 				</div>
-				<!--<div id="Motor_Phases" style="width: 100%; height: 400px;"> </div> -->
 				<div>
 					<form method = "post" action = "home.php" id = "pageReset" >
 						<p><input type="hidden" id="resetServerDetails" name="resetServerDetails" value="1"/>

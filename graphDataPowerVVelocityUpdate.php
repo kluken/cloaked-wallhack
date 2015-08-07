@@ -14,9 +14,9 @@ $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 
-$voltageResult = mysqli_query($conn, "SELECT `time_stamp`, `Bus_Current`, `Bus_Voltage` from `Bus_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 50;");
+$voltageResult = mysqli_query($conn, "SELECT `time_stamp`, `Bus_Current`, `Bus_Voltage` from `Bus_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 1;");
 
-$velocityResult = mysqli_query($conn, "SELECT `vehicle_velocity` from `Velocity_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 50;");
+$velocityResult = mysqli_query($conn, "SELECT `vehicle_velocity` from `Velocity_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 1;");
 
 
 
@@ -27,7 +27,6 @@ $numRows = mysqli_num_rows($voltageResult) - 1;
 if (mysqli_num_rows($velocityResult) - 1 < mysqli_num_rows($voltageResult) - 1)
 	$numRows = mysqli_num_rows($velocityResult) - 1;
 
-echo (' [');
 
 $velocityArray = Array();
 $count = 0;
@@ -53,7 +52,7 @@ for ($count = 0; $count < $numRows+1; $count++)
 	if ($count < $numRows)
 	echo ",";
 }
-echo ("]");
+echo ("");
 
 // Close the connection
 mysqli_close( $conn );

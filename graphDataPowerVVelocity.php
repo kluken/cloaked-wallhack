@@ -9,16 +9,19 @@ $username = $_SESSION["username"];
 $password = $_SESSION["password"];
 $dbname = $_SESSION["dbname"];
 $port = $_SESSION["port"];
+$dateFrom = $_SESSION["dateFrom"];
+$dateTo = $_SESSION["dateTo"];
 $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 
 // Fetch the data
 
-$voltageResult = mysqli_query($conn, "SELECT `time_stamp`, `Bus_Current`, `Bus_Voltage` from `Bus_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 50;");
+$voltageResult = mysqli_query($conn, "SELECT `time_stamp`, `Bus_Current`, `Bus_Voltage` from `Bus_Measurement` WHERE `time_stamp` BETWEEN '".$dateFrom."' AND '".$dateTo."' GROUP BY `time_stamp` ORDER BY `time_stamp` DESC;");
 
-$velocityResult = mysqli_query($conn, "SELECT `vehicle_velocity` from `Velocity_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 50;");
+$test = "SELECT DISTINCT `time_stamp`, `vehicle_velocity` from `Velocity_Measurement` ORDER BY `time_stamp` WHERE `time_stamp` BETWEEN '".$dateFrom."' AND '".$dateTo."' DESC;";
+//echo ($test);
 
-
+$velocityResult = mysqli_query($conn, "SELECT `vehicle_velocity` from `Velocity_Measurement` WHERE `time_stamp` BETWEEN '".$dateFrom."' AND '".$dateTo."' GROUP BY `time_stamp` ORDER BY `time_stamp` DESC;");
 
 // Print out rows
 $count = 0;

@@ -106,7 +106,7 @@
 							$velocityData = $velocityData / $rowCount;
 					}
 					else
-						$velocityData['Vehicle_Velocity'] = "No Data";
+						$velocityData = "No Data";
 						
 					$sqlSelectPower = "select `Bus_Current`, `Bus_Voltage` from `bus_measurement` GROUP BY `time_stamp` order by `time_stamp` desc limit 5";
 					$powerResult = mysqli_query($conn, $sqlSelectPower);

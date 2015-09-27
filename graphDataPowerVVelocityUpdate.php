@@ -14,7 +14,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 
-$voltageResult = mysqli_query($conn, "SELECT `time_stamp`, `Bus_Current`, `Bus_Voltage` from `Bus_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 1;");
+$voltageResult = mysqli_query($conn, "SELECT date_add(date(`time_stamp`), INTERVAL hour(`time_stamp`) HOUR) `time_stamp`, avg(`Bus_Current`) `Bus_Current`, avg(`Bus_Voltage`) `Bus_Voltage` from `Bus_Measurement` GROUP BY date_add(date(`time_stamp`), INTERVAL hour(`time_stamp`) HOUR) ORDER BY date_add(date(`time_stamp`), INTERVAL hour(`time_stamp`) HOUR);");
 
 $velocityResult = mysqli_query($conn, "SELECT `vehicle_velocity` from `Velocity_Measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 1;");
 

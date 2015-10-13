@@ -89,7 +89,7 @@
                     <?php
                         function getTableRowCount($xTable , $sqlConn ) {
                             $row_cnt = 0;
-							$selectStatement = "SELECT `packet_number` FROM `".$xTable."` ORDER BY `packet_number` DESC LIMIT 1;";
+							$selectStatement = "SELECT count(*) FROM `".$xTable."`;";
 							
                                 /* determine number of rows result set */
                             $result = mysqli_query($sqlConn, $selectStatement);

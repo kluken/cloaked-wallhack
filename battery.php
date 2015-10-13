@@ -175,7 +175,7 @@
 					<br/>
 					<form method="post" action="battery.php" id="setupForm" >
 						<p>
-							<label id = "numBatteryCellsLabel"> Please enter the amount of cells you want to show </label><input id="numBatteryCells" name="numBatteryCells"  value = "5" />
+							<label id = "numBatteryCellsLabel"> Please enter the amount of CMU's you want to show </label><input id="numBatteryCells" name="numBatteryCells"  value = "5" />
 							<input type="hidden" value="0" id="userConfirm" name="userConfirm"/>
 							<input type="button" value="Submit" onclick="submitForm();"/>
 						</p>
@@ -237,7 +237,7 @@
 								echo "</td>";
 								$CMU = "CMU".$count+1 ."SerialNumber";
 								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["Serial Number"]))
-									echo "<td class = 'highWarn'>";
+									echo "<td class = 'missingData'>";
 								else
 									echo "<td>";
 								if (empty($sqlStatusReturn[$count]))
@@ -246,120 +246,144 @@
 									echo $sqlStatusReturn[$count]["Serial Number"];
 								echo "</td>";
 								$CMU = "CMU".$count."PCBTemp";
-								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["PCB Temperature"]) || $sqlStatusReturn[$count]["PCB Temperature"] > 60)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["PCB Temperature"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlStatusReturn[$count]["PCB Temperature"] > 60)
+									echo "<td class = 'highWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlStatusReturn[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlStatusReturn[$count]["PCB Temperature"] . "&#176C";
+									echo $sqlStatusReturn[$count]["PCB Temperature"] . "&#176C";
 								echo "</td>";
 								$CMU = "CMU".$count."CellTemp";
-								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["Cell Temperature"]) || $sqlStatusReturn[$count]["Cell Temperature"] > 60)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlStatusReturn[$count]) || !is_numeric($sqlStatusReturn[$count]["Cell Temperature"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlStatusReturn[$count]["Cell Temperature"] > 60)
+									echo "<td class = 'highWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlStatusReturn[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlStatusReturn[$count]["Cell Temperature"] . "&#176C";
+									echo $sqlStatusReturn[$count]["Cell Temperature"] . "&#176C";
 								echo "</td>";
 								$CMU = "CMU".$count."Cell0Voltage";
-								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 0 Voltage"]) || $sqlCell0Return[$count]["Cell 0 Voltage"] < 2700 || $sqlCell0Return[$count]["Cell 0 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 0 Voltage"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlCell0Return[$count]["Cell 0 Voltage"] < 2700 || $sqlCell0Return[$count]["Cell 0 Voltage"] > 4200)
+									echo "<td class = 'highWarn'>";
 								else if ($sqlCell0Return[$count]["Cell 0 Voltage"] < 3100 || $sqlCell0Return[$count]["Cell 0 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell0Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell0Return[$count]["Cell 0 Voltage"];
+									echo $sqlCell0Return[$count]["Cell 0 Voltage"];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell1Voltage";
-								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 1 Voltage"]) || $sqlCell0Return[$count]["Cell 1 Voltage"] < 2700|| $sqlCell0Return[$count]["Cell 1 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 1 Voltage"]))
+								{
+									echo "<td class = 'missingData'>";
+								}
+								else if ($sqlCell0Return[$count]["Cell 1 Voltage"] < 2700|| $sqlCell0Return[$count]["Cell 1 Voltage"] > 4200)
+								{
+									echo "<td class = 'highWarn'>";
+								}		
 								else if ($sqlCell0Return[$count]["Cell 1 Voltage"] < 3100|| $sqlCell0Return[$count]["Cell 1 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell0Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell0Return[$count]["Cell 1 Voltage"];
+									echo $sqlCell0Return[$count]["Cell 1 Voltage"];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell2Voltage";
-								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 2 Voltage"]) || $sqlCell0Return[$count]["Cell 2 Voltage"] < 2700 || $sqlCell0Return[$count]["Cell 2 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 2 Voltage"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlCell0Return[$count]["Cell 2 Voltage"] < 2700 || $sqlCell0Return[$count]["Cell 2 Voltage"] > 4200)
+									echo "<td class = 'highWarn'>";
 								else if ($sqlCell0Return[$count]["Cell 2 Voltage"] < 3100 || $sqlCell0Return[$count]["Cell 2 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell0Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell0Return[$count]["Cell 2 Voltage"];
+									echo $sqlCell0Return[$count]["Cell 2 Voltage"];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell3Voltage";
-								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 3 Voltage"]) || $sqlCell0Return[$count]["Cell 3 Voltage"] < 2700 || $sqlCell0Return[$count]["Cell 3 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell0Return[$count]) || !is_numeric($sqlCell0Return[$count]["Cell 3 Voltage"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlCell0Return[$count]["Cell 3 Voltage"] < 2700 || $sqlCell0Return[$count]["Cell 3 Voltage"] > 4200)
+									echo "<td class = 'highWarn'>";
 								else if ($sqlCell0Return[$count]["Cell 3 Voltage"] < 3100 || $sqlCell0Return[$count]["Cell 3 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell0Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell0Return[$count]["Cell 3 Voltage"];
+									echo $sqlCell0Return[$count]["Cell 3 Voltage"];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell4Voltage";
-								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 4 Voltage"]) || $sqlCell4Return[$count]["Cell 4 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 4 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 4 Voltage"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlCell4Return[$count]["Cell 4 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 4 Voltage"] > 4200)
+									echo "<td class = 'highWarn'>";
 								else if ($sqlCell4Return[$count]["Cell 4 Voltage"] < 3100 || $sqlCell4Return[$count]["Cell 4 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell4Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell4Return[$count]["Cell 4 Voltage"];
+									echo $sqlCell4Return[$count]["Cell 4 Voltage"];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell5Voltage";
-								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 5 Voltage"]) || $sqlCell4Return[$count]["Cell 5 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 5 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 5 Voltage"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlCell4Return[$count]["Cell 5 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 5 Voltage"] > 4200)
+									echo "<td class = 'highWarn'>";
 								else if ($sqlCell4Return[$count]["Cell 5 Voltage"] < 3100 || $sqlCell4Return[$count]["Cell 5 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell4Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell4Return[$count]["Cell 5 Voltage"];
+									echo $sqlCell4Return[$count]["Cell 5 Voltage"];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell6Voltage";
-								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 6 Voltage"]) || $sqlCell4Return[$count]["Cell 6 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 6 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 6 Voltage"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlCell4Return[$count]["Cell 6 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 6 Voltage"] > 4200)
+									echo "<td class = 'highWarn'>";
 								else if ($sqlCell4Return[$count]["Cell 6 Voltage"] < 3100 || $sqlCell4Return[$count]["Cell 6 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell4Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell4Return[$count]["Cell 6 Voltage"];
+									echo $sqlCell4Return[$count]["Cell 6 Voltage"];
 								echo "</td>";
 								$CMU = "CMU".$count."Cell7Voltage";
-								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 7 Voltage"]) || $sqlCell4Return[$count]["Cell 7 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 7 Voltage"] > 4200)
-								echo "<td class = 'highWarn'>";
+								if (empty($sqlCell4Return[$count]) || !is_numeric($sqlCell4Return[$count]["Cell 7 Voltage"]))
+									echo "<td class = 'missingData'>";
+								else if ($sqlCell4Return[$count]["Cell 7 Voltage"] < 2700 || $sqlCell4Return[$count]["Cell 7 Voltage"] > 4200)
+									echo "<td class = 'highWarn'>";
 								else if ($sqlCell4Return[$count]["Cell 7 Voltage"] < 3100 || $sqlCell4Return[$count]["Cell 7 Voltage"] > 4100)
-								echo "<td class = 'medWarn'>";
+									echo "<td class = 'medWarn'>";
 								else
-								echo "<td>";
+									echo "<td>";
 								if (empty($sqlCell4Return[$count]))
-								echo "N/A";
+									echo "N/A";
 								else
-								echo $sqlCell4Return[$count]["Cell 7 Voltage"];
+									echo $sqlCell4Return[$count]["Cell 7 Voltage"];
 								echo "</td>";
 								echo "</tr>";
 							}

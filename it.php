@@ -7,11 +7,11 @@
 		<link rel="stylesheet" href="master.css" type="text/css" /> 
 		<script src="jquery-2.1.4.min.js"></script>
 		<script>
-			function refreshTable() 
+			/*function refreshTable() 
 			{
 				$('#content').load( "it.php #content");
 			}
-			setInterval(refreshTable, 3000);
+			setInterval(refreshTable, 3000);*/
 		</script>
 		
 		<?php 
@@ -29,6 +29,15 @@
 				$port = $_SESSION["port"];
 			}
 			
+			
+			if (isset($_POST["submit"]))
+			{
+				if ($_POST["function"] == "killCar")
+					exec("./bin/killcar");
+				else
+					exec ("./bin/buzzcar");
+			}
+			
 			?>
 	</head>
 	<body>
@@ -36,8 +45,12 @@
 			<?php require_once("headerBar.php"); ?>
 			<div id="content">
 				<p> 
-					SHOW ME THE CONTENT <br/>
-					<?php echo exec("test.exe"); ?>
+					<form action = "it.php" method = "post" id = "admin" name = "admin" >
+						<input type="radio" id="function[]" name = "function[]" value="killCar"> Kill Car </input> <br/>
+						<input type="radio" id="function[]" name = "function[]" value = "buzzDriver"> Buzz Driver </input> <br/>
+						<input type = "submit" value = "GO!"/>
+					</form>
+					
 				</p>
 			</div>
 		</div>

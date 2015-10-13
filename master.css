@@ -128,9 +128,14 @@ td.medWarn
 	background-color: #FFD700; /*Gold Yellow*/
 }
 
+td.missingData
+{
+	background-color: #9D9D9D; /*Greyish*/
+}
+
 td.goodData
 {
-	color: Green;
+	background-color: #00B300;
 }
 
 label.check

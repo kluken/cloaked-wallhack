@@ -91,24 +91,19 @@
 				if (isset($_SESSION["hostname"]))
 				{
 					$conn = mysqli_connect($_SESSION["hostname"], $_SESSION["username"], $_SESSION["password"], $_SESSION["dbname"], $_SESSION["port"]);
-					$sqlSelectVelocity = "select `Vehicle_Velocity` from `velocity_measurement` GROUP BY `time_stamp` order by `time_stamp` desc limit 5";
+					$sqlSelectVelocity = "select round(avg(`Vehicle_Velocity`), 2) as `Vehicle_Velocity` from `velocity_measurement` order by `time_stamp` desc limit 1";
 					$velocityResult = mysqli_query($conn, $sqlSelectVelocity);
 					$velocityData = 0;
 					$rowCount = 0;
 					if ($velocityResult != false)
 					{
-						while($row = mysqli_fetch_array($velocityResult))
-						{
-							$velocityData = $row['Vehicle_Velocity'] + $velocityData;
-							$rowCount++;
-						}
-						if ($rowCount != 0)
-							$velocityData = $velocityData / $rowCount;
+						$row = mysqli_fetch_assoc($velocityResult);
+						$velocityData = $row['Vehicle_Velocity'];
 					}
 					else
 						$velocityData = "No Data";
 						
-					$sqlSelectPower = "select `Bus_Current`, `Bus_Voltage` from `bus_measurement` GROUP BY `time_stamp` order by `time_stamp` desc limit 5";
+					$sqlSelectPower = "select `Bus_Current_(A)` as `Bus_Current`, `Bus_Voltage_(V)` as `Bus_Voltage` from `bmu_bus_measurement` GROUP BY `time_stamp` order by `time_stamp` desc limit 5";
 					$powerResult = mysqli_query($conn, $sqlSelectPower);
 					$busCurrent = 0;
 					$busVoltage = 0;

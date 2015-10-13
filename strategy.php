@@ -16,11 +16,23 @@
 			$dbname = $_SESSION["dbname"];
 			$port = $_SESSION["port"];
 			$conn = mysqli_connect($servername, $username, $password, $dbname, $port);
-		}
+		}	
+			
+			
 	?>
+	
 	<head>
 		<title>UWS Solar Car Project - Home</title>
 		<link rel="stylesheet" href="master.css" type="text/css" /> 
+		
+		<script src="jquery-2.1.4.min.js"></script>
+		<script>
+			function refreshTable() 
+			{
+				$('#data').load( "strategy.php #data");
+			}
+			setInterval(refreshTable, 1000);
+		</script>
 		
 		<script type="text/javascript">
 		
@@ -202,21 +214,196 @@
 			
 			function decimalToTime(decimal)
 			{
-				var hours = ;
-				var minutes = ;
-				var time = String(hours) + ":" + String(minutes);
+				var hours = String(time.charAt(0));
+				var minutes = "0." + String(time.charAt(2)) + String(time.charAt(3));
+				var time = String(hours) + ":" + String(parseInt(minutes) * 60);
+				return time;
 			}
 		</script>
 		
+		<?php
+		//Setup Variables
+			
+			$velocitySQL = "select round(avg(`Vehicle_Velocity` * 3.6), 2) `Vehicle_Velocity` from `velocity_measurement`";
+			$vehicleVelocity = mysqli_query($conn, $velocitySQL);
+			if ($vehicleVelocity != false)
+			{
+				$vehicleVelocityResult = mysqli_fetch_array($vehicleVelocity)['Vehicle_Velocity'];
+			}
+			else
+			$vehicleVelocityResult = "No Data";
+						
+			$mppt1PowerOutSql = "select round((avg(`uin`) * 1.5 * 0.1) * (avg(`iin`)  * 0.87 * 0.01 ), 2) AS pin from (select `iin`, `uin` from `mppt1` order by time_stamp desc limit 10) `pin`";
+			$mppt1Result = mysqli_query($conn, $mppt1PowerOutSql);
+			$mppt1Power = mysqli_fetch_array($mppt1Result)['pin'];
+			
+			$mppt2PowerOutSql = "select round((avg(`uin`) * 1.5 * 0.1) * (avg(`iin`)  * 0.87 * 0.01 ), 2) AS pin from (select `iin`, `uin` from `mppt2` order by time_stamp desc limit 10) `pin`";
+			$mppt2Result = mysqli_query($conn, $mppt2PowerOutSql);
+			$mppt2Power = mysqli_fetch_array($mppt2Result)['pin'];
+			
+			$shuntPowerSql = "select round((avg(`bus_current_(a)`)) * (avg(`bus_voltage_(v)`)), 2) AS pin from (select `bus_current_(a)`, `bus_voltage_(v)` from `bmu_bus_measurement` order by time_stamp desc limit 10) `pin`";
+			$shuntPowerResult = mysqli_query($conn, $shuntPowerSql);
+			$shuntPower = mysqli_fetch_array($shuntPowerResult)['pin'];
+			
+			$avg10MinSql = "select round((avg(`bus_current_(a)`)) * (avg(`bus_voltage_(v)`)), 2) AS pin from (select `bus_current_(a)`, `bus_voltage_(v)` from `bmu_bus_measurement` where day(`time_stamp`) = day(now()) and hour(`time_stamp`) = hour(now()) and minute(time_stamp) - minute(now()) < 11 order by time_stamp desc limit 10) `pin`";
+			$avg10MinResult = mysqli_query($conn, $avg10MinSql);
+			$avg10MinData = mysqli_fetch_array($avg10MinResult)['pin'];
+			
+			$avg30MinSql = "select round((avg(`bus_current_(a)`)) * (avg(`bus_voltage_(v)`)), 2) AS pin from (select `bus_current_(a)`, `bus_voltage_(v)` from `bmu_bus_measurement` where day(`time_stamp`) = day(now()) and hour(`time_stamp`) = hour(now()) and minute(time_stamp) - minute(now()) < 31 order by time_stamp desc limit 10) `pin`";
+			$avg30MinResult = mysqli_query($conn, $avg30MinSql);
+			$avg30MinData = mysqli_fetch_array($avg30MinResult)['pin'];
+			
+			$avg60MinSql = "select round((avg(`bus_current_(a)`)) * (avg(`bus_voltage_(v)`)), 2) AS pin from (select `bus_current_(a)`, `bus_voltage_(v)` from `bmu_bus_measurement` where day(`time_stamp`) = day(now()) and hour(`time_stamp`) = hour(now()) order by time_stamp desc limit 10) `pin`";
+			$avg60MinResult = mysqli_query($conn, $avg60MinSql);
+			$avg60MinData = mysqli_fetch_array($avg60MinResult)['pin'];
+			
+			$avg24HourSql = "select round((avg(`bus_current_(a)`)) * (avg(`bus_voltage_(v)`)), 2) AS pin from (select `bus_current_(a)`, `bus_voltage_(v)` from `bmu_bus_measurement` where day(`time_stamp`) = day(now()) order by time_stamp desc limit 10) `pin`";
+			$avg24HourResult = mysqli_query($conn, $avg24HourSql);
+			$avg24HourData = mysqli_fetch_array($avg24HourResult)['pin'];
+			
+			
+			
 		
+			?>
 		
 	</head>
 	<body onLoad = "getCurTime();">
 		<?php require_once("headerBar.php") ?>
-		<div id="content">
-			<form method = "post" action = "strategy.php" id = "form" >
-				<p>
-				<table border = "0px">
+		<div id="data">
+			<table>
+				<tr>
+					<th colspan = "8">
+						Data
+					</th>
+				</tr>
+				<tr>
+					<th>
+						Vehicle Velocity
+					</th>
+					<td>
+						<?php if ($vehicleVelocityResult != "No Data")
+							echo($vehicleVelocityResult);
+						else
+							echo ("No Data");?>
+					</td>
+					<th>
+						Tracker Power Out
+					</th>
+					<?php
+						if ($mppt1Power = "" || is_null($mppt1Power) )//|| $mppt2Power = "" || is_null($mppt2Power))
+						{
+							echo "<td class = 'missingData'>";
+							echo "No Data";
+						}
+						else
+						{
+							echo "<td>";
+							echo $mppt1Power;
+						}
+					?>
+					</td>
+					<th>
+						Current Power Use
+					</th>
+					<?php
+						if ($mppt1Power = "" || is_null($mppt1Power) || $mppt2Power = "" || is_null($mppt2Power) || $shuntPower = "" || is_null($shuntPower))
+						{
+							echo "<td class = 'missingData'>";
+							echo "No Data";
+						}
+						else
+						{
+							echo "<td>";
+							echo $mppt1Power + $mppt2Power + $shuntPower;
+						}
+					?>
+					</td>
+					<th>
+						Current Battery Charge
+					</th>
+					<td>
+						Cheese
+					</td>
+				</tr>
+				<tr>
+					<th colspan="8">
+						Average Power Usage
+					</th>
+				</tr>
+				<tr>
+					<th>
+						10 Minutes
+					</th>
+					<?php
+						if ($avg10MinData = "" || is_null($avg10MinData))
+						{
+							echo "<td class = 'missingData'>";
+							echo "No Data";
+						}
+						else
+						{
+							echo "<td>";
+							echo $avg10MinData;
+						}
+					?>
+					</td>
+					<th>
+						30 Minutes
+					</th>
+					<?php
+						if ($avg30MinData = "" || is_null($avg30MinData))
+						{
+							echo "<td class = 'missingData'>";
+							echo "No Data";
+						}
+						else
+						{
+							echo "<td>";
+							echo $avg30MinData;
+						}
+					?>
+					</td>
+					<th>
+						60 Minutes
+					</th>
+					<?php
+						if ($avg60MinData = "" || is_null($avg60MinData))
+						{
+							echo "<td class = 'missingData'>";
+							echo "No Data";
+						}
+						else
+						{
+							echo "<td>";
+							echo $avg60MinData;
+						}
+					?>
+					</td>
+					<th>
+						24 Hours
+					</th>
+					<?php
+						if ($avg24HourData = "" || is_null($avg24HourData))
+						{
+							echo "<td class = 'missingData'>";
+							echo "No Data";
+						}
+						else
+						{
+							echo "<td>";
+							echo $avg24HourData;
+						}
+					?>
+					</td>
+				</tr>
+			</table>
+					
+		
+		</div>
+		
+		<div id="calculator">
+			<p> <br/></p>
+				<table>
 					<tr>
 						<th>
 							<label for = "avgSpeed"> Average Speed: </label>
@@ -327,9 +514,6 @@
 						</th>
 					</tr>
 				</table>
-
-				</p>
-			</form>
 		</div>
 	</body>
 

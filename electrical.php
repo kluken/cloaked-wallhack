@@ -43,8 +43,8 @@
 						boxes[i].checked = true;
 				}
 				
-				boxes = document.getElementsByName("selectedEFlags[]");
-				for (i = 0; i < document.getElementsByName("selectedEFlags[]").length; i++)
+				boxes = document.getElementsByName("selectedBattFlags[]");
+				for (i = 0; i < document.getElementsByName("selectedBattFlags[]").length; i++)
 				{
 					if (boxes[i].checked == true)
 						boxes[i].checked = false;
@@ -52,14 +52,23 @@
 						boxes[i].checked = true;
 				}
 				
-				boxes = document.getElementsByName("selectedLFlags[]");
-				for (i = 0; i < document.getElementsByName("selectedLFlags[]").length; i++)
+				boxes = document.getElementsByName("selectedMPPTData[]");
+				for (i = 0; i < document.getElementsByName("selectedMPPTData[]").length; i++)
 				{
 					if (boxes[i].checked == true)
 						boxes[i].checked = false;
 					else
 						boxes[i].checked = true;
-				}				
+				}	
+
+				boxes = document.getElementsByName("selectedMPPTFlags[]");
+				for (i = 0; i < document.getElementsByName("selectedMPPTFlags[]").length; i++)
+				{
+					if (boxes[i].checked == true)
+						boxes[i].checked = false;
+					else
+						boxes[i].checked = true;
+				}					
 			}
 		</script>
 		
@@ -84,11 +93,23 @@
 			if (isset($_POST['resetSession']))
 			{
 				unset($_SESSION['electricalSelectedData']);
+				unset($_SESSION['electricalSelectedFlags']);
+				unset($_SESSION['electricalSelectedMPPTData']);
+				unset($_SESSION['electricalSelectedMPPTFlags']);
 			}
-			else if (isset($_POST['selectedData']))
+			else if (isset($_POST['selectedData']) || isset($_POST['selectedBattFlags']) || isset($_POST['selectedMPPTData']) || isset($_POST['selectedMPPTFlags']))
 			{
 				$_SESSION['electricalSelectedData'] = Array();
 				$_SESSION['electricalSelectedData'] = $_POST['selectedData'];
+				
+				$_SESSION['electricalSelectedFlags'] = Array();
+				$_SESSION['electricalSelectedFlags'] = $_POST['selectedBattFlags'];
+				
+				$_SESSION['electricalSelectedMPPTData'] = Array();
+				$_SESSION['electricalSelectedMPPTData'] = $_POST['selectedMPPTData'];
+				
+				$_SESSION['electricalSelectedMPPTFlags'] = Array();
+				$_SESSION['electricalSelectedMPPTFlags'] = $_POST['selectedMPPTFlags'];
 			}
 		?>
 	</head>
@@ -105,47 +126,11 @@
 								<legend>Please select the data to be shown.</legend>
 								<table id = "elecTable">
 									<tr>
-										<th>
-											<input type = "checkbox" id = "packSOCA" name = "selectedData[]" checked = "checked" value = "Pack State of Charge (Ah)"> <label for = "packSOCA"> Pack State of Charge (Ah)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "packSOCP" name = "selectedData[]" value = "Pack State of Charge (%)"> <label for = "packSOCP"> Pack State of Charge (%)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "balanceSOCA" name = "selectedData[]" value = "Balance State of Charge (Ah)"> <label for = "balanceSOCA"> Balance State of Charge (Ah)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "balanceSOCP" name = "selectedData[]" value = "Balance State of Charge (%)"> <label for = "balanceSOCP"> Balance State of Charge (%)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "chargingCell" name = "selectedData[]" value = "Charging Cell Voltage Error (mV)"> <label for = "chargingCell"> Charging Cell Voltage Error (mV)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cellTempMargin" name = "selectedData[]" value = "Cell Temp Margin"> <label for = "cellTempMargin"> Cell Temp Margin</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "dichargingCell" name = "selectedData[]" value = "Discharging Cell Voltage Error (mV)"> <label for = "dichargingCell"> Discharging Cell Voltage Error (mV)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "totalPackCapA" name = "selectedData[]" value = "Total Pack Capacity (Ah)"> <label for = "totalPackCapA"> Total Pack Capacity (Ah)</label>
+										<th colspan=8>
+											Electrical Data
 										</th>
 									</tr>
 									<tr>
-										<th>
-											<input type = "checkbox" id = "precharge12Status" name = "selectedData[]" value = "Precharge / Driver 12V Status"> <label for = "precharge12Status"> Precharge / Driver 12V Status</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "prechargeStatus" name = "selectedData[]" value = "Precharge Status"> <label for = "prechargeStatus"> Precharge Status</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "12VContactor" name = "selectedData[]" value = "12V Contactor Supply"> <label for = "12VContactor"> 12V Contactor Supply</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "prechargeTimerElapsed" name = "selectedData[]" value = "Precharge Timer Elapsed"> <label for = "prechargeTimerElapsed"> Precharge Timer Elapsed</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "prechargeTimer" name = "selectedData[]" value = "Precharge Timer"> <label for = "prechargeTimer"> Precharge Timer</label>
-										</th>
 										<th>
 											<input type = "checkbox" id = "minCellVolt" name = "selectedData[]" value = "Minimum Cell Voltage"> <label for = "minCellVolt"> Minimum Cell Voltage</label>
 										</th>
@@ -155,8 +140,6 @@
 										<th>
 											<input type = "checkbox" id = "cellWithMinVolt" name = "selectedData[]" value = "Cell With Minimum Voltage"> <label for = "cellWithMinVolt"> Cell with Minimum Voltage</label>
 										</th>
-									</tr>
-									<tr>
 										<th>
 											<input type = "checkbox" id = "maxCellVolt" name = "selectedData[]" value = "Maximum Cell Voltage"> <label for = "maxCellVolt"> Maximum Cell Voltage</label>
 										</th>
@@ -167,74 +150,19 @@
 											<input type = "checkbox" id = "cellWithMaxVolt" name = "selectedData[]" value = "Cell With Maximum Voltage"> <label for = "cellWithMaxVolt"> Cell with Maximum Voltage</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "minCmuTemp" name = "selectedData[]" value = "Minimum CMU Temp"> <label for = "minCmuTemp"> Minimum CMU Temp</label>
+											<input type = "checkbox" id = "minCellTemp" name = "selectedData[]" value = "Minimum Cell Temp"> <label for = "minCellTemp"> Minimum Cell Temp</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "cmuWithMinTemp" name = "selectedData[]" value = "CMU With Minimum Temperature"> <label for = "cmuWithMinTemp"> CMU With Minimum Temperature</label>
 										</th>
+									</tr>
+									<tr>
 										<th>
-											<input type = "checkbox" id = "maxCmuTemp" name = "selectedData[]" value = "Maximum CMU Temp"> <label for = "maxCmuTemp"> Maximum CMU Temp</label>
+											<input type = "checkbox" id = "maxCellTemp" name = "selectedData[]" value = "Maximum Cell Temp"> <label for = "maxCellTemp"> Maximum Cell Temp</label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "cmuWithMaxTemp" name = "selectedData[]" value = "CMU With Maximum Temperature"> <label for = "cmuWithMaxTemp"> CMU With Maximum Temperature</label>
 										</th>
-										<th>
-											<input type = "checkbox" id = "battVolt" name = "selectedData[]" value = "Battery Voltage (mV)"> <label for = "battVolt"> Battery Voltage (mV)</label>
-										</th>
-									</tr>
-									<tr>
-										<th>
-											<input type = "checkbox" id = "battCurr" name = "selectedData[]" value = "Battery Current (mA)"> <label for = "battCurr"> Battery Current (mA)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "battVoltThresRi" name = "selectedData[]" value = "Battery Voltage Threshold (Rising - V)"> <label for = "battVoltThresRi"> Battery Voltage Threshold (Rising - V)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "battVoltThresFa" name = "selectedData[]" value = "Battery Voltage Threshold (Falling - V)"> <label for = "battVoltThresFa"> Battery Voltage Threshold (Falling - V)</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cellUVT" name = "selectedData[]" value = "Cells Under Voltage"> <label for = "cellUVT"> Cells Under Voltage</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cellOVT" name = "selectedData[]" value = "Cells Over Voltage"> <label for = "cellOVT"> Cells Over Voltage</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cellOverTemp" name = "selectedData[]" value = "Cells Over Temperature"> <label for = "cellOverTemp"> Cells Over Temperature</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "measureUntrust" name = "selectedData[]" value = "Measurements Untrusted"> <label for = "measureUntrust"> Measurements Untrusted</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cmuCommsTimeout" name = "selectedData[]" value = "CMU Comms Timeout"> <label for = "cmuCommsTimeout"> CMU Comms Timeout</label>
-										</th>
-									</tr>
-									<tr>
-										<th>
-											<input type = "checkbox" id = "bmuSetupMode" name = "selectedData[]" value = "BMU Is in Setup Mode"> <label for = "bmuSetupMode"> BMU is in Setup Mode</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cmuCanBusPowerStatus" name = "selectedData[]" value = "CMU CAN Bus Power Status"> <label for = "cmuCanBusPowerStatus"> CMU CAN Bus Power Status</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "packIsoTestFail" name = "selectedData[]" value = "Pack Isolation Test Fail"> <label for = "packIsoTestFail"> Pack Isolation Test Fail</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "SOCTestNotValid" name = "selectedData[]" value = "SOC Measurement Not Valid"> <label for = "SOCTestNotValid"> SOC Measurement not Valid</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "12VCanLow" name = "selectedData[]" value = "12V CAN Supply Too Low"> <label for = "12VCanLow"> 12V CAN Supply Too Low</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "contactorStuck" name = "selectedData[]" value = "Contactor Stuck / Not Engaged"> <label for = "contactorStuck"> Contactor Stuck / Not Engaged</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cmuExtraCell" name = "selectedData[]" value = "CMU Detected Extra Cell"> <label for = "cmuExtraCell"> CMU Detected Extra Cell</label>
-										</th>
-										<th>
-											<input type = "checkbox" id = "cmuCount" name = "selectedData[]" value = "CMU Count"> <label for = "cmuCount"> CMU Count</label>
-										</th>
-									</tr>
-									<tr>
 										<th>
 											<input type = "checkbox" id = "bmuFirmware" name = "selectedData[]" value = "BMU Firmware Build"> <label for = "bmuFirmware"> BMU Firmware Build</label>
 										</th>
@@ -248,64 +176,138 @@
 											<input type = "checkbox" id = "fanContactor12V" name = "selectedData[]" value = "Fan and Contactor 12V Consumption (mA)"> <label for = "fanContactor12V"> Fan and Contactor 12V Consumption (mA)</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "12vCmus" name = "selectedData[]" value = "12V CMU's"> <label for = "12vCmus"> 12V CMU's </label>
+											<input type = "checkbox" id = "12vCmus" name = "selectedData[]" value = "12V CMU Consumption"> <label for = "12vCmus"> 12V CMU Consumption </label>
 										</th>
 										<th>
 											<input type = "checkbox" id = "extendedBmuHwVer" name = "selectedData[]" value = "Extended Pack BMU Hardware Version"> <label for = "extendedBmuHwVer"> Extended Pack BMU Hardware Version</label>
 										</th>
+									</tr>
+									<tr>
 										<th>
 											<input type = "checkbox" id = "extendedBmuModel" name = "selectedData[]" value = "Extended Pack BMU Model ID"> <label for = "extendedBmuModel"> Extended Pack BMU Model ID</label>
 										</th>
-										<th>
-											<input type = "checkbox" id = "mppt1Temp" name = "selectedData[]" value = "MPPT 1 Temperature"> <label for = "mppt1Temp"> MPPT 1 Temperature</label>
+									</tr>
+									
+									<!-- Finish battery data, start battery flags -->
+									
+									<tr>
+										<th colspan=8>
+											Electrical Flags
 										</th>
 									</tr>
 									<tr>
 										<th>
-											<input type = "checkbox" id = "mppt1Vout" name = "selectedData[]" value = "MPPT 1 Vout"> <label for = "mppt1Vout"> MPPT 1 Vout</label>
+											<input type = "checkbox" id = "cellUVT" name = "selectedBattFlags[]" value = "Cells Under Voltage"> <label for = "cellUVT"> Cells Under Voltage</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt1Iin" name = "selectedData[]" value = "MPPT 1 Iin"> <label for = "mppt1Iin"> MPPT 1 Iin</label>
+											<input type = "checkbox" id = "cellOVT" name = "selectedBattFlags[]" value = "Cells Over Voltage"> <label for = "cellOVT"> Cells Over Voltage</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt1Vin" name = "selectedData[]" value = "MPPT 1 Vin"> <label for = "mppt1Vin"> MPPT 1 Vin</label>
+											<input type = "checkbox" id = "cellOverTemp" name = "selectedBattFlags[]" value = "Cells Over Temperature"> <label for = "cellOverTemp"> Cells Over Temperature</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptBattOverVolt1" name = "selectedData[]" value = "Battery Over Voltage from MPPT1"> <label for = "mpptBattOverVolt1"> Battery Over Voltage from MPPT1</label>
+											<input type = "checkbox" id = "measureUntrust" name = "selectedBattFlags[]" value = "Measurements Untrusted"> <label for = "measureUntrust"> Measurements Untrusted</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedData[]" value = "MPPT1 Over Temperature"> <label for = "mpptOverTemp1"> MPPT1 Over Temperature</label>
+											<input type = "checkbox" id = "cmuCommsTimeout" name = "selectedBattFlags[]" value = "CMU Comms Timeout"> <label for = "cmuCommsTimeout"> CMU Comms Timeout</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "noConnMppt1" name = "selectedData[]" value = "No Connection to MPPT1"> <label for = "noConnMppt1"> No Connection to MPPT1</label>
+											<input type = "checkbox" id = "bmuSetupMode" name = "selectedBattFlags[]" value = "BMU Is in Setup Mode"> <label for = "bmuSetupMode"> BMU is in Setup Mode</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "underVoltMppt1" name = "selectedData[]" value = "Under Voltage on MPPT1 Input"> <label for = "underVoltMppt1"> Under Voltage on MPPT1 Input</label>
+											<input type = "checkbox" id = "cmuCanBusPowerStatus" name = "selectedBattFlags[]" value = "CMU CAN Bus Power Status"> <label for = "cmuCanBusPowerStatus"> CMU CAN Bus Power Status</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt2Temp" name = "selectedData[]" value = "MPPT 2 Temperature"> <label for = "mppt2Temp"> MPPT 2 Temperature</label>
+											<input type = "checkbox" id = "packIsoTestFail" name = "selectedBattFlags[]" value = "Pack Isolation Test Fail"> <label for = "packIsoTestFail"> Pack Isolation Test Fail</label>
 										</th>
 									</tr>
 									<tr>
 										<th>
-											<input type = "checkbox" id = "mppt2Vout" name = "selectedData[]" value = "MPPT 2 Vout"> <label for = "mppt2Vout"> MPPT 2 Vout</label>
+											<input type = "checkbox" id = "SOCTestNotValid" name = "selectedBattFlags[]" value = "SOC Measurement Not Valid"> <label for = "SOCTestNotValid"> SOC Measurement not Valid</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt2Iin" name = "selectedData[]" value = "MPPT 2 Iin"> <label for = "mppt2Iin"> MPPT 2 Iin</label>
+											<input type = "checkbox" id = "12VCanLow" name = "selectedBattFlags[]" value = "12V CAN Supply Too Low"> <label for = "12VCanLow"> 12V CAN Supply Too Low</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mppt2Vin" name = "selectedData[]" value = "MPPT 2 Vin"> <label for = "mppt2Vin"> MPPT 2 Vin</label>
+											<input type = "checkbox" id = "contactorStuck" name = "selectedBattFlags[]" value = "Contactor Stuck / Not Engaged"> <label for = "contactorStuck"> Contactor Stuck / Not Engaged</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptBattOverVolt2" name = "selectedData[]" value = "Battery Over Voltage from MPPT2"> <label for = "mpptBattOverVolt2"> Battery Over Voltage from MPPT2</label>
+											<input type = "checkbox" id = "cmuExtraCell" name = "selectedBattFlags[]" value = "CMU Detected Extra Cell"> <label for = "cmuExtraCell"> CMU Detected Extra Cell</label>
+										</th>
+									</tr>
+									
+									<!-- End BMU Flags. Begin MPPT Data -->
+									
+									<tr>
+										<th colspan=8>
+											MPPT 1 and 2 Data
+										</th>
+									</tr>
+									<tr>
+										<th>
+											<input type = "checkbox" id = "mppt1Temp" name = "selectedMPPTData[]" value = "MPPT 1 Temperature"> <label for = "mppt1Temp"> MPPT 1 Temperature</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "mpptOverTemp2" name = "selectedData[]" value = "MPPT2 Over Temperature"> <label for = "mpptOverTemp2"> MPPT2 Over Temperature</label>
+											<input type = "checkbox" id = "mppt1Vout" name = "selectedMPPTData[]" value = "MPPT 1 Vout"> <label for = "mppt1Vout"> MPPT 1 Vout</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt1Iin" name = "selectedMPPTData[]" value = "MPPT 1 Iin"> <label for = "mppt1Iin"> MPPT 1 Iin</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt1Vin" name = "selectedMPPTData[]" value = "MPPT 1 Vin"> <label for = "mppt1Vin"> MPPT 1 Vin</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt1PowerIn" name = "selectedMPPTData[]" value = "MPPT 1 PowerIn"> <label for = "mppt1PowerIn"> MPPT 1 Power In</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt2Temp" name = "selectedMPPTData[]" value = "MPPT 2 Temperature"> <label for = "mppt2Temp"> MPPT 2 Temperature</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt2Vout" name = "selectedMPPTData[]" value = "MPPT 2 Vout"> <label for = "mppt2Vout"> MPPT 2 Vout</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt2Iin" name = "selectedMPPTData[]" value = "MPPT 2 Iin"> <label for = "mppt2Iin"> MPPT 2 Iin</label>
+										</th>
+									</tr>
+									<tr>
+										<th>
+											<input type = "checkbox" id = "mppt2Vin" name = "selectedMPPTData[]" value = "MPPT 2 Vin"> <label for = "mppt2Vin"> MPPT 2 Vin</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mppt2PowerIn" name = "selectedMPPTData[]" value = "MPPT 2 PowerIn"> <label for = "mppt2PowerIn"> MPPT 2 Power In</label>
+										</th>
+									</tr>
+									
+									<!-- End MPPT Data. Begin MPPT Flags -->
+									
+									<tr>
+										<th colspan=8>
+											MPPT 1 and 2 Flags
+										</th>
+									</tr>
+									<tr>
+										<th>
+											<input type = "checkbox" id = "mpptBattOverVolt1" name = "selectedMPPTFlags[]" value = "Battery Over Voltage from MPPT1"> <label for = "mpptBattOverVolt1"> Battery Over Voltage from MPPT1</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mpptOverTemp1" name = "selectedMPPTFlags[]" value = "MPPT1 Over Temperature"> <label for = "mpptOverTemp1"> MPPT1 Over Temperature</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "noConnMppt1" name = "selectedMPPTFlags[]" value = "No Connection to MPPT1"> <label for = "noConnMppt1"> No Connection to MPPT1</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "underVoltMppt1" name = "selectedMPPTFlags[]" value = "Under Voltage on MPPT1 Input"> <label for = "underVoltMppt1"> Under Voltage on MPPT1 Input</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mpptBattOverVolt2" name = "selectedMPPTFlags[]" value = "Battery Over Voltage from MPPT2"> <label for = "mpptBattOverVolt2"> Battery Over Voltage from MPPT2</label>
+										</th>
+										<th>
+											<input type = "checkbox" id = "mpptOverTemp2" name = "selectedMPPTFlags[]" value = "MPPT2 Over Temperature"> <label for = "mpptOverTemp2"> MPPT2 Over Temperature</label>
 										</th><th>
-											<input type = "checkbox" id = "noConnMppt2" name = "selectedData[]" value = "No Connection to MPPT2"> <label for = "noConnMppt2"> No Connection to MPPT2</label>
+											<input type = "checkbox" id = "noConnMppt2" name = "selectedMPPTFlags[]" value = "No Connection to MPPT2"> <label for = "noConnMppt2"> No Connection to MPPT2</label>
 										</th>
 										<th>
-											<input type = "checkbox" id = "underVoltMppt2" name = "selectedData[]" value = "Under Voltage on MPPT2 Input"> <label for = "underVoltMppt2"> Under Voltage on MPPT2 Input</label>
+											<input type = "checkbox" id = "underVoltMppt2" name = "selectedMPPTFlags[]" value = "Under Voltage on MPPT2 Input"> <label for = "underVoltMppt2"> Under Voltage on MPPT2 Input</label>
 										</th>
 									</tr>
 								</table>
@@ -326,58 +328,235 @@
 						<input type = "hidden" id = "refreshElecPage" name = "refreshElecPage" value = "1"/>
 						<tr>
 							<?php 
+							
 							$count = 0;
 							$arrayLength = sizeof($_SESSION['electricalSelectedData']);
-							$numRows = (int)($arrayLength / 6);
-							foreach ($_SESSION['electricalSelectedData'] as $key => $entry)
+							if ($arrayLength > 0)
 							{
-								if ( $count % 6 != 0)
+								echo "<th colspan=12> Electrical Data </th>";
+								foreach ($_SESSION['electricalSelectedData'] as $key => $entry)
 								{
-									$sqlSelect = sqlLookup($entry);
-									$result = mysqli_query($conn, $sqlSelect);
-									echo "<th>$entry</th>";
-									if ($result != false && mysqli_num_rows($result) > 0)
+									if ( $count % 6 != 0)
 									{
-										$row =  mysqli_fetch_assoc($result);
-										$tableName = dataNameLookup($entry);
-										if ($row[$tableName] == "" || (is_null($row[$tableName])))
-											echo "<td class = 'highWarn'>No Data</td>";
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$row =  mysqli_fetch_assoc($result);
+											$tableName = dataNameLookup($entry);
+											if ((is_null($row[$tableName])) || $row[$tableName] == "")
+												echo "<td class = 'highWarn'>No Data</td>";
+											else 
+											{
+												echo "<td>$row[$tableName]</td>";
+											}
+										}
+										
 										else 
-										{
-											
-											echo "<td>$row[$tableName]</td>";
-										}
-									}
-									else 
-										echo "<td class = 'highWarn'>No Data</td>";
-								}
-								else
-								{
-									$sqlSelect = sqlLookup($entry);
-									$result = mysqli_query($conn, $sqlSelect);
-									echo "</tr>";
-									echo "<tr>";
-									echo "<th>$entry</th>";
-									if ($result != false && mysqli_num_rows($result) > 0)
-									{
-										$tableName = dataNameLookup($entry);
-										$row =  mysqli_fetch_assoc($result);
-										if ($row[$tableName] == "" || (is_null($row[$tableName])))
-										{		
-											echo "<td class = 'highWarn'>N/A</td>";
-										}
-										else
-										{
-											echo "<td>$row[$tableName]</td>";
-										}
+											echo "<td class = 'missingData'>No Data</td>";
 									}
 									else
 									{
-										echo "<td class = 'highWarn'>No Data</td>";
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "</tr>";
+										echo "<tr>";
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$tableName = dataNameLookup($entry);
+											$row =  mysqli_fetch_assoc($result);
+											if ($row[$tableName] == "" || (is_null($row[$tableName])))
+											{		
+												echo "<td class = 'highWarn'>N/A</td>";
+											}
+											else
+											{
+												echo "<td>$row[$tableName]</td>";
+											}
+										}
+										else
+										{
+											echo "<td class = 'missingData'>No Data</td>";
+										}
 									}
-								}
-								$count++;
-							} 
+									$count++;
+								} 
+							}
+							
+							//End of electrical data. Beginning of Electrical Flags
+	
+							$count = 0;
+							$arrayLength = sizeof($_SESSION['electricalSelectedFlags']);
+							if ($arrayLength > 0)
+							{
+								echo "</tr> <tr>";
+								echo "<th colspan=12> Electrical Flags </th>";
+								foreach ($_SESSION['electricalSelectedFlags'] as $key => $entry)
+								{
+									if ( $count % 6 != 0)
+									{
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$row =  mysqli_fetch_assoc($result);
+											$tableName = dataNameLookup($entry);
+											if ((is_null($row[$tableName])) || $row[$tableName] == "")
+												echo "<td class = 'highWarn'>No Data</td>";
+											else if ($row[$tableName] > 0)
+												echo "<td class = 'highWarn'>Error</td>";
+											else
+												echo "<td class='goodData'>OK</td>";
+										}
+										
+										else 
+											echo "<td class = 'missingData'>No Data</td>";
+									}
+									else
+									{
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "</tr>";
+										echo "<tr>";
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$tableName = dataNameLookup($entry);
+											$row =  mysqli_fetch_assoc($result);
+											if ($row[$tableName] == "" || (is_null($row[$tableName])))
+												echo "<td class = 'highWarn'>N/A</td>";
+											else if ($row[$tableName] > 0)
+												echo "<td class = 'highWarn'>Error</td>";
+											else
+												echo "<td class='goodData'>OK</td>";
+										}
+										else
+										{
+											echo "<td class = 'missingData'>No Data</td>";
+										}
+									}
+									$count++;
+								} 
+							}
+							
+							//End of electrical flags, beginning of MPPT Data
+							
+							$count = 0;
+							$arrayLength = sizeof($_SESSION['electricalSelectedMPPTData']);
+							if ($arrayLength > 0)
+							{
+								echo "</tr> <tr>";
+								echo "<th colspan=12> MPPT Data </th>";
+								foreach ($_SESSION['electricalSelectedMPPTData'] as $key => $entry)
+								{
+									if ( $count % 6 != 0)
+									{
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$row =  mysqli_fetch_assoc($result);
+											$tableName = dataNameLookup($entry);
+											if ((is_null($row[$tableName])) || $row[$tableName] == "")
+												echo "<td class = 'highWarn'>No Data</td>";
+											else 
+											{
+												echo "<td>$row[$tableName]</td>";
+											}
+										}
+										
+										else 
+											echo "<td class = 'missingData'>No Data</td>";
+									}
+									else
+									{
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "</tr>";
+										echo "<tr>";
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$tableName = dataNameLookup($entry);
+											$row =  mysqli_fetch_assoc($result);
+											if ($row[$tableName] == "" || (is_null($row[$tableName])))
+											{		
+												echo "<td class = 'highWarn'>N/A</td>";
+											}
+											else
+											{
+												echo "<td>$row[$tableName]</td>";
+											}
+										}
+										else
+										{
+											echo "<td class = 'missingData'>No Data</td>";
+										}
+									}
+									$count++;
+								} 
+							}
+							
+							//End of MPPT Data, beginning of MPPT Flags
+							
+							$count = 0;
+							$arrayLength = sizeof($_SESSION['electricalSelectedMPPTFlags']);
+							if ($arrayLength > 0)
+							{
+								echo "</tr> <tr>";
+								echo "<th colspan=12> MPPT Flags </th>";
+								foreach ($_SESSION['electricalSelectedMPPTFlags'] as $key => $entry)
+								{
+									if ( $count % 6 != 0)
+									{
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$row =  mysqli_fetch_assoc($result);
+											$tableName = dataNameLookup($entry);
+											if ((is_null($row[$tableName])) || $row[$tableName] == "")
+												echo "<td class = 'highWarn'>No Data</td>";
+											else if ($row[$tableName] > 0)
+												echo "<td class = 'highWarn'>Error</td>";
+											else
+												echo "<td class='goodData'>OK</td>";
+										}
+										
+										else 
+											echo "<td class = 'missingData'>No Data</td>";
+									}
+									else
+									{
+										$sqlSelect = sqlLookup($entry);
+										$result = mysqli_query($conn, $sqlSelect);
+										echo "</tr>";
+										echo "<tr>";
+										echo "<th>$entry</th>";
+										if ($result != false && mysqli_num_rows($result) > 0)
+										{
+											$tableName = dataNameLookup($entry);
+											$row =  mysqli_fetch_assoc($result);
+											if ($row[$tableName] == "" || (is_null($row[$tableName])))
+												echo "<td class = 'highWarn'>N/A</td>";
+											else if ($row[$tableName] > 0)
+												echo "<td class = 'highWarn'>Error</td>";
+											else
+												echo "<td class='goodData'>OK</td>";
+										}
+										else
+										{
+											echo "<td class = 'missingData'>No Data</td>";
+										}
+									}
+									$count++;
+								} 
+							}
 							?>
 						</tr>
 					</table>

@@ -337,18 +337,12 @@
 										}
 										else
 										{
-											while($row = mysqli_fetch_array($result)) 
-											{
-												$total = $total + $row[$tableName];
-												$numValues++;
-											}
-											if ($numValues !=0)
-												$total = $total / $numValues;
-											echo "<td>$total</td>";
+											$row = mysqli_fetch_array($result)[$tableName];
+											echo "<td>$row</td>";
 										}
 									}
 									else 
-										echo "<td class = 'highWarn'>No Data</td>";
+										echo "<td class = 'missingData'>No Data</td>";
 								}
 								else
 								{
@@ -369,18 +363,12 @@
 										}
 										else
 										{
-											while($row = mysqli_fetch_array($result)) 
-											{
-												$total = $total + $row[$tableName];
-												$numValues++;
-											}
-											if ($numValues !=0)
-												$total = $total / $numValues;
-											echo "<td>$total</td>";
+											$row = mysqli_fetch_array($result)[$tableName];
+											echo "<td>$row</td>";
 										}
 									}
 									else 
-										echo "<td class = 'highWarn'>No Data</td>";
+										echo "<td class = 'missingData'>No Data</td>";
 									}
 									
 								
@@ -412,13 +400,13 @@
 										$row =  mysqli_fetch_assoc($result);
 										$tableName = dataNameLookup($entry);
 										
-										if (!empty($row[$tableName]))
+										if ($row[$tableName] > 0)
 											echo "<td class = 'highWarn'>$row[$tableName]</td>";
 										else 
 											echo "<td>Good</td>";
 									}
 									else
-										echo "<td class = 'highWarn'>No Data</td>";
+										echo "<td class = 'missingData'>No Data</td>";
 								}
 								else
 								{
@@ -431,13 +419,13 @@
 									{
 										$row =  mysqli_fetch_assoc($result);
 										$tableName = dataNameLookup($entry);
-										if (!empty($row[$tableName]))
+										if ($row[$tableName] > 0)
 											echo "<td class = 'highWarn'>$row[$tableName]</td>";
 										else 
 											echo "<td>Good</td>";
 									}
 									else
-										echo "<td class = 'highWarn'>No Data</td>";
+										echo "<td class = 'missingData'>No Data</td>";
 								}
 								$count++;
 							} 
@@ -466,13 +454,13 @@
 									{
 										$row =  mysqli_fetch_assoc($result);
 										$tableName = dataNameLookup($entry);
-										if (!empty($row[$tableName]))
+										if ($row[$tableName] > 0)
 											echo "<td class = 'medWarn'>$row[$tableName]</td>";
 										else 
 											echo "<td>Good</td>";
 									}
 									else
-										echo "<td class = 'highWarn'>No Data</td>";
+										echo "<td class = 'missingData'>No Data</td>";
 								}
 								else
 								{
@@ -486,13 +474,13 @@
 									{
 										$row =  mysqli_fetch_assoc($result);
 										$tableName = dataNameLookup($entry);
-										if (!empty($row[$tableName]))
+										if ($row[$tableName] > 0)
 											echo "<td class = 'highWarn'>$row[$tableName]</td>";
 										else 
 											echo "<td>Good</td>";
 									}
 									else
-										echo "<td class = 'highWarn'>No Data</td>";
+										echo "<td class = 'missingData'>No Data</td>";
 								}
 								$count++;
 							} 

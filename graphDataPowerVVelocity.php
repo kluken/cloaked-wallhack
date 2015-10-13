@@ -1,5 +1,5 @@
 <?php
-// we need this so that PHP does not complain about deprectaed functions
+// we need this so that PHP does not complain about deprecated functions
 error_reporting( 0 );
 
 // Connect to MySQL
@@ -16,12 +16,12 @@ $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 // Fetch the data
 
-$voltageResult = mysqli_query($conn, "SELECT `time_stamp`, `Bus_Current`, `Bus_Voltage` from `Bus_Measurement` WHERE `time_stamp` BETWEEN '".$dateFrom."' AND '".$dateTo."' GROUP BY `time_stamp` ORDER BY `time_stamp` DESC;");
+$voltageResult = mysqli_query($conn, "SELECT `time_stamp`, `bus_current_(a)`, `bus_voltage_(v)` from `bmu_bus_measurement` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 20;");
 
-$test = "SELECT DISTINCT `time_stamp`, `vehicle_velocity` from `Velocity_Measurement` ORDER BY `time_stamp` WHERE `time_stamp` BETWEEN '".$dateFrom."' AND '".$dateTo."' DESC;";
+//$test = "SELECT DISTINCT `time_stamp`, `vehicle_velocity` from `Velocity_Measurement` ORDER BY `time_stamp` WHERE `time_stamp` BETWEEN '".$dateFrom."' AND '".$dateTo."' DESC;";
 //echo ($test);
 
-$velocityResult = mysqli_query($conn, "SELECT `vehicle_velocity` from `Velocity_Measurement` WHERE `time_stamp` BETWEEN '".$dateFrom."' AND '".$dateTo."' GROUP BY `time_stamp` ORDER BY `time_stamp` DESC;");
+$velocityResult = mysqli_query($conn, "SELECT `vehicle_velocity` from `velocity_measurement` WHERE `time_stamp` GROUP BY `time_stamp` ORDER BY `time_stamp` DESC LIMIT 20;");
 
 // Print out rows
 $count = 0;
@@ -52,7 +52,7 @@ while ($voltageRow = mysqli_fetch_assoc($voltageResult))
 
 for ($count = 0; $count < $numRows+1; $count++) 
 {
-	echo ('{"category": "'. $timeArray[$count] .'", "Power Draw": "'. $powerArray[$count] .'", "Vehicle Velocity": "' .$velocityArray[$count].'"}');
+	echo ('{"time": "'. $timeArray[$count] .'", "Power Draw": "'. $powerArray[$count] .'", "Vehicle Velocity": "' .$velocityArray[$count].'"}');
 	if ($count < $numRows)
 	echo ",";
 }

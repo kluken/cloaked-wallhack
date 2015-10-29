@@ -141,7 +141,7 @@
 											<input type = "checkbox" id = "motorVelocity" name = "selectedData[]" value = "Motor Velocity"/> <label for = "motorVelocity"> Motor Velocity </label>
 										</th> 
 										<th>
-											<input type = "checkbox" id = "busCurrent" name = "selectedData[]" value = "Bus Current"/> <label for = "busCurrent"> Bus Current </label>
+											<input type = "checkbox" id = "busCurrent" name = "selectedData[]" value = "Bus Current (A)"/> <label for = "busCurrent"> Bus Current </label>
 										</th> 
 										<th>
 											<input type = "checkbox" id = "busVoltage" name = "selectedData[]" value = "Bus Voltage"/> <label for = "busVoltage"> Bus Voltage </label>
@@ -455,9 +455,9 @@
 										$row =  mysqli_fetch_assoc($result);
 										$tableName = dataNameLookup($entry);
 										if ($row[$tableName] > 0)
-											echo "<td class = 'medWarn'>$row[$tableName]</td>";
+											echo "<td class = 'medWarn'>Limiting</td>";
 										else 
-											echo "<td>Good</td>";
+											echo "<td>OK</td>";
 									}
 									else
 										echo "<td class = 'missingData'>No Data</td>";
@@ -475,9 +475,9 @@
 										$row =  mysqli_fetch_assoc($result);
 										$tableName = dataNameLookup($entry);
 										if ($row[$tableName] > 0)
-											echo "<td class = 'highWarn'>$row[$tableName]</td>";
+											echo "<td class = 'highWarn'>Limiting</td>";
 										else 
-											echo "<td>Good</td>";
+											echo "<td>OK</td>";
 									}
 									else
 										echo "<td class = 'missingData'>No Data</td>";

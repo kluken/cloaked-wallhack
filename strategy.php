@@ -245,6 +245,8 @@
 			$shuntPowerResult = mysqli_query($conn, $shuntPowerSql);
 			$shuntPower = mysqli_fetch_array($shuntPowerResult)['pin'];
 			
+			$totalPower = $mppt1Power + $mppt2Power + $shuntPower;
+			
 			$avg10MinSql = "select round((avg(`bus_current_(a)`)) * (avg(`bus_voltage_(v)`)), 2) AS pin from (select `bus_current_(a)`, `bus_voltage_(v)` from `bmu_bus_measurement` where day(`time_stamp`) = day(now()) and hour(`time_stamp`) = hour(now()) and minute(time_stamp) - minute(now()) < 11 order by time_stamp desc limit 10) `pin`";
 			$avg10MinResult = mysqli_query($conn, $avg10MinSql);
 			$avg10MinData = mysqli_fetch_array($avg10MinResult)['pin'];
@@ -290,7 +292,13 @@
 						Tracker Power Out
 					</th>
 					<?php
-						if ($mppt1Power = "" || is_null($mppt1Power) )//|| $mppt2Power = "" || is_null($mppt2Power))
+					
+					//Test this! Weird! Change to testing total power and goes missing. Change the test, and missing.
+					
+					
+					
+					
+						if ($mppt1Power = "" || is_null($mppt1Power) || $mppt2Power = "" || is_null($mppt2Power))
 						{
 							echo "<td class = 'missingData'>";
 							echo "No Data";
@@ -298,7 +306,7 @@
 						else
 						{
 							echo "<td>";
-							echo $mppt1Power;
+							echo $mppt1Power + $mppt2Power;
 						}
 					?>
 					</td>
@@ -314,7 +322,7 @@
 						else
 						{
 							echo "<td>";
-							echo $mppt1Power + $mppt2Power + $shuntPower;
+							echo $totalPower;
 						}
 					?>
 					</td>

@@ -123,6 +123,11 @@ td.highWarn
 	background-color: #FF0000; /*Bright Red*/
 }
 
+td.lowWarn
+{
+	background-color: #FFCACA; /*Bright Red*/
+}
+
 td.medWarn
 {
 	background-color: #FFD700; /*Gold Yellow*/
@@ -135,11 +140,46 @@ td.missingData
 
 td.goodData
 {
-	background-color: #00B300;
+	background-color: #8CFFA9;
 }
 
 label.check
 {
 	display: inline-block; 
 	width: 100%; 
+}
+
+td.outputVoltageLF
+{
+	background-color: #FDF000; /*Yellow*/
+}
+
+td.motorCurrentLF
+{
+	background-color: #BEFD00; /*Green - Yellow */
+}
+
+td.velocityLF
+{
+	background-color: #00EAF7; /*Aqua*/
+}
+
+td.busCurrentLF
+{
+	background-color: #00ACF7; /*Blueish*/
+}
+
+td.BVULLF
+{
+	background-color: #0050F7; /*Blue*/
+}
+
+td.BVLLLF
+{
+	background-color: #6300F7; /*Purple */
+}
+
+td.IPMorMotorTempLF
+{
+	background-color: #DE00F7; /*Pink*/
 }

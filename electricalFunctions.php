@@ -139,7 +139,7 @@ function sqlLookup($dataName)
 	}
 	else if (strcmp($dataName, "MPPT 1 Vout") == 0)
 	{
-		return "select round((avg(`uout`)), 2) AS mppt1_uout from (select `uout` from `mppt1` order by time_stamp desc limit 10) `mppt1_uout`";
+		return "select round((avg(`uout`) * 2.1 * 0.1), 2) AS mppt1_uout from (select `uout` from `mppt1` order by time_stamp desc limit 10) `mppt1_uout`";
 	}
 	else if (strcmp($dataName, "MPPT 1 Iin") == 0)
 	{
@@ -159,7 +159,7 @@ function sqlLookup($dataName)
 	}
 	else if (strcmp($dataName, "MPPT 2 Vout") == 0)
 	{
-		return "select round((avg(`uout`)), 2) AS uout from (select `uout` from `mppt2` order by time_stamp desc limit 10) `uout`";
+		return "select round((avg(`uout`) * 2.1 * 0.1), 2) AS uout from (select `uout` from `mppt2` order by time_stamp desc limit 10) `uout`";
 	}
 	else if (strcmp($dataName, "MPPT 2 Iin") == 0)
 	{

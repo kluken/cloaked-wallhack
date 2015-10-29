@@ -65,7 +65,7 @@
 						<fieldset>
 							<legend>Please enter the Data Server Details.</legend>
 							<label for = "hostname">Please enter the Host Name: </label><input id = "hostname" name = "hostname" value = "127.0.0.1"/> <br/> <br/>
-							<label for = "dbname">Please enter the Database Name: </label><input id = "dbname" name = "dbname" value = "can_bus"/> <br/> <br/>
+							<label for = "dbname">Please enter the Database Name: </label><input id = "dbname" name = "dbname" value = "race_day_six"/> <br/> <br/>
 							<label for = "port">Please enter the Port Number: </label><input id = "port" name = "port" value = "3306"/> <br/> <br/>
 							<label for = "username">Please enter the User Name: </label><input id = "username" name = "username" value = "solar"/> <br/> <br/>
 							<label for = "password">Please enter the Password: </label><input id = "password" name = "password" value = "solar"/> <br/> <br/>

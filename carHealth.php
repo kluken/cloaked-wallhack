@@ -18,264 +18,366 @@
 			$conn = mysqli_connect($servername, $username, $password, $dbname, $port);
 		}
 		
-		$motorTempSelect = "SELECT round((avg(Motor_Temp)), 2) AS Motor_Temp FROM (SELECT `Motor_Temp` FROM `IPM_Heatsink_and_Motor_Temperature_Measurement` ORDER BY time_stamp DESC LIMIT 10) `Motor_Temp`";
-		$IPMSelect = "SELECT round((avg(dsp_board_temp)), 2) AS dsp_board_temp FROM (SELECT `dsp_board_temp` FROM `ipm_dsp_board_temperature_measurement` ORDER BY time_stamp DESC LIMIT 10) `dsp_board_temp`";
-		$mppt1TempSelect = "SELECT round((avg(Temperature)), 2) AS Temperature FROM (SELECT `Temperature` FROM `MPPT1` ORDER BY time_stamp DESC LIMIT 10) `Temperature`";
-		$mppt2TempSelect = "SELECT round((avg(Temperature)), 2) AS Temperature FROM (SELECT `Temperature` FROM `MPPT2` ORDER BY time_stamp DESC LIMIT 10) `Temperature`";
-		$shuntVoltSelect = "select round((avg(`bus_voltage_(V)`)), 2) AS `bus_voltage` from (select `bus_voltage_(V)` from `bmu_bus_measurement` order by time_stamp desc limit 10) `bus_voltage`";
-		$shuntCurrentSelect = "select round((avg(`bus_current_(A)`)), 2) AS `bus_current` from (select `bus_current_(A)` from `bmu_bus_measurement` order by time_stamp desc limit 10) `bus_current`";
-		$shuntPowerSelect = "select round((avg(`bus_current_(A)`)), 2) * round((avg(`bus_voltage_(V)`)), 2) AS `bus_power` from (select `bus_voltage_(V)`, `bus_current_(A)` from `bmu_bus_measurement` order by time_stamp desc limit 10) `bus_voltage`";
-		$minCellVoltSelect = "SELECT `Minimum_Cell_Voltage` FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
-		$cmuWithMinCellVoltSelect = "SELECT `CMU_with_Minimum_Voltage` FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
-		$cellWithMinCellVoltSelect = "SELECT `Cell_with_Minimum_Voltage` FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
-		$maxCellVoltSelect = "SELECT `Maximum_Cell_Voltage` FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
-		$cmuWithMaxCellVoltSelect = "SELECT `CMU_with_Maximum_Voltage` FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
-		$cellWithMaxCellVoltSelect = "SELECT `Cell_with_Maximum_Voltage` FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
-		$desatFaultSelect = "SELECT (sum(desaturation_fault)) AS desaturation_fault FROM (SELECT `desaturation_fault` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `desaturation_fault`";
-		$railUnder15VSelect = "SELECT (sum(15v_rail_under_voltage)) AS 15v_rail_under_voltage FROM (SELECT `15v_rail_under_voltage` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `15v_rail_under_voltage`";
-		$configReadErrorSelect = "SELECT (sum(config_read_error)) AS config_read_error FROM (SELECT `config_read_error` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `config_read_error`";
-		$watchdogSelect = "SELECT (sum(watchdog_caused_last_reset)) AS watchdog_caused_last_reset FROM (SELECT `watchdog_caused_last_reset` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `watchdog_caused_last_reset`";
-		$badMotorPositionSelect = "SELECT (sum(bad_motor_position_hall_sequence)) AS bad_motor_position_hall_sequence FROM (SELECT `bad_motor_position_hall_sequence` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `bad_motor_position_hall_sequence`";
-		$dcBusUnderVoltSelect = "SELECT (sum(dc_bus_over_voltage)) AS dc_bus_over_voltage FROM (SELECT `dc_bus_over_voltage` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `dc_bus_over_voltage`";
-		$swocSelect = "SELECT (sum(software_over_current)) AS software_over_current FROM (SELECT `software_over_current` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `software_over_current`";
-		$hwocSelect = "SELECT (sum(hardware_over_current)) AS hardware_over_current FROM (SELECT `hardware_over_current` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `hardware_over_current`";
-		$outputVoltagePWMSelect = "SELECT (sum(output_voltage_pwm)) AS output_voltage_pwm FROM (SELECT `output_voltage_pwm` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `output_voltage_pwm`";
-		$motorCurrentFlagSelect = "SELECT (sum(motor_current)) AS motor_current FROM (SELECT `motor_current` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `motor_current`";
-		$velocityFlagSelect	= "SELECT (sum(velocity)) AS velocity FROM (SELECT `velocity` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `velocity`";
-		$busCurrentFlagSelect = "SELECT (sum(bus_current)) AS bus_current FROM (SELECT `bus_current` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `bus_current`";
-		$busVoltUpperLimitFlagSelect = "SELECT (sum(bus_voltage_upper_limit)) AS bus_voltage_upper_limit FROM (SELECT `bus_voltage_upper_limit` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `bus_voltage_upper_limit`";
-		$busVoltLowerLimitFlagSelect = "SELECT (sum(bus_voltage_lower_limit)) AS bus_voltage_lower_limit FROM (SELECT `bus_voltage_lower_limit` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `bus_voltage_lower_limit`";
-		$ipmOrMotorTempFlagSelect = "SELECT (sum(ipm_temp_or_motor_temp)) AS ipm_temp_or_motor_temp FROM (SELECT `ipm_temp_or_motor_temp` FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `ipm_temp_or_motor_temp`";
-		$mppt1BattOverVoltFlagSelect = "SELECT (sum(battery_over_voltage)) AS battery_over_voltage1 FROM (SELECT `battery_over_voltage` FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `battery_over_voltage1`";
-		$mppt1OverTempFlagSelect = "SELECT (sum(over_temperature)) AS over_temperature1 FROM (SELECT `over_temperature` FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `over_temperature1`";
-		$mppt1NoConnectFlagSelect = "SELECT (sum(no_connection)) AS no_connection1 FROM (SELECT `no_connection` FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `no_connection1`";
-		$mppt1InputUnderVoltFlagSelect = "SELECT (sum(under_voltage)) AS under_voltage1 FROM (SELECT `under_voltage` FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `under_voltage1`";
-		$mppt2BattOverVoltFlagSelect = "SELECT (sum(battery_over_voltage)) AS battery_over_voltage2 FROM (SELECT `battery_over_voltage` FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `output_voltage_pwm`";
-		$mppt2OverTempFlagSelect = "SELECT (sum(over_temperature)) AS over_temperature2 FROM (SELECT `over_temperature` FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `over_temperature2`";
-		$mppt2NoConnectFlagSelect = "SELECT (sum(no_connection)) AS no_connection2 FROM (SELECT `no_connection` FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `no_connection2`";
-		$mppt2InputUnderVoltFlagSelect = "SELECT (sum(under_voltage)) AS under_voltage2 FROM (SELECT `under_voltage` FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `under_voltage2`";
+		$motorTempSelect = "SELECT round((avg(Motor_Temp)), 2) AS Motor_Temp, time_stamp FROM (SELECT `Motor_Temp`, time_stamp FROM `IPM_Heatsink_and_Motor_Temperature_Measurement` ORDER BY time_stamp DESC LIMIT 10) `Motor_Temp`";
+		$IPMSelect = "SELECT round((avg(ipm_heatsink_temp)), 2) AS dsp_board_temp, time_stamp FROM (SELECT `ipm_heatsink_temp`, time_stamp FROM `ipm_heatsink_and_motor_temperature_measurement` ORDER BY time_stamp DESC LIMIT 10) `dsp_board_temp`";
+		$mppt1TempSelect = "SELECT round((avg(Temperature)), 2) AS Temperature, time_stamp FROM (SELECT `Temperature`, time_stamp FROM `MPPT1` ORDER BY time_stamp DESC LIMIT 10) `Temperature`";
+		$mppt2TempSelect = "SELECT round((avg(Temperature)), 2) AS Temperature, time_stamp FROM (SELECT `Temperature`, time_stamp FROM `MPPT2` ORDER BY time_stamp DESC LIMIT 10) `Temperature`";
+		$instantMotorPowerSelect = "select round(avg(`Bus_Current`) * avg(`Bus_Voltage`), 2) AS pout from (select `Bus_Voltage`, `Bus_Current` from `bus_measurement` order by time_stamp desc limit 2) `pout`";
+		$instantSpeedSelect = "select round((avg(`vehicle_velocity`) * 3.6), 2) as `vehicle_velocity` from (select `vehicle_velocity` from `velocity_measurement` order by time_stamp desc limit 5) `vehicle_velocity`";
+		$shuntVoltSelect = "select round((avg(`bus_voltage_(V)`)), 2) AS `bus_voltage`, time_stamp from (select `bus_voltage_(V)`, time_stamp from `bmu_bus_measurement` order by time_stamp desc limit 10) `bus_voltage`";
+		$shuntCurrentSelect = "select round((avg(`bus_current_(A)`)), 2) AS `bus_current`, time_stamp from (select `bus_current_(A)`, time_stamp from `bmu_bus_measurement` order by time_stamp desc limit 10) `bus_current`";
+		$shuntPowerSelect = "select round((avg(`bus_current_(A)`)), 2) * round((avg(`bus_voltage_(V)`)), 2) AS `bus_power`, time_stamp from (select `bus_voltage_(V)`, `bus_current_(A)`, time_stamp from `bmu_bus_measurement` order by time_stamp desc limit 10) `bus_voltage`";
+		$shuntWattHours =  "select 	`total_watt_hours` from `total_watt_hours` order by time_stamp desc limit 1";
+		$avgMotorPowerSelect = "SELECT avg_motor_power from avg_motor_power_and_total_trackers order by time_stamp desc limit 1";
+		$totalTrackerPowerSelect = "select trackers_total_whrs from avg_motor_power_and_total_trackers order by time_stamp desc limit 1";
+		$avgTracker1Power = "select avg_tracker_1 from avg_tracker_power order by time_stamp desc limit 1";
+		$avgTracker2Power = "select avg_tracker_2 from avg_tracker_power order by time_stamp desc limit 1";
+		$mppt1PowerSelect = "select round((avg(`uin`) * 1.5 * 0.1) * (avg(`iin`)  * 0.87 * 0.01 ), 2) AS pin from (select `iin`, `uin` from `mppt1` order by time_stamp desc limit 10) `pin`";
+		$mppt2PowerSelect = "select round((avg(`uin`) * 1.5 * 0.1) * (avg(`iin`)  * 0.87 * 0.01 ), 2) AS pin from (select `iin`, `uin` from `mppt2` order by time_stamp desc limit 10) `pin`";
+		$minCellVoltSelect = "SELECT `Minimum_Cell_Voltage`, time_stamp FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
+		$cmuWithMinCellVoltSelect = "SELECT `CMU_with_Minimum_Voltage`, time_stamp FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
+		$cellWithMinCellVoltSelect = "SELECT `Cell_with_Minimum_Voltage, time_stamp` FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
+		$maxCellVoltSelect = "SELECT `Maximum_Cell_Voltage`, time_stamp FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
+		$cmuWithMaxCellVoltSelect = "SELECT `CMU_with_Maximum_Voltage`, time_stamp FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
+		$cellWithMaxCellVoltSelect = "SELECT `Cell_with_Maximum_Voltage`, time_stamp FROM `minimum_/_maximum_cell_voltage` ORDER BY packet_number DESC LIMIT 1;";
+		$desatFaultSelect = "SELECT (sum(desaturation_fault)) AS desaturation_fault, time_stamp FROM (SELECT `desaturation_fault`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `desaturation_fault`";
+		$railUnder15VSelect = "SELECT (sum(15v_rail_under_voltage)) AS 15v_rail_under_voltage, time_stamp FROM (SELECT `15v_rail_under_voltage`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `15v_rail_under_voltage`";
+		$configReadErrorSelect = "SELECT (sum(config_read_error)) AS config_read_error, time_stamp FROM (SELECT `config_read_error`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `config_read_error`";
+		$watchdogSelect = "SELECT (sum(watchdog_caused_last_reset)) AS watchdog_caused_last_reset, time_stamp FROM (SELECT `watchdog_caused_last_reset`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `watchdog_caused_last_reset`";
+		$badMotorPositionSelect = "SELECT (sum(bad_motor_position_hall_sequence)) AS bad_motor_position_hall_sequence, time_stamp FROM (SELECT `bad_motor_position_hall_sequence`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `bad_motor_position_hall_sequence`";
+		$dcBusUnderVoltSelect = "SELECT (sum(dc_bus_over_voltage)) AS dc_bus_over_voltage, time_stamp FROM (SELECT `dc_bus_over_voltage`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `dc_bus_over_voltage`";
+		$swocSelect = "SELECT (sum(software_over_current)) AS software_over_current, time_stamp FROM (SELECT `software_over_current`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `software_over_current`";
+		$hwocSelect = "SELECT (sum(hardware_over_current)) AS hardware_over_current, time_stamp FROM (SELECT `hardware_over_current`, time_stamp FROM `status_information` ORDER BY time_stamp DESC LIMIT 10) `hardware_over_current`";
+		$mppt1BattOverVoltFlagSelect = "SELECT (sum(battery_over_voltage)) AS battery_over_voltage, time_stamp FROM (SELECT `battery_over_voltage`, time_stamp FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `battery_over_voltage`";
+		$mppt1OverTempFlagSelect = "SELECT (sum(`over temperature`)) AS over_temperature, time_stamp FROM (SELECT `over temperature`, time_stamp FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `over_temperature`";
+		$mppt1NoConnectFlagSelect = "SELECT (sum(`no connection`)) AS no_connection, time_stamp FROM (SELECT `no connection`, time_stamp FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `no_connection`";
+		$mppt1InputUnderVoltFlagSelect = "SELECT (sum(`under voltage`)) AS under_voltage, time_stamp FROM (SELECT `under voltage`, time_stamp FROM `mppt1` ORDER BY time_stamp DESC LIMIT 10) `under_voltage`";
+		$mppt2BattOverVoltFlagSelect = "SELECT (sum(`battery over voltage`)) AS battery_over_voltage, time_stamp FROM (SELECT `battery over voltage`, time_stamp FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `battery over voltage`";
+		$mppt2OverTempFlagSelect = "SELECT (sum(`over temperature`)) AS over_temperature, time_stamp FROM (SELECT `over temperature`, time_stamp FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `over_temperature`";
+		$mppt2NoConnectFlagSelect = "SELECT (sum(`no connection`)) AS no_connection, time_stamp FROM (SELECT `no connection`, time_stamp FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `no_connection`";
+		$mppt2InputUnderVoltFlagSelect = "SELECT (sum(`under voltage`)) AS under_voltage, time_stamp FROM (SELECT `under voltage`, time_stamp FROM `mppt2` ORDER BY time_stamp DESC LIMIT 10) `under_voltage`";
 		
 		$result = mysqli_query($conn, $motorTempSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$motorTempData = mysqli_fetch_array($result)["Motor_Temp"];
+		}
 		else 
+		{
 			$motorTempData = "";
+		}
 		
 		$result = mysqli_query($conn, $IPMSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$IPMData = mysqli_fetch_array($result)["dsp_board_temp"];
+		}
 		else 
+		{
 			$IPMData = "";
+			$IPMTempTimeData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt1TempSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$mppt1TempData = mysqli_fetch_array($result)["Temperature"];
+		}
 		else 
+		{
 			$mppt1TempData = "";
-			
+		}
+
 		$result = mysqli_query($conn, $mppt2TempSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$mppt2TempData = mysqli_fetch_array($result)["Temperature"];
+		}
 		else 
+		{
 			$mppt2TempData = "";
-			
-		$result = mysqli_query($conn, $mppt2TempSelect);
+		}
+		
+		$result = mysqli_query($conn, $instantMotorPowerSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$mppt2TempData = mysqli_fetch_array($result)["Temperature"];
+		{
+			$instantMotorPowerData = mysqli_fetch_array($result)["pout"];
+		}
 		else 
-			$mppt2TempData = "";
+		{
+			$instantMotorPowerData = "";
+		}
+
+		$result = mysqli_query($conn, $instantSpeedSelect);
+		if ($result != false && mysqli_num_rows($result) > 0)
+		{
+			$instantSpeedData = mysqli_fetch_array($result)["vehicle_velocity"];
+		}
+		else 
+		{
+			$instantSpeedData = "";
+		}
 			
 		$result = mysqli_query($conn, $shuntCurrentSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$shuntCurrentData = mysqli_fetch_array($result)["bus_current"];
+		}
 		else 
-			$mppt2TempData = "";
+		{
+			$shuntCurrentData = "";
+		}
 		
 		$result = mysqli_query($conn, $shuntVoltSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$shuntVoltData = mysqli_fetch_array($result)["bus_voltage"];
+		}
 		else 
-			$minCellVoltData = "";
+		{
+			$shuntVoltData = "";
+		}
 			
 		$result = mysqli_query($conn, $shuntPowerSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$shuntPowerData = mysqli_fetch_array($result)["bus_power"];
+		}
 		else 
+		{
 			$shuntPowerData = "";
-			
-		$result = mysqli_query($conn, $minCellVoltSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$minCellVoltData = mysqli_fetch_array($result)["Minimum_Cell_Voltage"];
-		else 
-			$minCellVoltData = "";
+		}
 		
-		$result = mysqli_query($conn, $cmuWithMinCellVoltSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$cmuWithMinCellVoltData = mysqli_fetch_array($result)["CMU_with_Minimum_Voltage"];
-		else 
-			$cmuWithMinCellVoltData = "";
 		
-		$result = mysqli_query($conn, $cellWithMinCellVoltSelect);
+		$result = mysqli_query($conn, $shuntWattHours);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$cellWithMinCellVoltData = mysqli_fetch_array($result)["Cell_with_Minimum_Voltage"];
+		{
+			$shuntWattHoursData = mysqli_fetch_array($result)["total_watt_hours"] + 2735.37;//3184.66;//1600; //+ 1233.15;//3044.16;//1195.794;//2454.284;//2990.28; //2071.9
+		}
 		else 
-			$cellWithMinCellVoltData = "";
+		{
+			$shuntWattHoursData = "";
+		}
 		
-		$result = mysqli_query($conn, $maxCellVoltSelect);
+		$result = mysqli_query($conn, $avgMotorPowerSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$maxCellVoltData = mysqli_fetch_array($result)["Maximum_Cell_Voltage"];
+		{
+			$avgMotorPowerData = mysqli_fetch_array($result)["avg_motor_power"];
+		}
 		else 
-			$maxCellVoltData = "";
+		{
+			$avgMotorPowerData = "";
+		}
 		
-		$result = mysqli_query($conn, $cmuWithMaxCellVoltSelect);
+		$result = mysqli_query($conn, $totalTrackerPowerSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$cmuWithMaxCellVoltData = mysqli_fetch_array($result)["CMU_with_Maximum_Voltage"];
+		{
+			$totalTrackerPowerData = mysqli_fetch_array($result)["trackers_total_whrs"];
+		}
 		else 
-			$cmuWithMaxCellVoltData = "";
+		{
+			$totalTrackerPowerData = "";
+		}
 		
-		$result = mysqli_query($conn, $cellWithMaxCellVoltSelect);
+		$result = mysqli_query($conn, $avgTracker1Power);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$cellWithMaxCellVoltData = mysqli_fetch_array($result)["Cell_with_Maximum_Voltage"];
+		{
+			$avgTracker1Data = mysqli_fetch_array($result)["avg_tracker_1"];
+		}
 		else 
-			$cellWithMaxCellVoltData = "";
+		{
+			$avgTracker1Data = "";
+		}
+		
+		$result = mysqli_query($conn, $avgTracker2Power);
+		if ($result != false && mysqli_num_rows($result) > 0)
+		{
+			$avgTracker2Data = mysqli_fetch_array($result)["avg_tracker_2"];
+		}
+		else 
+		{
+			$avgTracker2Data = "";
+		}
+		
+		$result = mysqli_query($conn, $mppt1PowerSelect);
+		if ($result != false && mysqli_num_rows($result) > 0)
+		{
+			$mppt1PowerData = mysqli_fetch_array($result)["pin"];
+		}
+		else 
+		{
+			$mppt1PowerData = "";
+		}
+		
+		$result = mysqli_query($conn, $mppt2PowerSelect);
+		if ($result != false && mysqli_num_rows($result) > 0)
+		{
+			$mppt2PowerData = mysqli_fetch_array($result)["pin"];
+		}
+		else 
+		{
+			$mppt2PowerData = "";
+		}
 		
 		$result = mysqli_query($conn, $desatFaultSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$desatFaultData = mysqli_fetch_array($result)["desaturation_fault"];
+		}
 		else 
+		{
 			$desatFaultData = "";
+		}
 		
 		$result = mysqli_query($conn, $railUnder15VSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$railUnder15VData = mysqli_fetch_array($result)["15v_rail_under_voltage"];
+		}
 		else 
+		{
 			$railUnder15VData = "";
+		}
 		
 		$result = mysqli_query($conn, $configReadErrorSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$configReadErrorData = mysqli_fetch_array($result)["config_read_error"];
+		}
 		else 
+		{
 			$configReadErrorData = "";
+		}
 		
 		$result = mysqli_query($conn, $watchdogSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$watchdogData = mysqli_fetch_array($result)["watchdog_caused_last_reset"];
+		}
 		else 
+		{
 			$watchdogData = "";
+		}
 		
 		$result = mysqli_query($conn, $badMotorPositionSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$badMotorPositionData = mysqli_fetch_array($result)["bad_motor_position_hall_sequence"];
+		}
 		else 
+		{
 			$badMotorPositionData = "";
+		}
 		
 		$result = mysqli_query($conn, $dcBusUnderVoltSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$dcBusUnderVoltData = mysqli_fetch_array($result)["dc_bus_over_voltage"];
+		}
 		else 
+		{
 			$dcBusUnderVoltData = "";
+		}
 		
 		$result = mysqli_query($conn, $swocSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$swocData = mysqli_fetch_array($result)["software_over_current"];
+		}
 		else 
+		{
 			$swocData = "";
+		}
 		
 		$result = mysqli_query($conn, $hwocSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
+		{
 			$hwocData = mysqli_fetch_array($result)["hardware_over_current"];
+		}
 		else 
+		{
 			$hwocData = "";
-		
-		$result = mysqli_query($conn, $outputVoltagePWMSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$outputVoltagePWMData = mysqli_fetch_array($result)["output_voltage_pwm"];
-		else 
-			$outputVoltagePWMData = "";
-		
-		$result = mysqli_query($conn, $motorCurrentFlagSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$motorCurrentFlagData = mysqli_fetch_array($result)["motor_current"];
-		else 
-			$motorCurrentFlagData = "";
-		
-		$result = mysqli_query($conn, $velocityFlagSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$velocityFlagData = mysqli_fetch_array($result)["velocity"];
-		else 
-			$velocityFlagData = "";
-		
-		$result = mysqli_query($conn, $busCurrentFlagSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$busCurrentFlagData = mysqli_fetch_array($result)["bus_current"];
-		else 
-			$busCurrentFlagData = "";
-		
-		$result = mysqli_query($conn, $busVoltUpperLimitFlagSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$busVoltUpperLimitFlagData = mysqli_fetch_array($result)["bus_voltage_upper_limit"];
-		else 
-			$busVoltUpperLimitFlagData = "";
-		
-		$result = mysqli_query($conn, $busVoltLowerLimitFlagSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$busVoltLowerLimitFlagData = mysqli_fetch_array($result)["bus_voltage_lower_limit"];
-		else 
-			$busVoltLowerLimitFlagData = "";
-			
-		$result = mysqli_query($conn, $ipmOrMotorTempFlagSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$ipmOrMotorTempFlagData = mysqli_fetch_array($result)["ipm_temp_or_motor_temp"];
-		else 
-			$ipmOrMotorTempFlagData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt1OverTempFlagSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$mppt1OverTempFlagData = mysqli_fetch_array($result)["over_temperature1"];
+		{
+			$mppt1OverTempFlagData = mysqli_fetch_array($result)["over_temperature"];
+		}
 		else 
+		{
 			$mppt1OverTempFlagData = "";
-		
-		$result = mysqli_query($conn, $mppt1OverTempFlagSelect);
-		if ($result != false && mysqli_num_rows($result) > 0)
-			$mppt1OverTempFlagData = mysqli_fetch_array($result)["no_connection1"];
-		else 
-			$mppt1OverTempFlagData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt1NoConnectFlagSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$mppt1NoConnectFlagData = mysqli_fetch_array($result)["battery_over_voltage1"];
+		{
+			$mppt1NoConnectFlagData = mysqli_fetch_array($result)["no_connection"];
+		}
 		else 
+		{
 			$mppt1NoConnectFlagData = "";
+		}
+		
+		$result = mysqli_query($conn, $mppt1BattOverVoltFlagSelect);
+		if ($result != false && mysqli_num_rows($result) > 0)
+		{
+			$mppt1BattOverVoltFlagData = mysqli_fetch_array($result)["battery_over_voltage"];
+		}
+		else 
+		{
+			$mppt1BattOverVoltFlagData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt1InputUnderVoltFlagSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$mppt1InputUnderVoltFlagData = mysqli_fetch_array($result)["under_voltage1"];
+		{
+			$mppt1InputUnderVoltFlagData = mysqli_fetch_array($result)["under_voltage"];
+		}
 		else 
+		{
 			$mppt1InputUnderVoltFlagData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt2OverTempFlagSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$mppt2OverTempFlagData = mysqli_fetch_array($result)["over_temperature2"];
+		{
+			$mppt2OverTempFlagData = mysqli_fetch_array($result)["over_temperature"];
+		}
 		else 
+		{
 			$mppt2OverTempFlagData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt2NoConnectFlagSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-		$mppt2NoConnectFlagData = mysqli_fetch_array($result)["no_connection2"];
+		{
+			$mppt2NoConnectFlagData = mysqli_fetch_array($result)["no_connection"];
+		}
 		else 
+		{
 			$mppt2NoConnectFlagData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt2BattOverVoltFlagSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-				$mppt2BattOverVoltFlagData = mysqli_fetch_array($result)["battery_over_voltage2"];
+		{
+			$mppt2BattOverVoltFlagData = mysqli_fetch_array($result)["battery_over_voltage"];
+		}
 		else 
+		{
 			$mppt2BattOverVoltFlagData = "";
+		}
 		
 		$result = mysqli_query($conn, $mppt2InputUnderVoltFlagSelect);
 		if ($result != false && mysqli_num_rows($result) > 0)
-			$mppt2InputUnderVoltFlagData = mysqli_fetch_array($result)["under_voltage2"];
+		{
+			$mppt2InputUnderVoltFlagData = mysqli_fetch_array($result)["under_voltage"];
+		}
 		else 
+		{
 			$mppt2InputUnderVoltFlagData = "";
+		}
 		
 		
 		
@@ -306,7 +408,7 @@
 					</tr>
 					<tr>
 						<th>
-							Motor Controller Temp
+							Motor Temp
 						</th>
 						<?php 
 							if ($motorTempData == "")
@@ -314,13 +416,17 @@
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
+							else if ($motorTempData > 85)
+								echo "<td class = 'highWarn'>";
+							else if ($motorTempData > 65)
+								echo "<td class = 'medWarn'>";
 							else
 								echo "<td>";
 							echo $motorTempData; 
 						?>
 						</td>
 						<th>
-							IPM DSP Temp
+							Motor Controller Temp
 						</th>
 						<?php 
 							if ($IPMData == "")
@@ -328,6 +434,10 @@
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
+							else if ($IPMData > 85)
+								echo "<td class = 'highWarn'>";
+							else if ($IPMData > 65)
+								echo "<td class = 'medWarn'>";
 							else
 								echo "<td>";
 							echo $IPMData; 
@@ -342,6 +452,10 @@
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
+							else if ($mppt1TempData > 85)
+								echo "<td class = 'highWarn'>";
+							else if ($mppt1TempData > 65)
+								echo "<td class = 'medWarn'>";
 							else
 								echo "<td>";
 							echo $mppt1TempData; 
@@ -356,6 +470,10 @@
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
+							else if ($mppt2TempData > 85)
+								echo "<td class = 'highWarn'>";
+							else if ($mppt2TempData > 65)
+								echo "<td class = 'medWarn'>";
 							else
 								echo "<td>";
 							echo $mppt2TempData; 
@@ -365,6 +483,45 @@
 						<th colspan="8"> 
 							Power Figures
 						</th>
+					</tr>
+					<tr>
+						<th>
+						</th>
+						<th>
+						</th>
+						<th>
+						</th>
+						<th>
+						</th>
+						<th>
+							Instant Motor Power
+						</th>
+						<?php 
+							if ($instantMotorPowerData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+								echo "<td>";
+							echo $instantMotorPowerData; 
+						?>
+						</td>
+						<th>
+							Instant Speed (km/hr)
+						</th>
+						<?php 
+							if ($instantSpeedData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+								echo "<td>";
+							echo $instantSpeedData; 
+						?>
+						</td>
+						
 					</tr>
 					<tr>
 						<th>
@@ -400,7 +557,7 @@
 						?>
 						</td>
 						<th>
-							Power
+							Shunt Power
 						</th>
 						<?php 
 							if ($shuntPowerData == "")
@@ -411,100 +568,200 @@
 							else
 							{
 								echo "<td>";
-								echo $shuntPowerData; 
+								echo round($shuntPowerData, 2); 
 							}
 						?>
 						</td>
+						<th>
+							Total Watt Hours Used
+						</th>
+						<?php 
+							if ($shuntWattHoursData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else if ($shuntWattHoursData > 0)
+							{
+								echo "<td class = 'lowWarn'>";
+								echo round($shuntWattHoursData, 2); 
+							}
+							else
+							{
+								echo "<td class = 'goodData'>";
+								echo round($shuntWattHoursData, 2); 
+							}
+						?>
+						</td>							
 					</tr>
 					<tr>
-						<th colspan="8"> 
-							Voltages
-						</th>
-					</tr>
-					<tr>
 						<th>
-							Minimum Cell Voltage
+							Total Watt Hours Remaining
 						</th>
 						<?php 
-							if ($minCellVoltData == "")
+							if ($shuntWattHoursData == "")
 							{
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
 							else
-								echo "<td>";
-							echo $minCellVoltData; 
-						?>
-						<th>
-							CMU with Minimum Voltage
-						</th>
-						<?php 
-							if ($cmuWithMinCellVoltData == "")
 							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else
 								echo "<td>";
-							echo $cmuWithMinCellVoltData; 
-						?>
-						<th>
-							Cell with Minimum Voltage
-						</th>
-						<?php 
-							if ($cellWithMinCellVoltData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
+								echo round(4100 - $shuntWattHoursData, 2); 
 							}
-							else
-								echo "<td>";
-							echo $cellWithMinCellVoltData; 
 						?>
-						<td rowspan="2" colspan="2">
 						</td>
+						<th>
+							Battery SOC
+						</th>
+						<?php 
+							if ($shuntWattHoursData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+							{
+								echo "<td>";
+								echo round((4100 - $shuntWattHoursData) / 4100 * 100, 2); 
+								echo "%";
+							}
+						?>
+						</td>
+						<th>
+							Average Motor Draw
+						</th>
+						<?php 
+							if ($avgMotorPowerData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+							{
+								echo "<td>";
+								echo $avgMotorPowerData; 
+							}
+						?>
+						</td>
+						<th>
+							Total Tracker WHrs
+						</th>
+						<?php 
+							if ($totalTrackerPowerData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+							{
+								echo "<td>";
+								echo $totalTrackerPowerData; 
+							}
+						?>
+						</td>
+						
 					</tr>
 					<tr>
 						<th>
-							Maximum Cell Voltage
+							Average Tracker 1 Power
 						</th>
 						<?php 
-							if ($maxCellVoltData == "")
+							if ($avgTracker1Data == "")
 							{
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
 							else
+							{
 								echo "<td>";
-							echo $maxCellVoltData; 
+								echo $avgTracker1Data; 
+							}
 						?>
+						</td>
 						<th>
-							CMU with Maximum Voltage
+							Average Tracker 2 Power
 						</th>
 						<?php 
-							if ($cmuWithMaxCellVoltData == "")
+							if ($avgTracker2Data == "")
 							{
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
 							else
+							{
 								echo "<td>";
-							echo $cmuWithMaxCellVoltData; 
+								echo $avgTracker2Data; 
+							}
 						?>
+						</td>	
 						<th>
-							Cell with Maximum Voltage
+							MPPT1 Instant Power
 						</th>
 						<?php 
-							if ($cellWithMaxCellVoltData == "")
+							if ($mppt1PowerData == "")
 							{
 								echo "<td class = 'missingData'>";
 								echo "No Data";
 							}
 							else
+							{
 								echo "<td>";
-							echo $cellWithMaxCellVoltData; 
+								echo $mppt1PowerData; 
+							}
 						?>
+						</td>	
+						<th>
+							MPPT2 Instant Power
+						</th>
+						
+						<?php 
+							if ($mppt2PowerData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+							{
+								echo "<td>";
+								echo $mppt2PowerData; 
+							}
+						?>
+						</td>	
 					</tr>
+					<tr>
+						<th colspan=3>
+							Average Tracker Combined
+						</th>
+						<?php 
+							if ($avgTracker1Data == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+							{
+								echo "<td>";
+								echo $avgTracker1Data + $avgTracker2Data; 
+							}
+						?>
+						</td>
+						<th colspan=3>
+							Instant Tracker Combined
+						</th>
+						<?php 
+							if ($mppt1PowerData == "")
+							{
+								echo "<td class = 'missingData'>";
+								echo "No Data";
+							}
+							else
+							{
+								echo "<td>";
+								echo $mppt1PowerData + $mppt2PowerData; 
+							}
+						?>
+						</td>	
 					<tr>
 						<th colspan="8">
 							Motor Error Flags
@@ -670,162 +927,6 @@
 								echo "No Data";
 							}
 							else if ($hwocData > 0)
-							{
-								echo "<td class = 'highWarn'>";
-								echo "error"; 
-							}
-							else 
-							{
-								echo "<td>";
-								echo "OK"; 
-							}
-						?>
-						</td>
-					</tr>
-					<tr>
-						<th colspan="8">
-							Motor Limiting Flags
-						</th>
-					</tr>
-					<tr>
-						<th>
-							Output Voltage PWM
-						</th>
-						<?php 
-							if ($outputVoltagePWMData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else if ($outputVoltagePWMData > 0)
-							{
-								echo "<td class = 'highWarn'>";
-								echo "error"; 
-							}
-							else 
-							{
-								echo "<td>";
-								echo "OK"; 
-							}
-						?>
-						</td>
-						<th>
-							Motor Current
-						</th>
-						<?php 
-							if ($motorCurrentFlagData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else if ($motorCurrentFlagData > 0)
-							{
-								echo "<td class = 'highWarn'>";
-								echo "error"; 
-							}
-							else 
-							{
-								echo "<td>";
-								echo "OK"; 
-							}
-						?>
-						</td>
-						<th>
-							Velocity
-						</th>
-						<?php 
-							if ($velocityFlagData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else if ($velocityFlagData > 0)
-							{
-								echo "<td class = 'highWarn'>";
-								echo "error"; 
-							}
-							else 
-							{
-								echo "<td>";
-								echo "OK"; 
-							}
-						?>
-						</td>
-						<th>
-							Bus Current
-						</th>
-						<?php 
-							if ($busCurrentFlagData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else if ($busCurrentFlagData > 0)
-							{
-								echo "<td class = 'highWarn'>";
-								echo "error"; 
-							}
-							else 
-							{
-								echo "<td>";
-								echo "OK"; 
-							}
-						?>
-						</td>
-					</tr>
-					<tr>
-						<th>
-							Bus Voltage Upper Limiting
-						</th>
-						<?php 
-							if ($busVoltUpperLimitFlagData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else if ($busVoltUpperLimitFlagData > 0)
-							{
-								echo "<td class = 'highWarn'>";
-								echo "error"; 
-							}
-							else 
-							{
-								echo "<td>";
-								echo "OK"; 
-							}
-						?>
-						</td>
-						<th>
-							Bus Voltage Lower Limiting
-						</th>
-						<?php 
-							if ($busVoltLowerLimitFlagData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else if ($busVoltLowerLimitFlagData > 0)
-							{
-								echo "<td class = 'highWarn'>";
-								echo "error"; 
-							}
-							else 
-							{
-								echo "<td>";
-								echo "OK"; 
-							}
-						?>
-						</td>
-						<th>
-							IPM Temp or Motor Temp
-						</th>
-						<?php 
-							if ($ipmOrMotorTempFlagData == "")
-							{
-								echo "<td class = 'missingData'>";
-								echo "No Data";
-							}
-							else if ($ipmOrMotorTempFlagData > 0)
 							{
 								echo "<td class = 'highWarn'>";
 								echo "error"; 
@@ -1015,7 +1116,81 @@
 						?>
 						</td>
 					</tr>
-					
+					<?php
+						/*if ($motorTimeData = "" || empty($motorTimeData) || $IPMTempTimeData = "" || empty($IPMTempTimeData) || $mppt1TimeData = "" || empty($mppt1TimeData) || $mppt2TimeData = "" || empty($mppt2TimeData) || $shuntTimeData = "" || empty($shuntTimeData) || $shuntWattHoursTime = "" || empty($shuntWattHoursTime) || $cellVoltTimeData = "" || empty($cellVoltTimeData) || $flagTimeData = "" || empty($flagTimeData))
+						{
+						?>
+						<tr colspan=8>
+							Missing Datas
+						</tr>
+						<tr>
+							<?php
+								if ($motorTimeData = "" || empty($motorTimeData))
+								{
+								?>
+									<td>
+										Motor Temp
+									</td>
+								<?php
+								}
+								if ($IPMTempTimeData = "" || empty($IPMTempTimeData))
+								{
+								?>
+									<td>
+										IPM Temp
+									</td>
+								<?php
+								}
+								if ($mppt1TimeData = "" || empty($mppt1TimeData))
+								{
+								?>
+									<td>
+										MPPT1
+									</td>
+								<?php
+								}
+								if ($mppt2TimeData = "" || empty($mppt2TimeData))
+								{
+								?>
+									<td>
+										MPPT2
+									</td>
+								<?php
+								}
+								if ($shuntTimeData = "" || empty($shuntTimeData))
+								{
+								?>
+									<td>
+										Shunt Volt/Current
+									</td>
+								<?php
+								}
+								//if ($shuntWattHoursTime = "" || empty($shuntWattHoursTime))
+								//{
+								?>
+									<td>
+										<?php echo $shuntWattHoursTime; ?>
+									</td>
+								<?php
+								//}
+								if ($cellVoltTimeData = "" || empty($cellVoltTimeData))
+								{
+								?>
+									<td>
+										Cell Volts
+									</td>
+								<?php
+								}
+								if ($flagTimeData = "" || empty($flagTimeData))
+								{
+								?>
+									<td>
+										Motor Status
+									</td>
+								<?php
+								}
+						}
+						*/?>
 				</table>
 			</p>
 		</div>
